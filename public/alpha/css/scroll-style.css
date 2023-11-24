@@ -1,0 +1,6 @@
+#demo{ line-height: 20px; }
+.content{overflow: auto;position: relative;width: 740px;max-width: 100%;height: 400px;
+	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+.content.hidden{ display: none; }
+#demo.showcase{ min-width: 740px; }
+.snap-scrolling-example .content{ height: auto; width: 1220px;}

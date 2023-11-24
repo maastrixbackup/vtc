@@ -1,0 +1,2 @@
+change homepage in package.json
+change APIPath in fetch file 

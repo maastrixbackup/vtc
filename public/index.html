@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>VTC</title>
+  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="Real Estate Virtual Tours, Virtual Tours for Real Estate, Virtual Tours, e-Flyers and YouTube Videos for Real Estate, 3D WalkThrough Home Tours, Video Tours, 3D Virtual Tours" />
+  <meta name="description" content="Professional photography and online DIY software to create a virtual tour, e-flyer and video in under 15 minutes. VirtualTourCafe offers over a dozen property website designs to choose from including Premium Tour Themes to market your listings for the greatest exposure and lead capture. Have a real estate office, brokerage or association with 10 to 10,000 members/associates? We have an automated solution for you! Our EZ-AutoTour will create a virtual tour, e-flyer and video automatically from the MLS and notify the agent." />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="icon" type="image/x-icon" href="%PUBLIC_URL%/alpha/favicon.ico" media="screen" async />
+  <!-- <link
+      rel="apple-touch-icon"
+      href="%PUBLIC_URL%/alpha/logo192.png?rd=4221159546"
+      media="screen"
+      async
+    /> -->
+
+  <link href="%PUBLIC_URL%/alpha/css/bootstrap.min.css" rel="stylesheet" media async />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" media="screen" async />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" media="screen" async />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+        media="screen"> -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/AgentStyle.css" type="text/css" media="screen" async />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="screen" async />
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/animate.min.css" media="screen" async />
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/video-menu.css" media="screen" async />
+  <!-- <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/menu.css"> -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/jquery.mobilemenu.css" media="screen" async />
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/jquery.mCustomScrollbar.css" media="screen" async />
+  <!-- <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/scroll-style.css" media="screen"> -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/style.css" type="text/css" media="screen" async />
+  <!-- <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/other.css" type="text/css" media="screen"> -->
+  <!-- <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/Themetemplate.css" type="text/css" media="screen"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="screen" async />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" media="screen" async />
+  <link rel="stylesheet" href="https://unpkg.com/react-rangeslider/umd/rangeslider.min.css" media="screen" async />
+  <!-- --------preconnect link-------- -->
+  <link rel="preconnect" href="https://virtualtourcafe.com/alpha">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" ></script> -->
+
+  <script src="%PUBLIC_URL%/alpha/js/wow.js" defer></script>
+  <!-- <script src="%PUBLIC_URL%/alpha/js/menu.js"></script> -->
+  <!-- <script src="%PUBLIC_URL%/alpha/js/jquery.mobilemenu.js"></script> -->
+  <!-- <script src="%PUBLIC_URL%/alpha/js/jquery.mCustomScrollbar.concat.min.js"></script> -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/jquery-ui.css" media="screen" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="%PUBLIC_URL%/alpha/css/asRange.css" media="screen" />
+  <!-- <script src="%PUBLIC_URL%/alpha/js/jquery-asRange.js"></script> -->
+  <script src="https://www.google.com/recaptcha/api.js"></script>
+  <script src="//d87f27644c894ac1be31e7b9eae45f3f.js.ubembed.com"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <style type="text/css">
+    .page-link {
+      cursor: pointer;
+    }
+
+    .pinterest-btn {
+      border: 2px solid #80808047;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #sortable {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 450px;
+    }
+
+    #sortable li {
+      margin: 3px 3px 3px 0;
+      padding: 1px;
+      float: left;
+      width: 100px;
+      height: 90px;
+      font-size: 4em;
+      text-align: center;
+    }
+
+    .draggable {
+      top: auto !important;
+      left: auto !important;
+    }
+
+    .head_sec .desktop_sticky .user_img img {
+      height: 37px;
+      object-fit: cover;
+    }
+
+    .react-tel-input .form-control {
+      height: 50px !important;
+      width: 100% !important;
+    }
+
+    .MuiSelect-select.MuiSelect-select {
+      margin-left: 10px !important;
+    }
+
+    .dropzone {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+      border-width: 2px;
+      border-radius: 2px;
+      border-color: #00cec3;
+      border-style: dashed;
+      background-color: #fafafa;
+      color: #bdbdbd;
+      outline: none;
+      transition: border 0.24s ease-in-out;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .rnc {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 255px;
+      background-color: #eee;
+      border-radius: 6px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .rnc-row {
+      display: flex;
+      align-items: stretch;
+      margin: 0 0 10px 0;
+    }
+
+    .rnc-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin: 0 0 0 10px;
+    }
+
+    .rnc-canvas {
+      box-sizing: border-box;
+      background-color: #fff;
+      border-radius: 4px;
+    }
+
+    .rnc-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      background: #fff;
+      color: inherit;
+      border: none;
+      padding: 0;
+      width: 25px;
+      height: 20px;
+      box-sizing: border-box;
+      border-radius: 4px;
+    }
+
+    .rnc-button svg {
+      width: 1em;
+      height: 1em;
+      fill: currentColor;
+    }
+
+    .rnc-input {
+      border: none;
+      padding: 10px 6px;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .MuiTypography-body1 {
+      font-family: "Nunito" !important;
+    }
+
+    .MuiDialog-paperWidthSm {
+      width: 100%;
+      max-width: 310px !important;
+    }
+
+    .MuiDialogTitle-root {
+      background: #ffa12d;
+    }
+
+    .MuiTypography-h6 {
+      color: #fff !important;
+    }
+
+    /* .MuiDialog-root {
+            z-index: 99 !important;
+        } */
+
+    a:not([href]):not([tabindex]) {
+      color: white !important;
+      cursor: pointer !important;
+    }
+
+    #anchor {
+      color: black !important;
+    }
+
+    .MuiSnackbar-anchorOriginTopRight {
+      top: 110px !important;
+    }
+
+    .reactEasyCrop_Contain {
+      position: inherit !important;
+    }
+
+    .reactEasyCrop_Container {
+      position: inherit !important;
+    }
+
+    .radio {
+      display: none;
+    }
+
+    input[type="radio"]:checked+#lbl {
+      border: 3px solid #f6ad17;
+    }
+
+    input[type="radio"]:checked+#lbl_pre {
+      border: 7px solid #f6ad17;
+      box-shadow: 0px 0px 8px 5px;
+    }
+
+    .nav-tabs .nav-item {
+      margin-right: 5px;
+    }
+
+    #img_div {
+      margin-bottom: 45px;
+    }
+
+    ._1ceqH ._1Yplu ._2gd2_ {
+      display: none !important;
+    }
+
+    .service_provide_left_tab ul li a.active {
+      color: #ffa12d !important;
+    }
+
+    .font {
+      font-size: 20px !important;
+    }
+
+    .rdw-editor-wrapper {
+      border: 1px solid #b5aeae;
+      height: 150px;
+      overflow: auto;
+    }
+
+    .rdw-editor-main {
+      overflow: hidden !important;
+    }
+
+    .rdw-editor-toolbar {
+      border: 1px solid #b5aeae !important;
+      margin: 5px;
+    }
+
+    .rdw-dropdown-wrapper {
+      border: 1px solid #979191 !important;
+    }
+
+    /* a:not([href]):not([tabindex]) {
+    color: black !important;
+    cursor: pointer !important;
+} */
+    .rdw-option-wrapper {
+      border: 1px solid #979191;
+    }
+
+    /* .rdw-dropdown-selectedtext a:not([href]):not([tabindex]) {
+    color: black !important;
+    cursor: pointer !important;
+} */
+    .rdw-dropdown-selectedtext span {
+      color: black;
+    }
+
+    /* .color p{
+    color: #fff !important;
+} */
+    .bg-active {
+      background-image: linear-gradient(to bottom,
+          #ffb400,
+          #ff8a00) !important;
+      color: #fff !important;
+    }
+
+    td {
+      padding: 0;
+    }
+
+    @media print and (color) {
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root">
+    <div className="d-none">
+      <a href="https://www.virtualtourcafe.com/alpha/"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/appointment"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/agent"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/example"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/features"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/broker"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/association"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/association-quote"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/contact-us"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/preferred-vendors"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/about-us"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/pricing"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/faq"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/terms-and-conditions"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/login"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/broker-login"></a>
+      <a href="https://www.virtualtourcafe.com/alpha/agent-login"></a>
+    </div>
+  </div>
+
+</body>
+<script src="%PUBLIC_URL%/alpha/js/bootstrap.min.js"></script>
+<script>
+  var closebtns = document.getElementsByClassName("close");
+  var i;
+
+  for (i = 0; i < closebtns.length; i++) {
+    closebtns[i].addEventListener("click", function() {
+      this.parentElement.style.display = "none";
+    });
+  }
+</script>
+<script defer>
+  $(document).ready(function() {
+    /*$(".range-example-input").asRange({
+      range: false,
+      limit: false,
+    });
+    // $.mobilemenu();
+    $(function () {
+      $("#list1").sortable();
+    });
+    */
+    // $(function () {
+    //     $("#list2").sortable();
+    // });
+  });
+
+  // $(".gee_cross").hide();
+  // $(".gee_menu").hide();
+  // $(".gee_hamburger").click(function () {
+  //     $(".gee_menu").slideToggle("slow", function () {
+  //         $(".gee_hamburger").hide();
+  //         $(".gee_cross").show();
+  //     });
+  // });
+
+  // $(".gee_cross").click(function () {
+  //     $(".gee_menu").slideToggle("slow", function () {
+  //         $(".gee_cross").hide();
+  //         $(".gee_hamburger").show();
+  //     });
+  // });
+  $(document).ready(function() {
+    wow = new WOW({
+      animateClass: "animated",
+      offset: 0,
+      callback: function(box) {
+        console.log("WOW: animating <" + box.tagName.toLowerCase() + ">");
+      },
+    });
+    wow.init();
+  });
+
+  // document.getElementById('moar').onclick = function () {
+  //     var section = document.createElement('section');
+  //     section.className = 'section--purple wow fadeInDown';
+  //     this.parentNode.insertBefore(section, this);
+  // };
+</script>
+<script>
+  $(window).scroll(function() {
+      $(this).scrollTop() >= 50 ?
+        $("#return-to-top").fadeIn(200) :
+        $("#return-to-top").fadeOut(200);
+    }),
+    $("#return-to-top").click(function() {
+      $("body,html").animate({
+          scrollTop: 0,
+        },
+        500
+      );
+    });
+</script>
+<!-- testinggg to be enabled -->
+<!-- <script >
+    $(document).ready(function () {
+      (function ($) {
+        $(window).on("load", function () {
+          var amount = Math.max.apply(
+            Math,
+            $("#content-1 li")
+              .map(function () {
+                return $(this).outerWidth(true);
+              })
+              .get()
+          );
+          $("#content-1").mCustomScrollbar({
+            axis: "x",
+            theme: "inset",
+            advanced: {
+              autoExpandHorizontalScroll: true,
+            },
+            scrollButtons: {
+              enable: true,
+              scrollType: "stepped",
+            },
+            keyboard: { scrollType: "stepped" },
+            snapAmount: amount,
+            mouseWheel: { scrollAmount: amount },
+          });
+        });
+      })(jQuery);
+      (function ($) {
+        $(window).on("load", function () {
+          var amount = Math.max.apply(
+            Math,
+            $("#content-img li")
+              .map(function () {
+                return $(this).outerWidth(true);
+              })
+              .get()
+          );
+          $("#content-img").mCustomScrollbar({
+            axis: "x",
+            theme: "inset",
+            advanced: {
+              autoExpandHorizontalScroll: true,
+            },
+            scrollButtons: {
+              enable: true,
+              scrollType: "stepped",
+            },
+            keyboard: { scrollType: "stepped" },
+            snapAmount: 260,
+            mouseWheel: { scrollAmount: 260 },
+          });
+        });
+      })(jQuery);
+    });
+  </script> -->
+<script>
+  // (function ($) {
+  //     $.mobilemenu = function (options) {
+  //         var settings = $.extend({
+  //             menu: '#mobilemenu',
+  //             trigger: '#mobilemenu button.trigger'
+  //         }, options);
+  //         //$(settings.menu).remove();
+  //         $(settings.trigger).click(function () {
+  //             if (!$(this).hasClass('active')) {
+  //                 $(this).addClass('active');
+  //                 $(settings.menu).addClass('active');
+  //                 return $('body').css('overflow', 'hidden');
+  //             } else {
+  //                 $(this).removeClass('active');
+  //                 $(settings.menu).removeClass('active');
+  //                 return $('body').css('overflow', 'auto');
+  //             }
+  //         });
+  //     };
+  // }(jQuery));
+</script>
+<!-- <script>
+    (function ($) {
+      $(window).on("load", function () {
+        var amount = Math.max.apply(
+          Math,
+          $("#content-2 li")
+            .map(function () {
+              return $(this).outerWidth(true);
+            })
+            .get()
+        );
+        $("#content-2").mCustomScrollbar({
+          axis: "x",
+          theme: "inset",
+          advanced: {
+            autoExpandHorizontalScroll: true,
+          },
+          scrollButtons: {
+            enable: true,
+            scrollType: "stepped",
+          },
+          keyboard: { scrollType: "stepped" },
+          snapAmount: 200,
+          mouseWheel: { scrollAmount: 200 },
+        });
+      });
+    })(jQuery);
+  </script> -->
+
+<!-- <script>
+    (function ($) {
+      $(window).on("load", function () {
+        var amount = Math.max.apply(
+          Math,
+          $("#content-3 li")
+            .map(function () {
+              return $(this).outerWidth(true);
+            })
+            .get()
+        );
+
+        $("#content-3").mCustomScrollbar({
+          axis: "x",
+          theme: "inset",
+          advanced: {
+            autoExpandHorizontalScroll: true,
+          },
+          scrollButtons: {
+            enable: true,
+            scrollType: "stepped",
+          },
+          keyboard: { scrollType: "stepped" },
+          snapAmount: 200,
+          mouseWheel: { scrollAmount: 200 },
+        });
+      });
+    })(jQuery);
+  </script> -->
+<script>
+  var closebtns = document.getElementsByClassName("close");
+  var i;
+
+  for (i = 0; i < closebtns.length; i++) {
+    closebtns[i].addEventListener("click", function() {
+      this.parentElement.style.display = "none";
+    });
+  }
+  var element = document.querySelector(".custom-file-input");
+  if (element != null) {
+    element.addEventListener("change", function(e) {
+      var name = document.getElementById("customFileInput").files[0].name;
+      var nextSibling = e.target.nextElementSibling;
+      nextSibling.innerText = name;
+    });
+  }
+</script>
+<script>
+  function blur() {
+    var blur = $("#blur").slider("value");
+    var grayscale = $("#grayscale").slider("value");
+    var brightness = $("#brightness").slider("value");
+    var contrast = $("#contrast").slider("value");
+    var rotate = $("#rotate").slider("value");
+    var invert = $("#invert").slider("value");
+    var opacity = $("#opacity").slider("value");
+    var saturate = $("#saturate").slider("value");
+    var sepia = $("#sepia").slider("value");
+    $("#image").css(
+      "-webkit-filter",
+      "blur(" +
+      blur +
+      "px)" +
+      "brightness(" +
+      brightness +
+      "%)" +
+      "grayscale(" +
+      grayscale +
+      "%)" +
+      "hue-rotate(" +
+      rotate +
+      "deg)" +
+      "contrast(" +
+      contrast +
+      "%)" +
+      "invert(" +
+      invert +
+      "%)" +
+      "opacity(" +
+      opacity +
+      "%)" +
+      "saturate(" +
+      saturate +
+      ")" +
+      "sepia(" +
+      sepia +
+      "%)"
+    );
+
+    $("#imageone").css(
+      "-webkit-filter",
+      "blur(" +
+      blur +
+      "px)" +
+      "brightness(" +
+      brightness +
+      "%)" +
+      "grayscale(" +
+      grayscale +
+      "%)" +
+      "hue-rotate(" +
+      rotate +
+      "deg)" +
+      "contrast(" +
+      contrast +
+      "%)" +
+      "invert(" +
+      invert +
+      "%)" +
+      "opacity(" +
+      opacity +
+      "%)" +
+      "saturate(" +
+      saturate +
+      ")" +
+      "sepia(" +
+      sepia +
+      "%)"
+    );
+
+    $("#imagetwo").css(
+      "-webkit-filter",
+      "blur(" +
+      blur +
+      "px)" +
+      "brightness(" +
+      brightness +
+      "%)" +
+      "grayscale(" +
+      grayscale +
+      "%)" +
+      "hue-rotate(" +
+      rotate +
+      "deg)" +
+      "contrast(" +
+      contrast +
+      "%)" +
+      "invert(" +
+      invert +
+      "%)" +
+      "opacity(" +
+      opacity +
+      "%)" +
+      "saturate(" +
+      saturate +
+      ")" +
+      "sepia(" +
+      sepia +
+      "%)"
+    );
+  }
+
+  //***********SLIDERS*************//
+
+  $(function() {
+    $("#blur").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 25,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+    $("#grayscale").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+    $("#brightness").slider({
+      orientation: "horizontal",
+      min: 100,
+      max: 1000,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+
+    $("#contrast").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 1000,
+      value: 100,
+      slide: blur,
+      change: blur,
+    });
+    $("#rotate").slider({
+      orientation: "horizontal",
+      min: -180,
+      max: 180,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+
+    $("#saturate").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 1,
+      slide: blur,
+      change: blur,
+    });
+
+    $("#sepia").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+
+    $("#opacity").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 100,
+      slide: blur,
+      change: blur,
+    });
+
+    $("#invert").slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: blur,
+      change: blur,
+    });
+  });
+</script>
+<script type="text/javascript">
+  $(window).on("scroll", function() {
+    if ($(window).scrollTop() > 100) {
+      $(".banner_cont").addClass("mt_top");
+    } else {
+      $(".banner_cont").removeClass("mt_top");
+    }
+  });
+</script>
+
+<script type="text/javascript">
+  $(window).on("scroll", function() {
+    if ($(window).scrollTop() > 100) {
+      $(".head_sec_menu,.mobile_slide").addClass(
+        "sticky_header animated fadeInDown"
+      );
+    } else {
+      $(".head_sec_menu,.mobile_slide").removeClass(
+        "sticky_header animated fadeInDown"
+      );
+    }
+  });
+</script>
+
+<script>
+  $(".contact_book_btn a").on("click", function(e) {
+    e.preventDefault();
+    var target = $(this).attr("href");
+    $("html, body").animate({
+        scrollTop: $(target).offset().top - 140,
+      },
+      2000
+    );
+  });
+</script>
+<script>
+  $(window).scroll(function() {
+      $(this).scrollTop() >= 50 ?
+        $("#return-to-top").fadeIn(200) :
+        $("#return-to-top").fadeOut(200);
+    }),
+    $("#return-to-top").click(function() {
+      $("body,html").animate({
+          scrollTop: 0,
+        },
+        500
+      );
+    });
+</script>
+
+<!-- <script>
+    var owl = $('.screenshot_slider').owlCarousel({
+        loop: true,
+        responsiveClass: true,
+        nav: true,
+        margin: 0, 
+        autoplay:true,
+        autoplayTimeout: 4000,
+        smartSpeed: 400,
+        center: true,
+        nav: false,
+        dots:false,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            600: {
+                items: 5
+            },
+            1200: {
+                items: 5
+            }
+        }
+    });
+    jQuery(document.documentElement).keydown(function (event) {    
+        if (event.keyCode == 37) {
+          owl.trigger('prev.owl.carousel', [400]);
+        } else if (event.keyCode == 39) {
+            owl.trigger('next.owl.carousel', [400]);
+        }
+    });
+    </script> -->
+<script>
+  // jQuery(window).ready(function () {
+  //     $.mobilemenu()
+  // });
+</script>
+
+<!-- <script>
+        jQuery(document).ready(function(){
+            $("#cssmenu").menumaker({
+            title: "",
+            format: "multitoggle"
+        });
+        })
+       
+    </script> -->
+<script>
+  $("#accordion,#accordion2,#accordion3").on(
+    "hide.bs.collapse show.bs.collapse",
+    (e) => {
+      $(e.target)
+        .prev()
+        .find("i:last-child")
+        .toggleClass("fa-angle-down fa-angle-up");
+    }
+  );
+</script>
+<script>
+  function findOffset(element) {
+    var top = 0,
+      left = 0;
+
+    do {
+      top += element.offsetTop || 0;
+      left += element.offsetLeft || 0;
+      element = element.offsetParent;
+    } while (element);
+
+    return {
+      top: top,
+      left: left,
+    };
+  }
+
+  window.onload = function() {
+    var stickyHeader = document.getElementById("sticky");
+    if (stickyHeader != null) {
+      var headerOffset = findOffset(stickyHeader);
+
+      window.onscroll = function() {
+        // body.scrollTop is deprecated and no longer available on Firefox
+        var bodyScrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (bodyScrollTop > headerOffset.top) {
+          stickyHeader.classList.add("fixed");
+        } else {
+          stickyHeader.classList.remove("fixed");
+        }
+      };
+    }
+  };
+</script>
+<script defer>
+  (function(d) {
+    var s = d.createElement("script");
+    s.setAttribute("data-account", "i6wfsgKNd0");
+    s.setAttribute("src", "https://cdn.userway.org/widget.js");
+    (d.body || d.head).appendChild(s);
+  })(document);
+</script>
+
+<noscript>Please ensure Javascript is enabled for purposes of
+  <a href="https://userway.org">website accessibility</a>
+</noscript>
+
+</html>
