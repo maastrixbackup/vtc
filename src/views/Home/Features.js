@@ -17,7 +17,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import CancelIcon from "@material-ui/icons/Cancel";
-import video from "../../images/video.mp4";
+// import video from "../../images/video.mp4";
 import Footer1 from "../../components/Footer/Footer1";
 import Title from "../../CommonMethods/Title";
 import { MetaInfo } from "../../CommonMethods/MetaTagsContext";
@@ -1015,7 +1015,7 @@ export default function Features() {
                     <iframe
                       width="100%"
                       height="440"
-                      src={video}
+                      src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

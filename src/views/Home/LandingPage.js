@@ -14,14 +14,14 @@ import Skeleton from "@material-ui/lab/Skeleton";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import video from "../../images/video.mp4";
+// import video from "../../images/video.mp4";
 import Footer from "../../components/Footer/Footer";
 import logo from "../../images/vtc-logo.png";
 import mission_bg from "../../images/mission-bg.jpg";
 import phone from "../../images/phone.png";
 import ftr_head from "../../images/ftr-head-bg.png";
 import pic_bg from "../../images/pic-bg.png";
-import video_1 from "../../images/video3.mp4";
+// import video_1 from "../../images/video3.mp4";
 import user from "../../images/user.jpg";
 import { APIURL, APIPath } from "../../CommonMethods/Fetch";
 import { postRecord } from "../../CommonMethods/Save";
@@ -1619,7 +1619,7 @@ export default function LandingPage(props) {
             <iframe
               width="100%"
               height="440"
-              src={video_1}
+              src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1649,7 +1649,7 @@ export default function LandingPage(props) {
                     <iframe
                       width="100%"
                       height="440"
-                      src={video}
+                      src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
