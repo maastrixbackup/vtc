@@ -1526,17 +1526,23 @@ const AgentEditTour = React.memo((props) => {
       imageId: selectedImages,
     };
     setOpen(true);
+    try {
+      const res = await axios.post(APIDeleteMulitple, data);
+      setOpen(false);
+      if (res.data[0].response.status === "success") {
 
-    const res = await axios.post(APIDeleteMulitple, data);
-    setOpen(false);
-
-    if (res.data[0].response.status === "success") {
-
-      setMessage(res.data[0].response.message);
-      setOpenSuccess(true);
-      setSync(!sync);
-      setSelectedImages([]);
+        setMessage(res.data[0].response.message);
+        setOpenSuccess(true);
+        setSync(!sync);
+        setSelectedImages([]);
+      }
+    } catch (error) {
+      setOpen(false);
+      
     }
+ 
+
+    
   };
   const removeDocData = async (docid) => {
     const data = {

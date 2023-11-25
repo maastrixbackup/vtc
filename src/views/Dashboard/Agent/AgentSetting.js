@@ -73,6 +73,8 @@ import thumbpics2 from "../../../images/thumbpics2.jpg";
 import thumbpics3 from "../../../images/thumbpics3.jpg";
 import thumbpics4 from "../../../images/thumbpics4.jpg";
 import OwlCarousel from "react-owl-carousel";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import "cropperjs/dist/cropper.css";
 
 import { Link, useHistory } from "react-router-dom";
 import Footer from "../../../components/Footer/AgentFooter";
@@ -276,6 +278,9 @@ export default function AgentSetting(props) {
   const { dispatch } = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
   const [checked, setChecked] = useState(false);
+  const [image, setImage] = useState();
+  const [openImageCrop, setOpenImageCrop] = useState(false);
+  const [croppingLogo, setCroppingLogo] = useState(false);
   const [profileData, setProfileData] = useState(initialState);
   const [imageData, setImageData] = useState(initialImageState);
   const [mycafeData, setMycafeData] = useState(initialMycafeState);
@@ -1072,38 +1077,28 @@ export default function AgentSetting(props) {
     history.push(APIPath() + "my-cafe-gellary/" + mycafeData.mycafegallery);
   };
 
-  // const saveImage = () => {
-  //     setOpen(true);
-  //     imageData.authenticate_key = "abcd123XYZ";
-  //     imageData.agent_id = JSON.parse(context.state.user).agentId;
-  //     console.log(imageData);
-  //     const formData = new FormData();
-  //     for (let i in imageData) {
-  //         if (i === 'agentphotouploadfile') {
-  //             for (let file of imageData[i]) {
-  //                 formData.append('agentphotouploadfile', file);
-  //             }
-  //         } else {
-  //             formData.append(i, imageData[i])
-  //         }
-  //     }
-  //     axios
-  //         .post(APIURL() + `agent-profile-upload-image`, formData, {})
-  //         .then(res => {
-  //             setOpen(false);
-  //             console.log(res);
-  //             setMessage(res.data[0].response.message);
-  //             setOpenSuccess(true);
-  //             setImageData({ ...imageData, ["agentphotouploadfile"]: res.data[0].response.data.profile_image });
-  //         })
-  //         .catch(err => {
-  //             console.log(err);
-  //             setOpen(false);
-  //             setMessage(err);
-  //             setOpenError(true);
-  //         }
-  //         );
-  // }
+  function convertBase64ToBlob(base64Image) {
+    // Split into two parts
+    const parts = base64Image.split(";base64,");
+
+    // Hold the content type
+    const imageType = parts[0].split(":")[1];
+
+    // Decode Base64 string
+    const decodedData = atob(parts[1]);
+
+    // Create UNIT8ARRAY of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length);
+
+    // Insert all character code into uInt8Array
+    for (let i = 0; i < decodedData.length; ++i) {
+      uInt8Array[i] = decodedData.charCodeAt(i);
+    }
+
+    // Return BLOB image after conversion
+    return new Blob([uInt8Array], { type: imageType });
+  }
+
   const saveImage = () => {
     setOpen(true);
     imageData.authenticate_key = "abcd123XYZ";
@@ -1111,13 +1106,17 @@ export default function AgentSetting(props) {
     const formData = new FormData();
     for (let i in imageData) {
       if (i === "agentphotouploadfile") {
-        for (let file of imageData[i]) {
-          formData.append("agentphotouploadfile", file);
-        }
+        const file = convertBase64ToBlob(imageData[i]);
+        formData.append("agentphotouploadfile", file);
+        // fetch(imageData[i])
+        //   .then((res) => res.blob())
+        //   .then((file) => {formData.append("agentphotouploadfile", file);console.log(file)});
+        // formData.append("agentphotouploadfile", file);
       } else {
         formData.append(i, imageData[i]);
       }
     }
+
     axios
       .post(APIURL() + `agent-profile-upload-image`, formData, {})
       //  .post("https://cors-anywhere.herokuapp.com/http://139.59.28.82/vtc/api/agent-profile-upload-image", formData, {})
@@ -1126,11 +1125,12 @@ export default function AgentSetting(props) {
         if (res.data[0].response.status === "success") {
           setMessage(res.data[0].response.message);
           setOpenSuccess(true);
-          setImageData({
-            ...imageData,
-            ["agentphotouploadfile"]: res.data[0].response.data.profile_image,
-          });
+          // setImageData({
+          //   ...imageData,
+          //   ["agentphotouploadfile"]: res.data[0].response.data.profile_image,
+          // });
         } else {
+          setSync(!sync);
           setOpen(false);
           setMessage(res.data[0].response.message);
           setOpenError(true);
@@ -1167,11 +1167,29 @@ export default function AgentSetting(props) {
       });
   };
   console.log(imageData);
-  const forImage = (element) => {
+  const forImage = (e) => {
     setImageData({
       ...imageData,
-      ["agentphotouploadfile"]: element.target.files,
+      ["agentphotouploadfile"]: e.target.files,
     });
+    e.preventDefault();
+    let files;
+    setCroppingLogo(false);
+
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      setImage(reader.result);
+    };
+
+    reader.readAsDataURL(files[0]);
+    setOpenImageCrop(true);
   };
 
   const handlecafeChange = (event) => {
@@ -1229,9 +1247,8 @@ export default function AgentSetting(props) {
     const formData = new FormData();
     for (let i in companyPictures) {
       if (i === "logoImageName") {
-        for (let file of companyPictures[i]) {
-          formData.append("logoImageName", file);
-        }
+        const file = convertBase64ToBlob(companyPictures[i]);
+        formData.append("logoImageName", file);        
       } else if (i === "bannerImageName") {
         for (let file of companyPictures[i]) {
           formData.append("bannerImageName", file);
@@ -1750,13 +1767,31 @@ export default function AgentSetting(props) {
     setCompanyPictures({ ...companyPictures, logoImageName: "" });
     handleLogoGetData(data);
   };
-  const handleImageChange = (event) => {
+  const handleImageChange = (e) => {
     setCompanyPictures({
       ...companyPictures,
-      logoImageName: event.target.files,
+      logoImageName: e.target.files,
     });
     setLogoImageId("0");
-    setCustomLogo(URL.createObjectURL(event.target.files[0]));
+    setCustomLogo(URL.createObjectURL(e.target.files[0]));
+    e.preventDefault();
+    let files;
+
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    setCroppingLogo(true);
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      setImage(reader.result);
+    };
+
+    reader.readAsDataURL(files[0]);
+    setOpenImageCrop(true);
   };
   const handleBannerImageChange = (event) => {
     setCompanyPictures({
@@ -2199,29 +2234,31 @@ export default function AgentSetting(props) {
   };
   function changeHover(e) {
     setHover(true);
-  }  
+  }
   const handleItemClick = (event) => {
     // Remove 'active' class from all tabs
-    const tabs = document.querySelectorAll('.mainMenu .dropdown-item');
-    tabs.forEach(tab => {
-      tab.classList.remove('active');
+    const tabs = document.querySelectorAll(".mainMenu .dropdown-item");
+    tabs.forEach((tab) => {
+      tab.classList.remove("active");
     });
 
     // Remove 'active' class from all tab-pane elements
-    const tabPanes = document.querySelectorAll('.innerMenu > .tab-pane');
-    tabPanes.forEach(tabPane => {
-      tabPane.classList.remove('active');
+    const tabPanes = document.querySelectorAll(".innerMenu > .tab-pane");
+    tabPanes.forEach((tabPane) => {
+      tabPane.classList.remove("active");
     });
 
     // Add 'active' class to the clicked tab
-    event.target.classList.add('active');
+    event.target.classList.add("active");
 
     // Manually activate the tab
-    const targetTab = event.target.getAttribute('href').substring(1);
+    const targetTab = event.target.getAttribute("href").substring(1);
     const targetTabElement = document.getElementById(targetTab);
 
-    const tabEvent = new CustomEvent('shown.bs.tab', { relatedTarget: targetTabElement });
-    targetTabElement.classList.add('active');
+    const tabEvent = new CustomEvent("shown.bs.tab", {
+      relatedTarget: targetTabElement,
+    });
+    targetTabElement.classList.add("active");
     targetTabElement.dispatchEvent(tabEvent);
 
     // Update the dropdown menu if needed
@@ -2231,8 +2268,36 @@ export default function AgentSetting(props) {
     // ...
 
     // Optionally, scroll to the tab content
-    targetTabElement.scrollIntoView({ behavior: 'smooth' });
+    targetTabElement.scrollIntoView({ behavior: "smooth" });
   };
+  const cropperRef = useRef(null);
+  const onCrop = () => {
+    // const cropper = cropperRef.current ? cropperRef.current.cropper : null;
+    // if (cropper) {
+    //   setImageData({
+    //     ...imageData,
+    //     agentphotouploadfile: cropper.getCroppedCanvas().toDataURL(),
+    //   });
+    // }
+  };
+  const saveCroppedImage = () => {
+    const cropper = cropperRef.current ? cropperRef.current.cropper : null;
+    if (cropper) {
+      if (!croppingLogo)
+        setImageData({
+          ...imageData,
+          agentphotouploadfile: cropper.getCroppedCanvas().toDataURL(),
+        });
+      else {
+        setCustomLogo(cropper.getCroppedCanvas().toDataURL());
+        setCompanyPictures({
+          ...companyPictures,
+          logoImageName: cropper.getCroppedCanvas().toDataURL(),
+        });
+      }
+    }
+  };
+
   return (
     <div>
       <Title title="Agent Setting" />
@@ -2365,7 +2430,6 @@ export default function AgentSetting(props) {
                               href="#Description"
                               class="dropdown-item"
                               onClick={handleItemClick}
-
                             >
                               <i class="fas fa-info-circle"></i> Company
                               Information{" "}
@@ -2378,8 +2442,6 @@ export default function AgentSetting(props) {
                               href="#Email"
                               class="dropdown-item"
                               onClick={handleItemClick}
-
-
                             >
                               <i class="fas fa-mail-bulk"></i> Default
                               Email/phone Options
@@ -2389,7 +2451,6 @@ export default function AgentSetting(props) {
                             <a
                               class="dropdown-item"
                               onClick={handleItemClick}
-
                               data-toggle="tab"
                               href="#Preferences"
                             >
@@ -2400,7 +2461,6 @@ export default function AgentSetting(props) {
                             <a
                               class="dropdown-item"
                               onClick={handleItemClick}
-
                               data-toggle="tab"
                               href="#Video"
                             >
@@ -2412,7 +2472,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Tour"
                             >
                               <i class="fas fa-directions"></i> Tour Options{" "}
@@ -2423,7 +2482,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Flyer"
                             >
                               <i class="fas fa-book-open"></i> Flyer Options{" "}
@@ -2434,7 +2492,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Traffic"
                             >
                               <i class="fas fa-paste"></i> Traffic Reports{" "}
@@ -2445,7 +2502,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Slide"
                             >
                               <i class="fab fa-slideshare"></i> Slide Show
@@ -2457,7 +2513,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Panorama"
                             >
                               <i class="fas fa-vr-cardboard"></i> Panorama
@@ -2469,7 +2524,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Theme"
                             >
                               <i class="fas fa-sliders-h"></i> Themes Defaults
@@ -2480,7 +2534,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Bg_Music"
                             >
                               <i class="fas fa-music"></i> Background Music
@@ -2492,7 +2545,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Payments"
                             >
                               <i class="far fa-credit-card"></i> Payment
@@ -2504,7 +2556,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Social"
                             >
                               <i class="fa fa-angellist"></i> Setup Social
@@ -2516,7 +2567,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#Youtube"
                             >
                               <i class="fab fa-youtube"></i> Youtube Channel
@@ -2527,7 +2577,6 @@ export default function AgentSetting(props) {
                               class="dropdown-item"
                               data-toggle="tab"
                               onClick={handleItemClick}
-
                               href="#News"
                             >
                               <i class="fas fa-envelope-open-text"></i> Add
@@ -3260,7 +3309,9 @@ export default function AgentSetting(props) {
                                   <input
                                     type="file"
                                     accept="image/*"
-                                    onChange={handleImageChange}
+                                    onChange={(e) => {
+                                      handleImageChange(e);
+                                    }}
                                   />
                                   <button
                                     onClick={() => removeLogo()}
@@ -6916,6 +6967,34 @@ export default function AgentSetting(props) {
               )}
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        maxWidth={maxWidth}
+        fullWidth={true}
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={openImageCrop}
+      >
+        <DialogTitle id="customized-dialog-title">
+          Image Crop
+          <CancelIcon
+            onClick={() => setOpenImageCrop(false)}
+            style={{ float: "right", cursor: "pointer" }}
+          />
+        </DialogTitle>
+        <DialogContent dividers>
+          <Cropper
+            src={image}
+            style={{ height: 400, width: "100%" }}
+            // Cropper.js options
+            initialAspectRatio={1}
+            guides={false}
+            crop={onCrop}
+            ref={cropperRef}
+            zoomable={false}
+          />
+          <button onClick={saveCroppedImage}>Save</button>
         </DialogContent>
       </Dialog>
       <Footer />
