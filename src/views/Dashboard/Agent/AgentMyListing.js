@@ -129,20 +129,20 @@ export default function AgentMylisting(props) {
         if (context.state.user) {
             const agent_id = JSON.parse(context.state.user).agentId;
             if (themeId === 1) {
-                window.open("https://virtualtourcafe.com/tour/" + id, '_blank');
+                window.open("/tour/" + id, '_blank');
                 setThemeId("");
             } else if (themeId === 2) {
-                window.open("https://virtualtourcafe.com/tour/" + id, '_blank');
+                window.open("/tour/" + id, '_blank');
                 setThemeId("");
             } else if (themeId === 3) {
-                window.open("https://virtualtourcafe.com/tour/" + id, '_blank');
+                window.open("/tour/" + id, '_blank');
                 setThemeId("");
             } else if (themeId === 4) {
-                window.open("https://virtualtourcafe.com/tour/" + id, '_blank');
+                window.open("/tour/" + id, '_blank');
                 setThemeId("");
             }
             else if (themeId === 5) {
-                window.open("https://virtualtourcafe.com/tour/" + id, '_blank');
+                window.open("/tour/" + id, '_blank');
                 setThemeId("");
             }
         }

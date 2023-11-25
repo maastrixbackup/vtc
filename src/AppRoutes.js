@@ -131,7 +131,7 @@ export default function AppRoutes() {
       </Snackbar>
       <MetaTags />
 
-      <Router history={hist}>
+      <Router history={hist} basename="/">
         <Switch>
           <PrivateRoute
             path={APIPath() + "my-non-brand-gallery/:agentId"}
