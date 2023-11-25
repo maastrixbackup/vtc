@@ -11695,3 +11695,6 @@ img.panaromaRibbon {
   color: white;
   font-size: 14px;
 }
+.new_edit_tour_sec.selected {
+  border: 3px solid #72b924;
+}

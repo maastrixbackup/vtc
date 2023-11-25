@@ -88,6 +88,7 @@ const APISaveDistributSetting = APIURL() + "get-SaveDistributeSettings";
 const APIDistributeTour = APIURL() + "distribute-tour";
 const APIGetDocumentDatas = APIURL() + "edit-property";
 const APIDeleteDocument = APIURL() + "delete-document";
+const APIDeleteMulitple = APIURL() + "delete-multiple-image";
 const APIUpdateOrder = APIURL() + "change-order";
 const APIcropImage = APIURL() + "save-cropper-image-tour";
 const APIDeleteImage = APIURL() + "delete-image-editimageset";
@@ -184,6 +185,7 @@ const AgentEditTour = React.memo((props) => {
   const [checkdMenu, setCheckedMenu] = useState([]);
   const [allMenuData, setAllMenuData] = useState([]);
   const [menuOrders, setMenuOrders] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [idsArray, setIdsArray] = useState([]);
   const [firstOrder, setFirstOrder] = useState({});
   const [announcements, setAnnouncements] = useState([]);
@@ -199,6 +201,14 @@ const AgentEditTour = React.memo((props) => {
   const [selectedTo, setSelectedTo] = React.useState(
     new Date("2014-08-18T21:11:54")
   );
+  const selectOrRemove = (id) => {
+    if (selectedImages.includes(id)) {
+      setSelectedImages((selectedImages) =>
+        selectedImages.filter((image) => image != id)
+      );
+    } else setSelectedImages((selectedImages) => [...selectedImages, id]);
+  };
+
   const [editing, setEditing] = useState(false);
   const [tourList, setTourList] = useState([]);
   const [imageId, setImageId] = useState("");
@@ -833,34 +843,19 @@ const AgentEditTour = React.memo((props) => {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 2) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 3) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 4) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 5) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setThemeId("");
       }
     }
@@ -869,10 +864,7 @@ const AgentEditTour = React.memo((props) => {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (defaultsThemeId && isPremium === 0) {
-        window.open(
-          "/tour/" + tour_id,
-          "_blank"
-        );
+        window.open("/tour/" + tour_id, "_blank");
         setDefaultsThemeId("");
       }
     }
@@ -1526,6 +1518,21 @@ const AgentEditTour = React.memo((props) => {
     setHeaderImageId(0);
 
     //setBannerData({ ...bannerData, "header": 0 });
+  };
+  const deleteSelected = async (docid) => {
+    const data = {
+      authenticate_key: "abcd123XYZ",
+      tourId: tour_id,
+      imageId: selectedImages,
+    };
+    setOpen(true);
+
+    const res = await axios.post(APIDeleteMulitple, data);
+    setOpen(false);
+
+    if (res.data[0].response.status === "success") {
+      setSync(!sync);
+    }
   };
   const removeDocData = async (docid) => {
     const data = {
@@ -4140,6 +4147,16 @@ const AgentEditTour = React.memo((props) => {
               <div class="test_sec">
                 <div class="test_sec_left"></div>
                 <div class="test_sec_right">
+                  {selectedImages.length > 0 && (
+                    <button
+                      onClick={deleteSelected}
+                      type="button"
+                      class="next_btn float-start"
+                    >
+                      Delete Selected
+                    </button>
+                  )}
+
                   <button
                     onClick={updateTourListData}
                     type="button"
@@ -4314,12 +4331,13 @@ const AgentEditTour = React.memo((props) => {
                   setImageUrl(res.imageurl);
                   setImageId(res.id);
                   handleImageId(res);
+                  selectOrRemove(res.id);
                 }}
                 class="col-lg-4 col-md-4"
               >
                 <div
                   id={"myDiv" + res.id}
-                  class="select_img_set_box new_edit_tour_sec"
+                  className={selectedImages.includes(res.id) ?"select_img_set_box new_edit_tour_sec selected" :"select_img_set_box new_edit_tour_sec"}
                 >
                   <div
                     class="tab-content py-3 px-3 px-sm-0"
