@@ -1531,7 +1531,11 @@ const AgentEditTour = React.memo((props) => {
     setOpen(false);
 
     if (res.data[0].response.status === "success") {
+
+      setMessage(res.data[0].response.message);
+      setOpenSuccess(true);
       setSync(!sync);
+      setSelectedImages([]);
     }
   };
   const removeDocData = async (docid) => {
