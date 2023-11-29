@@ -2430,6 +2430,7 @@ nav-item{margin:0 !important;}
   position: relative;
 
   float: left;
+  flex: 0 0 106px;
 }
 
 .socila_avatar_img img {

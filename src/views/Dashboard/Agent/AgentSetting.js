@@ -6994,7 +6994,7 @@ export default function AgentSetting(props) {
             ref={cropperRef}
             zoomable={false}
           />
-          <button onClick={saveCroppedImage}>Save</button>
+          <button className="next_btn" onClick={saveCroppedImage}>Save</button>
         </DialogContent>
       </Dialog>
       <Footer />

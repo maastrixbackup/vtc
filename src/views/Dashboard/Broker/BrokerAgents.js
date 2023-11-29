@@ -895,7 +895,7 @@ export default function BrokerAgensts(props) {
                             <div class="profile_listing_single_inner">
                               <div class="socila_avatar">
                                 <div class="socila_avatar_img">
-                                  <img class="" alt="image" src={res.src} />
+                                  <img class="" alt="agentimage" src={res.src} />
                                 </div>
                                 <div class="socila_avatar_cont">
                                   <h6>

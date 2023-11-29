@@ -2890,24 +2890,29 @@ export default function AgentDashboard(props) {
                     <div class="col-lg-4 col-md-4">
                       {Object.keys(mostViewedData).length > 0 &&
                       mostViewedData.tour.tour_image !== "" ? (
-                        <div class="recent_projects_tabs_img">
-                          <img
-                            src={mostViewedData.tour.tour_image}
-                            alt=""
-                            title=""
-                          />
-                          <div class="recent_projects_tabs_img_conts">
-                            <a>
-                              <div class="recent_projects_tabs_img_conts_inner">
-                                <span class="link_icn">
-                                  <i class="fas fa-link"></i>
-                                </span>
-                                <h4>Tours</h4>
-                                <h5>test city,Alabama,United States,512600</h5>
-                              </div>
-                            </a>
+                        <a
+                          href={`/tour/${mostViewedData.tour.tour_id}`}
+                          target="_blank"
+                        >
+                          <div class="recent_projects_tabs_img">
+                            <img
+                              src={mostViewedData.tour.tour_image}
+                              alt=""
+                              title=""
+                            />
+                            <div class="recent_projects_tabs_img_conts">
+                              <a>
+                                <div class="recent_projects_tabs_img_conts_inner">
+                                  <span class="link_icn">
+                                    <i class="fas fa-link"></i>
+                                  </span>
+                                  <h4>{mostViewedData.tour.caption}</h4>
+                                  <h5>{`${mostViewedData.tour.city},${mostViewedData.tour.statename},${mostViewedData.tour.countryname},${mostViewedData.tour.zipcode}`}</h5>
+                                </div>
+                              </a>
+                            </div>
                           </div>
-                        </div>
+                        </a>
                       ) : (
                         ""
                       )}
@@ -2915,24 +2920,29 @@ export default function AgentDashboard(props) {
                     <div class="col-lg-4 col-md-4">
                       {Object.keys(mostViewedData).length > 0 &&
                       mostViewedData.flyer.flyer_image !== "" ? (
-                        <div class="recent_projects_tabs_img">
-                          <img
-                            src={mostViewedData.flyer.flyer_image}
-                            alt=""
-                            title=""
-                          />
-                          <div class="recent_projects_tabs_img_conts">
-                            <a>
-                              <div class="recent_projects_tabs_img_conts_inner">
-                                <span class="link_icn">
-                                  <i class="fas fa-link"></i>
-                                </span>
-                                <h4>Tours</h4>
-                                <h5>test city,Alabama,United States,512600</h5>
-                              </div>
-                            </a>
+                        <a
+                          href={`/site/flyer/${mostViewedData.flyer.flyer_id}`}
+                          target="_blank"
+                        >
+                          <div class="recent_projects_tabs_img">
+                            <img
+                              src={mostViewedData.flyer.flyer_image}
+                              alt=""
+                              title=""
+                            />
+                            <div class="recent_projects_tabs_img_conts">
+                              <a>
+                                <div class="recent_projects_tabs_img_conts_inner">
+                                  <span class="link_icn">
+                                    <i class="fas fa-link"></i>
+                                  </span>
+                                  <h4>{mostViewedData.flyer.caption}</h4>
+                                  <h5>{`${mostViewedData.flyer.city},${mostViewedData.flyer.statename},${mostViewedData.flyer.countryname},${mostViewedData.flyer.zipcode}`}</h5>
+                                </div>
+                              </a>
+                            </div>
                           </div>
-                        </div>
+                        </a>
                       ) : (
                         ""
                       )}
@@ -2940,24 +2950,28 @@ export default function AgentDashboard(props) {
                     <div class="col-lg-4 col-md-4">
                       {Object.keys(mostViewedData).length > 0 &&
                       mostViewedData.video.video_image !== "" ? (
-                        <div class="recent_projects_tabs_img">
-                          <img
-                            src={mostViewedData.video.video_image}
-                            alt=""
-                            title=""
-                          />
-                          <div class="recent_projects_tabs_img_conts">
-                            <a>
-                              <div class="recent_projects_tabs_img_conts_inner">
-                                <span class="link_icn">
-                                  <i class="fas fa-link"></i>
-                                </span>
-                                <h4>Tours</h4>
-                                <h5>test city,Alabama,United States,512600</h5>
-                              </div>
-                            </a>
+                        <a
+                          href={`/agent-edit-video/${mostViewedData.video.video_id}`} target="_blank"
+                        >
+                          <div class="recent_projects_tabs_img">
+                            <img
+                              src={mostViewedData.video.video_image}
+                              alt=""
+                              title=""
+                            />
+                            <div class="recent_projects_tabs_img_conts">
+                              <a>
+                                <div class="recent_projects_tabs_img_conts_inner">
+                                  <span class="link_icn">
+                                    <i class="fas fa-link"></i>
+                                  </span>
+                                  <h4>{mostViewedData.video.caption}</h4>
+                                  <h5>{`${mostViewedData.video.city},${mostViewedData.video.statename},${mostViewedData.video.countryname},${mostViewedData.video.zipcode}`}</h5>
+                                </div>
+                              </a>
+                            </div>
                           </div>
-                        </div>
+                        </a>
                       ) : (
                         ""
                       )}

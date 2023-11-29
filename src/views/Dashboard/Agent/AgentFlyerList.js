@@ -26,6 +26,20 @@ import craigslisflyeractive_icon from "../../../images/craigslisflyeractive_icon
 import ReactPaginate from "react-paginate";
 import Title from "../../../CommonMethods/Title";
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
+import ReactDOMServer from "react-dom/server";
+import FlyerTheme1 from "./components/flyer/FlyerTheme1";
+import FlyerTheme2 from "./components/flyer/FlyerTheme2";
+import FlyerTheme3 from "./components/flyer/FlyerTheme3";
+import FlyerTheme4 from "./components/flyer/FlyerTheme4";
+import FlyerTheme5 from "./components/flyer/FlyerTheme5";
+import FlyerTheme6 from "./components/flyer/FlyerTheme6";
+import FlyerTheme7 from "./components/flyer/FlyerTheme7";
+import FlyerTheme8 from "./components/flyer/FlyerTheme8";
+
+
+
+
+
 const APIGetUserData = APIURL() + "user-details";
 const APIGetImagesetList = APIURL() + "get-imagesetlist";
 const APIDeleteImageset = APIURL() + "delete-imageset";
@@ -38,6 +52,7 @@ const APILoadCraigList = APIURL() + "load-craiglist-modal";
 const APIGetCategory = APIURL() + "get-categories";
 const APIGetStates = APIURL() + "get-states";
 const APIGetPropertyType = APIURL() + "get-Propertytype";
+const APIGetViewFlyerData = APIURL() + "view-flyer";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -687,6 +702,71 @@ export default function AgentFlyerList(props) {
   function changeHover(e) {
     setHover(true);
   }
+  const downloadPdf = async () => {
+    let htmlString;
+    const objusr = {
+      authenticate_key: "abcd123XYZ",
+      tourId: id,
+      agent_id: JSON.parse(context.state.user).agentId,
+    };
+    const res = await postRecord(APIGetViewFlyerData, objusr);
+    const tourData = res.data[0].response.tourData;
+    const allData2 = res.data[0].response;
+    // console.log('====================================');
+    // console.log(res,tourData,"tourData");
+    // console.log('====================================');
+    // return;
+    const link2 = tourData.tourid;
+
+    if (allData && allData.flyerId === "flyer01") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme1 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer02") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme2 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer03") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme3 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer04") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme4 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer05") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme5 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer06") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme6 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer07") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme7 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else if (allData && allData.flyerId === "flyer08") {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme8 tourData={tourData} allData={allData2} link={link2} />
+      );
+    } else {
+      htmlString = await ReactDOMServer.renderToString(
+        <FlyerTheme1 tourData={tourData} allData={allData2} link={link2} />
+      );
+    }
+    const blob = new Blob([htmlString], { type: 'application/pdf' });
+
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download ='download.pdf';
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+  };
   return (
     <div>
       {loading && (
@@ -846,7 +926,7 @@ export default function AgentFlyerList(props) {
                             <li>
                               <a
                                 class="dropdown-item"
-                                onClick={() => downloadFlyerModal()}
+                                onClick={() => downloadPdf()}
                               >
                                 <i class="fas fa-file-pdf"></i> Download Flyer
                                 PDF
