@@ -419,7 +419,7 @@ export default function AppRoutes() {
           <Route path={APIPath() + "photos-agent"} component={PhotosAgent} />
           <Route path={APIPath()} exact component={LandingPage} />
         </Switch>
-        <SessionTimeout history={hist}></SessionTimeout>
+        <SessionTimeout loading={loading} history={hist}></SessionTimeout>
       </Router>
     </>
   );

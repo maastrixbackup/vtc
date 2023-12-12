@@ -2715,6 +2715,7 @@ const AgentEditTour = React.memo((props) => {
         if (res.data[0].response.status === "success") {
           setMessage(res.data[0].response.message);
           setOpenSuccess(true);
+          setOpenChangeOrderModal(false);
           // setSync(false);
         } else {
           setMessage(res.data[0].response.message);
@@ -8327,7 +8328,7 @@ const AgentEditTour = React.memo((props) => {
                           {announcements.map((res) => (
                             <tr>
                               <td valign="top">
-                                {dateFormat(res.announcedate, "dd-mm-yyyy")}
+                                {dateFormat(res.announcedate, "mm-dd-yyyy")}
                               </td>
                               <td valign="top">
                                 {res.fromtime + " " + res.fromampm}

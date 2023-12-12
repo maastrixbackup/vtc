@@ -36,10 +36,6 @@ import FlyerTheme6 from "./components/flyer/FlyerTheme6";
 import FlyerTheme7 from "./components/flyer/FlyerTheme7";
 import FlyerTheme8 from "./components/flyer/FlyerTheme8";
 
-
-
-
-
 const APIGetUserData = APIURL() + "user-details";
 const APIGetImagesetList = APIURL() + "get-imagesetlist";
 const APIDeleteImageset = APIURL() + "delete-imageset";
@@ -53,6 +49,8 @@ const APIGetCategory = APIURL() + "get-categories";
 const APIGetStates = APIURL() + "get-states";
 const APIGetPropertyType = APIURL() + "get-Propertytype";
 const APIGetViewFlyerData = APIURL() + "view-flyer";
+const APIDownloadFlyerData = APIURL() + "download-flyer";
+const DownloadPdf = APIURL() + "generatePdf";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -703,69 +701,50 @@ export default function AgentFlyerList(props) {
     setHover(true);
   }
   const downloadPdf = async () => {
+    if (id === "") {
+      setMessage("Please select one from flyerlist");
+      setOpenError(true);
+      return;
+    }
+    setOpen(true);
     let htmlString;
     const objusr = {
       authenticate_key: "abcd123XYZ",
       tourId: id,
       agent_id: JSON.parse(context.state.user).agentId,
     };
-    const res = await postRecord(APIGetViewFlyerData, objusr);
-    const tourData = res.data[0].response.tourData;
-    const allData2 = res.data[0].response;
-    // console.log('====================================');
-    // console.log(res,tourData,"tourData");
-    // console.log('====================================');
-    // return;
-    const link2 = tourData.tourid;
-
-    if (allData && allData.flyerId === "flyer01") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme1 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer02") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme2 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer03") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme3 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer04") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme4 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer05") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme5 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer06") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme6 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer07") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme7 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else if (allData && allData.flyerId === "flyer08") {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme8 tourData={tourData} allData={allData2} link={link2} />
-      );
-    } else {
-      htmlString = await ReactDOMServer.renderToString(
-        <FlyerTheme1 tourData={tourData} allData={allData2} link={link2} />
-      );
+    const res = await postRecord(APIDownloadFlyerData, objusr);
+    if (res.data[0].response.status == "error") {
+      setMessage(res.data[0].response.message);
+      setOpenError(true);
+      setOpen(false);
+      return;
     }
-    const blob = new Blob([htmlString], { type: 'application/pdf' });
-
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download ='download.pdf';
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
+    const tourData = res.data[0].response.tourData;
+    const allData2 = res.data[0].response;    
+    const objusr1 = {
+      authenticate_key: "abcd123XYZ",
+      html: htmlString,
+      tourData: tourData,
+      allData: allData2,
+    };
+    try {
+      const res1 = await postRecord(DownloadPdf, objusr1);
+      const response = await fetch(res1.data.pdf_link);
+      const blob = await response.blob();
+      const src = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.href = src;
+      // link.replace(/\s/g, "%");
+      link.href = link.href.replace(/\s/g, "%20");
+      link.setAttribute("download", "Flyer.pdf");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    } finally {
+      setOpen(false);
+    }
   };
   return (
     <div>
@@ -1071,7 +1050,7 @@ export default function AgentFlyerList(props) {
                               />
                             </li>
                             <li class="">
-                              <a onClick={() => downloadFlyerModal()}>
+                              <a onClick={() => downloadPdf()}>
                                 <span>
                                   <i class="fas fa-file-pdf"></i>
                                 </span>

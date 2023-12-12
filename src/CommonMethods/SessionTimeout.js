@@ -52,16 +52,18 @@ const SessionTimeout = (props) => {
   let resetTimer = useCallback(() => {
     clearTimeout(startTimerInterval.current);
     clearInterval(warningInactiveInterval.current);
-    if (context.state.isAuthenticated) {
-      timeStamp = moment();
-      sessionStorage.setItem("lastTimeStamp", timeStamp);
-    } else {
-      clearInterval(warningInactiveInterval.current);
-      sessionStorage.removeItem("lastTimeStamp");
+    if (!props.loading) {
+      if (context.state.isAuthenticated) {
+        timeStamp = moment();
+        sessionStorage.setItem("lastTimeStamp", timeStamp);
+      } else {
+        clearInterval(warningInactiveInterval.current);
+        sessionStorage.removeItem("lastTimeStamp");
+      }
+      timeChecker();
     }
-    timeChecker();
     //setOpen(false);
-  }, [context.state.isAuthenticated]);
+  }, [context.state.isAuthenticated,props.loading]);
 
   // handle close popup
   const handleClose = () => {
@@ -91,7 +93,7 @@ const SessionTimeout = (props) => {
       clearTimeout(startTimerInterval.current);
       //   resetTimer();
     };
-  }, [resetTimer, events, timeChecker]);
+  }, [resetTimer, events, timeChecker,props.loading]);
 
   if (!isOpen) {
     return null;

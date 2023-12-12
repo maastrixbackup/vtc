@@ -10102,7 +10102,7 @@ h3.fwMedium.mb-6 {
   top: 0px;
   height: 100%;
   width: 100%;
-  background: url("../../images/female-laptop.jpg") no-repeat center top;
+  background: url("../images/female-laptop.jpg") no-repeat center top;
   width: 45%;
   background-size: cover;
 }
@@ -11698,3 +11698,6 @@ img.panaromaRibbon {
 .new_edit_tour_sec.selected {
   border: 3px solid #72b924;
 }
+/* iframe {
+  pointer-events: none;
+} */

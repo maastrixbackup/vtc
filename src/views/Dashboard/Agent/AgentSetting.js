@@ -1166,7 +1166,6 @@ export default function AgentSetting(props) {
         setOpen(false);
       });
   };
-  console.log(imageData);
   const forImage = (e) => {
     setImageData({
       ...imageData,
@@ -1181,17 +1180,22 @@ export default function AgentSetting(props) {
     } else if (e.target) {
       files = e.target.files;
     }
+    if (files[0]) {
+      try {
+        const reader = new FileReader();
 
-    const reader = new FileReader();
+        reader.onload = function () {
+          setImage(reader.result);
+        };
 
-    reader.onload = function () {
-      setImage(reader.result);
-    };
-
-    reader.readAsDataURL(files[0]);
-    setOpenImageCrop(true);
+        reader.readAsDataURL(files[0]);
+        setOpenImageCrop(true);
+      } catch (error) {
+        setMessage("Something Went Wrong. Please try again later...");
+        setOpenError(true);
+      }
+    }
   };
-
   const handlecafeChange = (event) => {
     const { name, value } = event.target;
     setMycafeData({ ...mycafeData, [name]: value });
@@ -1238,42 +1242,65 @@ export default function AgentSetting(props) {
         setOpen(false);
       });
   };
+  const isURL = (str)=> {
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+    console.log('==============urlRegex======================');
+    console.log(urlRegex.test(str));
+    console.log('====================================');
+    return urlRegex.test(str);
+  }
   const saveCompanyPictures = () => {
     setOpen(true);
-    companyPictures.authenticate_key = "abcd123XYZ";
-    companyPictures.agent_id = JSON.parse(context.state.user).agentId;
-    companyPictures.bannerImageId = headerImageId;
-    companyPictures.logoImageId = logoimageid;
-    const formData = new FormData();
-    for (let i in companyPictures) {
-      if (i === "logoImageName") {
-        const file = convertBase64ToBlob(companyPictures[i]);
-        formData.append("logoImageName", file);        
-      } else if (i === "bannerImageName") {
-        for (let file of companyPictures[i]) {
-          formData.append("bannerImageName", file);
-        }
-      } else {
-        formData.append(i, companyPictures[i]);
-      }
-    }
-    axios
-      .post(APIURL() + `agent-company-information-upload-imgupdate`, formData)
-      .then((res) => {
-        setOpen(false);
-        if (res.data[0].response.status === "success") {
-          setMessage(res.data[0].response.message);
-          setOpenSuccess(true);
+    try {
+      companyPictures.authenticate_key = "abcd123XYZ";
+      companyPictures.agent_id = JSON.parse(context.state.user).agentId;
+      companyPictures.bannerImageId = headerImageId;
+      companyPictures.logoImageId = logoimageid;
+      const formData = new FormData();
+      for (let i in companyPictures) {
+        if (i === "logoImageName") {
+          if (!isURL(customLogo)) {
+            const file = convertBase64ToBlob(companyPictures[i]);
+            formData.append("logoImageName", file);
+          } else {
+            for (let file of companyPictures[i]) {
+              formData.append("logoImageName", file);
+            }
+          }
+        } else if (i === "bannerImageName") {
+          for (let file of companyPictures[i]) {
+            formData.append("bannerImageName", file);
+          }
         } else {
-          setMessage(res.data[0].response.message);
-          setOpenError(true);
+          formData.append(i, companyPictures[i]);
         }
-      })
-      .catch((err) => {
-        setMessage("Something Went Wrong. Please try again later...");
-        setOpenError(true);
-        setOpen(false);
-      });
+      }
+      axios
+        .post(APIURL() + `agent-company-information-upload-imgupdate`, formData)
+        .then((res) => {
+          setOpen(false);
+          if (res.data[0].response.status === "success") {
+            setMessage(res.data[0].response.message);
+            setOpenSuccess(true);
+          } else {
+            setMessage(res.data[0].response.message);
+            setOpenError(true);
+          }
+        })
+        .catch((err) => {
+          setMessage("Something Went Wrong. Please try again later...");
+          setOpenError(true);
+          setOpen(false);
+        });
+    } catch (error) {
+      console.log("====================================");
+      console.log(error);
+      console.log("====================================");
+      setMessage("Something Went Wrong. Please try again later...");
+      setOpenError(true);
+    } finally {
+      setOpen(false);
+    }
   };
   const saveEmailOptions = () => {
     setOpen(true);
@@ -1782,16 +1809,22 @@ export default function AgentSetting(props) {
     } else if (e.target) {
       files = e.target.files;
     }
-    setCroppingLogo(true);
+    if (files[0]) {
+      setCroppingLogo(true);
+      try {
+        const reader = new FileReader();
 
-    const reader = new FileReader();
+        reader.onload = function () {
+          setImage(reader.result);
+        };
 
-    reader.onload = function () {
-      setImage(reader.result);
-    };
-
-    reader.readAsDataURL(files[0]);
-    setOpenImageCrop(true);
+        reader.readAsDataURL(files[0]);
+        setOpenImageCrop(true);
+      } catch (error) {
+        setMessage("Something Went Wrong. Please try again later...");
+        setOpenError(true);
+      }
+    }
   };
   const handleBannerImageChange = (event) => {
     setCompanyPictures({
@@ -2295,6 +2328,7 @@ export default function AgentSetting(props) {
           logoImageName: cropper.getCroppedCanvas().toDataURL(),
         });
       }
+      setOpenImageCrop(false);
     }
   };
 
@@ -6994,7 +7028,9 @@ export default function AgentSetting(props) {
             ref={cropperRef}
             zoomable={false}
           />
-          <button className="next_btn" onClick={saveCroppedImage}>Save</button>
+          <button className="next_btn" onClick={saveCroppedImage}>
+            Save
+          </button>
         </DialogContent>
       </Dialog>
       <Footer />

@@ -1412,12 +1412,12 @@ export default function Agent() {
                     <iframe
                       width="100%"
                       height="440"
-                      autoplay
-                      src={agentData.our_clients_say_right.image}
+                      autoPlay
+                      src={agentData.our_clients_say_right.sub_title}
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
+                      allowFullScreen
                     ></iframe>
                   ) : (
                     ""
