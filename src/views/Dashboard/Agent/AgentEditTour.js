@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Recorder } from "react-voice-recorder";
 import $ from "jquery";
 import ReactCrop from "react-image-crop";
@@ -19,6 +19,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import banner from "../../../images/vtc-banner.jpg";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
+import { enUS } from "date-fns/locale";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   MuiPickersUtilsProvider,
@@ -45,6 +46,9 @@ import { confirmAlert } from "react-confirm-alert";
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
 import { useParams } from "react-router-dom";
 import DragAndDrop from "./DragAndDrop";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import "cropperjs/dist/cropper.css";
+
 const APITourService = APIURL() + "tourservicelink";
 
 const APIGetUserData = APIURL() + "user-details";
@@ -303,6 +307,36 @@ const AgentEditTour = React.memo((props) => {
   const [hover, setHover] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
+
+  useEffect(() => {
+    setAgentPhoto(croppedImage);
+  }, [croppedImage]);
+  const cropperRef = useRef(null);
+  const [openImageCrop, setOpenImageCrop] = useState(false);
+  const [cropping, setCropping] = useState(false);
+  const [croppedImageNew, setCroppedImageNew] = useState(null);
+  const [imageDataUrl, setImageDataUrl] = useState(null);
+  const onCrop = () => {
+    const cropper = cropperRef.current ? cropperRef.current.cropper : null;
+    if (cropper) {
+      // You can use setCroppedImage to preview the cropped image if needed
+      setCroppedImage(cropper.getCroppedCanvas().toDataURL());
+    }
+  };
+  const saveCroppedImage = async () => {
+    const cropper = cropperRef.current ? cropperRef.current.cropper : null;
+    if (cropper) {
+      const croppedImageDataUrl = cropper.getCroppedCanvas().toDataURL();
+      const file = await convertBase64ToBlob(croppedImageDataUrl)
+      setAgentData({ ...agentData, photo: file });
+
+      // You can use croppedImageDataUrl as needed, e.g., save it to state or send it to the server
+
+      setCropping(false);
+      setOpenImageCrop(false);
+    }
+  };
+
   useEffect(() => {
     if (context.state.user) {
       const obj = {
@@ -1530,7 +1564,6 @@ const AgentEditTour = React.memo((props) => {
       const res = await axios.post(APIDeleteMulitple, data);
       setOpen(false);
       if (res.data[0].response.status === "success") {
-
         setMessage(res.data[0].response.message);
         setOpenSuccess(true);
         setSync(!sync);
@@ -1538,11 +1571,7 @@ const AgentEditTour = React.memo((props) => {
       }
     } catch (error) {
       setOpen(false);
-      
     }
- 
-
-    
   };
   const removeDocData = async (docid) => {
     const data = {
@@ -1579,9 +1608,24 @@ const AgentEditTour = React.memo((props) => {
     setAgentData({ ...agentData, [name]: value.replace(/\D/g, "") });
   };
   const handleAgentImageChange = (event) => {
-    setAgentData({ ...agentData, photo: event.target.files });
-    setAgentPhoto(URL.createObjectURL(event.target.files[0]));
+    const file = event.target.files[0];
+    setAgentData({ ...agentData, photo: file });
+
+    // Check if the file is an image (you might want to add additional checks)
+    if (file && file.type.startsWith("image/")) {
+      try {
+        const reader = new FileReader();
+        reader.onload = function () {
+          setImageDataUrl(reader.result);
+          setCropping(true);
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("Error reading image file:", error);
+      }
+    }
   };
+
   const handleOnChange = (val, fname) => {};
   const handleAudioStop = (data) => {
     setValue({ audioDetails: data });
@@ -1706,6 +1750,27 @@ const AgentEditTour = React.memo((props) => {
         setOpen(false);
       });
   };
+  function convertBase64ToBlob(base64Image) {
+    // Split into two parts
+    const parts = base64Image.split(";base64,");
+
+    // Hold the content type
+    const imageType = parts[0].split(":")[1];
+
+    // Decode Base64 string
+    const decodedData = atob(parts[1]);
+
+    // Create UNIT8ARRAY of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length);
+
+    // Insert all character code into uInt8Array
+    for (let i = 0; i < decodedData.length; ++i) {
+      uInt8Array[i] = decodedData.charCodeAt(i);
+    }
+
+    // Return BLOB image after conversion
+    return new Blob([uInt8Array], { type: imageType });
+  }
   const saveAgentInfo = () => {
     setOpen(true);
     agentData.authenticate_key = "abcd123XYZ";
@@ -1714,9 +1779,7 @@ const AgentEditTour = React.memo((props) => {
     const formData = new FormData();
     for (let i in agentData) {
       if (i === "photo") {
-        for (let file of agentData[i]) {
-          formData.append("photo", file);
-        }
+          formData.append("photo", agentData[i]);
       } else {
         formData.append(i, agentData[i]);
       }
@@ -4348,7 +4411,11 @@ const AgentEditTour = React.memo((props) => {
               >
                 <div
                   id={"myDiv" + res.id}
-                  className={selectedImages.includes(res.id) ?"select_img_set_box new_edit_tour_sec selected" :"select_img_set_box new_edit_tour_sec"}
+                  className={
+                    selectedImages.includes(res.id)
+                      ? "select_img_set_box new_edit_tour_sec selected"
+                      : "select_img_set_box new_edit_tour_sec"
+                  }
                 >
                   <div
                     class="tab-content py-3 px-3 px-sm-0"
@@ -8225,7 +8292,11 @@ const AgentEditTour = React.memo((props) => {
                     <hr class=""></hr>
                     <div class="row">
                       <div class="col-md-4 formbox1">
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <MuiPickersUtilsProvider
+                          utils={DateFnsUtils}
+                          locale={enUS}
+                          timeZone="America/New_York"
+                        >
                           <Grid container justifyContent="space-around">
                             <KeyboardDatePicker
                               disableToolbar
@@ -10095,6 +10166,35 @@ const AgentEditTour = React.memo((props) => {
           </div>
         </div>
       </div>
+      <Dialog
+        maxWidth={maxWidth}
+        fullWidth={true}
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={cropping}
+      >
+        <DialogTitle id="customized-dialog-title">
+          Image Crop
+          <CancelIcon
+            onClick={() => setCropping(false)}
+            style={{ float: "right", cursor: "pointer" }}
+          />
+        </DialogTitle>
+        <DialogContent dividers>
+          <Cropper
+            src={imageDataUrl}
+            style={{ height: 400, width: "100%" }}
+            initialAspectRatio={1}
+            guides={false}
+            crop={onCrop}
+            ref={cropperRef}
+            zoomable={false}
+          />
+          <button className="next_btn" onClick={saveCroppedImage}>
+            Save
+          </button>
+        </DialogContent>
+      </Dialog>
     </>
   );
 });

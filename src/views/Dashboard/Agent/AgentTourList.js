@@ -1121,6 +1121,41 @@ export default function AgentTourList(props) {
         .then((res) => {
           setGlobalLoading(false);
           if (res.data[0].response.status === "success") {
+            if (res.data[0].response.data.pictureAry.length > 0) {
+              axios.post(
+                APIURL() + `save-tour-picture`,
+                {
+                  tourid: res.data[0].response.data.tourid,
+                  property: res.data[0].response.data.property,
+                  pictureAry:res.data[0].response.data.pictureAry,
+                },
+                {}
+              );
+            }
+            if (res.data[0].response.data.panoramaImgAry.length > 0) {
+              axios.post(
+                APIURL() + `save-panarama-image`,
+                {
+                  tourid: res.data[0].response.data.tourid,
+                  property: res.data[0].response.data.property,
+                  panoramaImgAry:res.data[0].response.data.panoramaImgAry,
+                  imagecapturedatepano:res.data[0].response.data.imagecapturedatepano,
+                },
+                {}
+              );
+            }
+            if (res.data[0].response.data.videoAry.length > 0) {
+              axios.post(
+                APIURL() + `save-tour-video`,
+                {
+                  tourid: res.data[0].response.data.tourid,
+                  property: res.data[0].response.data.property,
+                  videoAry:res.data[0].response.data.videoAry,
+                  post:res.data[0].response.data.post,
+                },
+                {}
+              );
+            }
             setGlobalMessage(res.data[0].response.message);
             setGlobalAlertType("success");
             setGlobalOpenPopUp(true);

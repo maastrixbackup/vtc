@@ -321,7 +321,7 @@ export default function AgentFirstTour() {
                                         </div>
                                         <div class="browse_img tab-pane" id="Description" role="tabpanel">
                                             <div class="browse_img_head">
-                                                <h5>Browse Images1</h5>
+                                                <h5>Browse Images</h5>
                                             </div>
                                             <div class="browse_img_conts_main">
                                                 <div class="browse_img_conts">

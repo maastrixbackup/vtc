@@ -1163,7 +1163,7 @@ export default function Agent() {
             <div class="container">
               <div class="row">
                 <div class="col-lg-12 col-md-12">
-                  <div class="head_sec_menu" style={{ zIndex: "99" }}>
+                  <div class="head_sec_menu" >
                     <div class="row">
                       <div class="col-lg-3 col-md-3">
                         <div class="vtc_logo">
