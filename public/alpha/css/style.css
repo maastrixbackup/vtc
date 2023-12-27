@@ -11704,3 +11704,6 @@ img.panaromaRibbon {
 .dropdown-menu.profile-top {
   z-index: 99999 !important;
 }
+.ribbon {
+  height: 50px !important;
+}

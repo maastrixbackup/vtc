@@ -44,7 +44,6 @@ import { postRecord } from "../../../CommonMethods/Save";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import ReactPaginate from "react-paginate";
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
 const APIGetUserData = APIURL() + "user-details";
 const APIGetVideoList = APIURL() + "get-videoList";
@@ -728,7 +727,7 @@ export default function AgentEditVideo(props) {
   const filterData = async () => {
     const endOffset = offset + postPerPage;
     setTotalData(videoLIst.slice(offset, endOffset));
-    setDragImages(videoLIst.slice(offset, endOffset));
+    setDragImages(videoLIst);
     setPageCount(Math.ceil(videoLIst.length / postPerPage));
   };
   const handlePageClick = (event) => {
@@ -1137,7 +1136,7 @@ export default function AgentEditVideo(props) {
                             <a class="dropdown-item" onClick={downloadImage}>
                               <i class="fas fa-print"></i> Download Video
                             </a>
-                          </li>                          
+                          </li>
                           <li>
                             <a
                               class="dropdown-item"
@@ -1429,7 +1428,11 @@ export default function AgentEditVideo(props) {
               <GridDropZone
                 boxesPerRow={3}
                 rowHeight={420}
-                style={{ height: "900px" }}
+                style={{
+                  height: "900px",
+                  overflow: "visible",
+                  overflowX: "hidden",
+                }}
               >
                 {dragImages.map((res, index) => (
                   <GridItem key={res.id}>
@@ -1462,12 +1465,13 @@ export default function AgentEditVideo(props) {
                                   <img src={res.filepath} alt="" />
                                   {res.image_type === "panoramas" ? (
                                     <img
+                                      className="ribbon"
                                       src={res.flag_img}
                                       style={{
                                         position: "absolute",
-                                        width: "90px",
+                                        width: "57px",
                                         right: "5px",
-                                        top: "5px",
+                                        top: "13px",
                                         border: "none",
                                         boxShadow: "none",
                                       }}
@@ -2124,31 +2128,6 @@ export default function AgentEditVideo(props) {
                             )}
                         </Droppable>
                     </DragDropContext> */}
-
-          <hr class="spacer10px"></hr>
-          <div class="row">
-            <div class="col-lg-12">
-              <ReactPaginate
-                previousLabel={"«"}
-                nextLabel={"»"}
-                breakLabel={"..."}
-                pageCount={pageCount}
-                marginPagesDisplayed={3}
-                ageRangeDisplayed={3}
-                onPageChange={handlePageClick}
-                containerClassName="pagination justify-content-center"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                activeClassName="active"
-              />
-            </div>
-          </div>
         </div>
       </section>
 

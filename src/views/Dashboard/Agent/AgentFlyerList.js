@@ -707,7 +707,6 @@ export default function AgentFlyerList(props) {
       return;
     }
     setOpen(true);
-    let htmlString;
     const objusr = {
       authenticate_key: "abcd123XYZ",
       tourId: id,
@@ -724,7 +723,6 @@ export default function AgentFlyerList(props) {
     const allData2 = res.data[0].response;    
     const objusr1 = {
       authenticate_key: "abcd123XYZ",
-      html: htmlString,
       tourData: tourData,
       allData: allData2,
     };

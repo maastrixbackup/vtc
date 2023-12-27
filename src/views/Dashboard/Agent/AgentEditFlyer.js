@@ -69,6 +69,8 @@ const APIUpdateOrder = APIURL() + "change-order";
 const APIcropImage = APIURL() + "save-cropper-image-tour";
 const APIDeleteDocument = APIURL() + "delete-document";
 const APIGetViewFlyerData = APIURL() + "view-flyer";
+const DownloadPdf = APIURL() + "generatePdf";
+const APIDownloadFlyerData = APIURL() + "download-flyer";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -1381,6 +1383,45 @@ export default function AgentEditTour(props) {
   //     });
   //   }
   // }, [sync, context.state.user, imageset_id]);
+  const downloadPdf = async () => {
+    setOpen(true);
+    const objusr = {
+      authenticate_key: "abcd123XYZ",
+      tourId: imageset_id,
+      agent_id: JSON.parse(context.state.user).agentId,
+    };
+    const res = await postRecord(APIDownloadFlyerData, objusr);
+    if (res.data[0].response.status == "error") {
+      setMessage(res.data[0].response.message);
+      setOpenError(true);
+      setOpen(false);
+      return;
+    }
+    const tourData = res.data[0].response.tourData;
+    const allData2 = res.data[0].response;
+    const objusr1 = {
+      authenticate_key: "abcd123XYZ",
+      tourData: tourData,
+      allData: allData2,
+    };
+    try {
+      const res1 = await postRecord(DownloadPdf, objusr1);
+      const response = await fetch(res1.data.pdf_link);
+      const blob = await response.blob();
+      const src = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.href = src;
+      // link.replace(/\s/g, "%");
+      link.href = link.href.replace(/\s/g, "%20");
+      link.setAttribute("download", "Flyer.pdf");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    } finally {
+      setOpen(false);
+    }
+  };
   return (
     <div>
       <AgentHeader />
@@ -1550,6 +1591,14 @@ export default function AgentEditTour(props) {
                               data-target="#Property"
                             >
                               <i class="fas fa-home"></i> Property Information{" "}
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={() => downloadPdf()}
+                            >
+                              <i class="fas fa-file-pdf"></i> Download Flyer PDF
                             </a>
                           </li>
                         </ul>
@@ -1822,7 +1871,7 @@ export default function AgentEditTour(props) {
                       >
                         <div class="row">
                           <div class="col-lg-5 col-md-5">
-                            <div class="select_img_set_box_img">
+                            <div class="select_img_set_box_img customFlyerRibbon">
                               <img
                                 src={res.file_url}
                                 style={{ height: "110px", marginTop: "14px" }}
@@ -1830,12 +1879,13 @@ export default function AgentEditTour(props) {
                               />
                               {res.image_type === "panoramas" ? (
                                 <img
+                                  className="ribbon"
                                   src={res.flag_img}
                                   style={{
                                     position: "absolute",
-                                    width: "90px",
+                                    width: "57px",
                                     right: "5px",
-                                    top: "5px",
+                                    top: "13px",
                                     border: "none",
                                     boxShadow: "none",
                                   }}

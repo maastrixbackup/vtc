@@ -1127,7 +1127,7 @@ export default function AgentTourList(props) {
                 {
                   tourid: res.data[0].response.data.tourid,
                   property: res.data[0].response.data.property,
-                  pictureAry:res.data[0].response.data.pictureAry,
+                  pictureAry: res.data[0].response.data.pictureAry,
                 },
                 {}
               );
@@ -1138,8 +1138,9 @@ export default function AgentTourList(props) {
                 {
                   tourid: res.data[0].response.data.tourid,
                   property: res.data[0].response.data.property,
-                  panoramaImgAry:res.data[0].response.data.panoramaImgAry,
-                  imagecapturedatepano:res.data[0].response.data.imagecapturedatepano,
+                  panoramaImgAry: res.data[0].response.data.panoramaImgAry,
+                  imagecapturedatepano:
+                    res.data[0].response.data.imagecapturedatepano,
                 },
                 {}
               );
@@ -1150,8 +1151,8 @@ export default function AgentTourList(props) {
                 {
                   tourid: res.data[0].response.data.tourid,
                   property: res.data[0].response.data.property,
-                  videoAry:res.data[0].response.data.videoAry,
-                  post:res.data[0].response.data.post,
+                  videoAry: res.data[0].response.data.videoAry,
+                  post: res.data[0].response.data.post,
                 },
                 {}
               );
@@ -2069,28 +2070,10 @@ export default function AgentTourList(props) {
                           onDoubleClick={() => handleEditImageset(res)}
                         >
                           <div class="profile-screen">
-                            {res.image_type === "image" ? (
-                              <img
-                                src={res.filename}
-                                style={{ height: "178px", width: "355px" }}
-                              />
-                            ) : (
-                              <video
-                                src={res.filename}
-                                width="95px"
-                                height="95px"
-                                style={{
-                                  border: "4px solid #fff",
-                                  boxShadow:
-                                    "0px 0px 13px 0px rgb(0 0 0 / 20%)",
-                                  borderRadius: "50%",
-                                  marginBottom: "1rem",
-                                  marginRight: "1rem",
-                                  height: "157px",
-                                  width: "100%",
-                                }}
-                              />
-                            )}
+                            <img
+                              src={res.filename}
+                              style={{ height: "178px", width: "355px" }}
+                            />
                             <div class="profile-screen-name">{res.caption}</div>
                             <div class="profile-screen-desc">
                               <div class="profile-screen-desc1">

@@ -61,6 +61,8 @@ const APIUpdateCustomFlyerTemplate = APIURL() + "update-Custom-FlyerTemplate";
 const APISendFlyerMail = APIURL() + "send-flyer-mail";
 const APIGetDocumentDatas = APIURL() + "edit-property";
 const APIDeleteDocument = APIURL() + "delete-document";
+const APIDownloadFlyerData = APIURL() + "download-flyer";
+const DownloadPdf = APIURL() + "generatePdf";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -637,12 +639,14 @@ export default function EditFlyerTheme(props) {
       setOfferedTheme1(filter_data1[0].img2);
       setActiveSelcet(true);
     }
-    setBannerData({ ...bannerData, image: "" });   
+    setBannerData({ ...bannerData, image: "" });
   };
   useEffect(() => {
     // This effect will run whenever themeData is updated
     handleThemeChange({
-      target: { value: JSON.stringify({ title: "Default", value: "default-1" }) },
+      target: {
+        value: JSON.stringify({ title: "Default", value: "default-1" }),
+      },
     });
   }, [themeData]);
   //console.log(offeredTheme);
@@ -690,7 +694,6 @@ export default function EditFlyerTheme(props) {
     editImageSecondDropdownThemeFlyers(themevalue);
   };
   const editImageSecondDropdownThemeFlyers = (data) => {
-
     themeData.authenticate_key = "abcd123XYZ";
     themeData.agentId = JSON.parse(context.state.user)?.agentId;
     themeData.tourid = imageset_id;
@@ -1071,6 +1074,45 @@ export default function EditFlyerTheme(props) {
   function changeHover(e) {
     setHover(true);
   }
+  const downloadPdf = async () => {
+    setOpen(true);
+    const objusr = {
+      authenticate_key: "abcd123XYZ",
+      tourId: imageset_id,
+      agent_id: JSON.parse(context.state.user).agentId,
+    };
+    const res = await postRecord(APIDownloadFlyerData, objusr);
+    if (res.data[0].response.status == "error") {
+      setMessage(res.data[0].response.message);
+      setOpenError(true);
+      setOpen(false);
+      return;
+    }
+    const tourData = res.data[0].response.tourData;
+    const allData2 = res.data[0].response;
+    const objusr1 = {
+      authenticate_key: "abcd123XYZ",
+      tourData: tourData,
+      allData: allData2,
+    };
+    try {
+      const res1 = await postRecord(DownloadPdf, objusr1);
+      const response = await fetch(res1.data.pdf_link);
+      const blob = await response.blob();
+      const src = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.href = src;
+      // link.replace(/\s/g, "%");
+      link.href = link.href.replace(/\s/g, "%20");
+      link.setAttribute("download", "Flyer.pdf");
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    } finally {
+      setOpen(false);
+    }
+  };
   return (
     <div>
       <AgentHeader />
@@ -1249,6 +1291,14 @@ export default function EditFlyerTheme(props) {
                               data-target="#Property"
                             >
                               <i class="fas fa-home"></i> Property Information{" "}
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={() => downloadPdf()}
+                            >
+                              <i class="fas fa-file-pdf"></i> Download Flyer PDF
                             </a>
                           </li>
                         </ul>
@@ -1688,7 +1738,7 @@ export default function EditFlyerTheme(props) {
           open={editFlyerDesigner}
         >
           <DialogTitle id="customized-dialog-title">
-            Flyer Designer
+            Flyer Designer 1
             <CancelIcon
               onClick={() => setEditFlyerDesigner(false)}
               style={{ float: "right", cursor: "pointer" }}
