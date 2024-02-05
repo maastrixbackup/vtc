@@ -3895,9 +3895,9 @@ export default function EditImageSet(props) {
                                     value={propertyData.pricetype}
                                     class="form-control formbox1select"
                                   >
-                                    <option>USD</option>
-                                    <option>CAD</option>
-                                    <option>EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="EUR">EUR</option>
                                   </select>
                                 </div>
                                 <div class="col-md-3 formbox1">

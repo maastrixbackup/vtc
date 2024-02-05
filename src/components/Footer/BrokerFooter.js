@@ -18,6 +18,10 @@ export default function BrokerFooter(props) {
                 }
             });
     }, []);
+    const currentDate = new Date();
+
+    // Get the current year
+    const currentYear = currentDate.getFullYear();
     return (
         <div class="footer_sec">
             <footer>
@@ -68,7 +72,7 @@ export default function BrokerFooter(props) {
                     <div class="row">
                         <div class="col-lg-12 col-md-12 mx-auto">
                             <div class="ftr_copy_sec_main">
-                                <p>All trademarks are properties of their respective owners. © 2022 - VirtualTourCafe, LLC All rights reserved. </p>
+                                <p>All trademarks are properties of their respective owners. © {currentYear} - VirtualTourCafe, LLC All rights reserved. </p>
                                 <Link to={APIPath() + "agent-privacy"}>Privacy Policy</Link>
                             </div>
                         </div>

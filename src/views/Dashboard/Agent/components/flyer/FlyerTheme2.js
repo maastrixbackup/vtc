@@ -183,9 +183,7 @@ export default function FlyerTheme2(props) {
                   <div
                     style={{
                       float: "left",
-                      width: "100%",
-                      height: "288px",
-                      overflow: "hidden",
+                      width: "100%",                     
                     }}
                   >
                     <table
@@ -314,7 +312,7 @@ export default function FlyerTheme2(props) {
                       color: "#fff",
                     }}
                   >
-                    Offered at : $
+                    Offered at :
                     {Object.keys(tourData).length > 0 && tourData.price}
                   </h4>
 

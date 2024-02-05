@@ -103,7 +103,7 @@ export default function AgentEditTour(props) {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [maxWidth, setMaxWidth] = React.useState("lg");
-  const [propertyData, setPropertyData] = useState({});
+  const [propertyData, setPropertyData] = useState({ pricetype: "USD" });
   const [openEditImageModal, setOpenEditImageModal] = useState(false);
   const [blurValue, setBlurValue] = useState(0);
   const [brightValue, setBrightValue] = useState(10);
@@ -381,7 +381,10 @@ export default function AgentEditTour(props) {
       };
       postRecord(APIGetProperty, objusr).then((res) => {
         if (res.data[0].response.status === "success") {
-          setPropertyData(res.data[0].response.data.toData);
+          setPropertyData({
+            ...propertyData,
+            ...res.data[0].response.data.toData,
+          });
           setEditorState1(
             EditorState.createWithContent(
               ContentState.createFromText(
@@ -5321,9 +5324,11 @@ export default function AgentEditTour(props) {
                                     value={propertyData.pricetype}
                                     class="form-control formbox1select"
                                   >
-                                    <option>USD</option>
-                                    <option>CAD</option>
-                                    <option>EUR</option>
+                                    <option selected value="USD">
+                                      USD
+                                    </option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="EUR">EUR</option>
                                   </select>
                                 </div>
                                 <div class="col-md-3 formbox1">

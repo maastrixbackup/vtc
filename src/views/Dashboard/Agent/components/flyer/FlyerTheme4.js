@@ -74,13 +74,13 @@ export default function FlyerTheme4(props) {
                     cellpadding="0"
                   >
                     <tr>
-                      <td align="left" valign="top" height="110">
+                      <td align="left" valign="top" height="132">
                         {Object.keys(allData).length > 0 && (
                           <img
                             src={allData.image_url[1]}
                             alt=""
                             width="250"
-                            height="110"
+                            height="132"
                           />
                         )}
                       </td>
@@ -89,13 +89,13 @@ export default function FlyerTheme4(props) {
                       <td align="left" valign="top" height="5"></td>
                     </tr>
                     <tr>
-                      <td align="left" valign="top" height="110">
+                      <td align="left" valign="top" height="132">
                         {Object.keys(allData).length > 0 && (
                           <img
                             src={allData.image_url[2]}
                             alt=""
                             width="250"
-                            height="110"
+                            height="132"
                           />
                         )}
                       </td>
@@ -104,13 +104,13 @@ export default function FlyerTheme4(props) {
                       <td align="left" valign="top" height="5"></td>
                     </tr>{" "}
                     <tr>
-                      <td align="left" valign="top" height="110">
+                      <td align="left" valign="top" height="132">
                         {Object.keys(allData).length > 0 && (
                           <img
                             src={allData.image_url[3]}
                             alt=""
                             width="250"
-                            height="110"
+                            height="132"
                           />
                         )}
                       </td>
@@ -119,13 +119,13 @@ export default function FlyerTheme4(props) {
                       <td align="left" valign="top" height="5"></td>
                     </tr>{" "}
                     <tr>
-                      <td align="left" valign="top" height="110">
+                      <td align="left" valign="top" height="132">
                         {Object.keys(allData).length > 0 && (
                           <img
                             src={allData.image_url[4]}
                             alt=""
                             width="250"
-                            height="110"
+                            height="132"
                           />
                         )}
                       </td>
@@ -134,13 +134,13 @@ export default function FlyerTheme4(props) {
                       <td align="left" valign="top" height="5"></td>
                     </tr>{" "}
                     <tr>
-                      <td align="left" valign="top" height="110">
+                      <td align="left" valign="top" height="132">
                         {Object.keys(allData).length > 0 && (
                           <img
                             src={allData.image_url[5]}
                             alt=""
                             width="250"
-                            height="110"
+                            height="132"
                           />
                         )}
                       </td>
@@ -168,6 +168,7 @@ export default function FlyerTheme4(props) {
                             alt=""
                             width="100%"
                             height="300"
+                            className="customImagePrint"                     
                           />
                         )}
                       </td>
@@ -232,7 +233,7 @@ export default function FlyerTheme4(props) {
                             textTransform: "uppercase",
                           }}
                         >
-                          <b>Offered at</b>: ${" "}
+                          <b>Offered at</b>:
                           {Object.keys(tourData).length > 0 && tourData.price}
                         </h6>
 

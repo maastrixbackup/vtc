@@ -48,6 +48,9 @@ import { useParams } from "react-router-dom";
 import DragAndDrop from "./DragAndDrop";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
 const APITourService = APIURL() + "tourservicelink";
 
@@ -307,6 +310,7 @@ const AgentEditTour = React.memo((props) => {
   const [hover, setHover] = useState(false);
   const [hover1, setHover1] = useState(false);
   const [hover2, setHover2] = useState(false);
+  const [startDate, setStartDate] = useState(new Date());
 
   useEffect(() => {
     setAgentPhoto(croppedImage);
@@ -327,7 +331,7 @@ const AgentEditTour = React.memo((props) => {
     const cropper = cropperRef.current ? cropperRef.current.cropper : null;
     if (cropper) {
       const croppedImageDataUrl = cropper.getCroppedCanvas().toDataURL();
-      const file = await convertBase64ToBlob(croppedImageDataUrl)
+      const file = await convertBase64ToBlob(croppedImageDataUrl);
       setAgentData({ ...agentData, photo: file });
 
       // You can use croppedImageDataUrl as needed, e.g., save it to state or send it to the server
@@ -1153,9 +1157,14 @@ const AgentEditTour = React.memo((props) => {
         setOpen(false);
       });
   };
+  // const handleDateChange = (date) => {
+  //   announcementData.announcedate = dateFormat(date, "yyyy-mm-dd");
+  //   setSelectedDate(date);
+  // };
   const handleDateChange = (date) => {
-    announcementData.announcedate = dateFormat(date, "yyyy-mm-dd");
-    setSelectedDate(date);
+    const formattedDate = date ? format(date, "yyyy-MM-dd") : "";
+    setStartDate(date);
+    setAnnouncementData({ ...announcementData, announcedate: formattedDate });
   };
   const handleFromChange = (date) => {
     announcementData.fromtime_h = date;
@@ -1779,7 +1788,7 @@ const AgentEditTour = React.memo((props) => {
     const formData = new FormData();
     for (let i in agentData) {
       if (i === "photo") {
-          formData.append("photo", agentData[i]);
+        formData.append("photo", agentData[i]);
       } else {
         formData.append(i, agentData[i]);
       }
@@ -7663,9 +7672,9 @@ const AgentEditTour = React.memo((props) => {
                                     value={propertyData.pricetype}
                                     class="form-control formbox1select"
                                   >
-                                    <option>USD</option>
-                                    <option>CAD</option>
-                                    <option>EUR</option>
+                                    <option value="USD">USD</option>
+                                    <option value="CAD">CAD</option>
+                                    <option value="EUR">EUR</option>
                                   </select>
                                 </div>
                                 <div class="col-md-3 formbox1">
@@ -8291,28 +8300,16 @@ const AgentEditTour = React.memo((props) => {
                     <h6>Create Announcements</h6>
                     <hr class=""></hr>
                     <div class="row">
-                      <div class="col-md-4 formbox1">
-                        <MuiPickersUtilsProvider
-                          utils={DateFnsUtils}
-                          locale={enUS}
-                          timeZone="America/New_York"
-                        >
-                          <Grid container justifyContent="space-around">
-                            <KeyboardDatePicker
-                              disableToolbar
-                              variant="inline"
-                              format="MM/dd/yyyy"
-                              margin="normal"
-                              id="date-picker-inline"
-                              label="Date"
-                              value={announcementData.announcedate}
-                              onChange={handleDateChange}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                            />
-                          </Grid>
-                        </MuiPickersUtilsProvider>
+                      <div class="col-md-4 formbox1 formBox2">
+                      <div className="row"><div className="col-12"><label htmlFor="">Date</label></div>
+                      <div className="col-12"> <DatePicker
+                          // selected={announcementData.announcedate}
+                          onChange={handleDateChange}
+                          selected={startDate}
+                        />      </div></div>
+                      
+                      
+                                        
                       </div>
                       <div class="col-md-4 formbox1">
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>

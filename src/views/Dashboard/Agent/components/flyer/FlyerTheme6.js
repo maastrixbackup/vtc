@@ -121,7 +121,7 @@ export default function FlyerTheme6(props) {
                             padding: "0px",
                           }}
                         >
-                          <b>Offered at</b> : $
+                          <b>Offered at</b> : 
                           {Object.keys(tourData).length > 0 && tourData.price}
                         </h6>
                       </td>

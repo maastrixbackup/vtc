@@ -187,7 +187,7 @@ export default function FlyerTheme1(props) {
                             <b> Offered At</b> :
                           </td>
                           <td width="33%" align="left" valign="middle">
-                            $
+                            
                             {Object.keys(tourData).length > 0 && tourData.price}
                           </td>
                         </tr>

@@ -526,7 +526,7 @@ export default function FlyerTheme7(props) {
                                         textTransform: "uppercase",
                                       }}
                                     >
-                                      <b>Offered at</b> : $
+                                      <b>Offered at</b> :
                                       {Object.keys(tourData).length > 0 &&
                                         tourData.price}
                                     </h6>

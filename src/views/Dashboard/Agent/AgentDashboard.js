@@ -69,7 +69,7 @@ export default function AgentDashboard(props) {
     categoryid: "",
     typeid: "",
     caption: "",
-    pricetype: "",
+    pricetype: "USD",
     price: "",
     mls: "",
     virtualtourservice: 0,

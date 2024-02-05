@@ -75,7 +75,7 @@ const initialImagesetState = {
   categoryid: "",
   typeid: "",
   caption: "",
-  pricetype: "",
+  pricetype: "USD",
   price: "",
   mls: "",
   virtualtourservice: 1,

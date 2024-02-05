@@ -81,7 +81,7 @@ export default function AgentImageSets() {
     categoryid: "",
     typeid: "",
     caption: "",
-    pricetype: "",
+    pricetype: "USD",
     price: "",
     mls: "",
     virtualtourservice: 1,
