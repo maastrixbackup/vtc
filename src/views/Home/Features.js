@@ -859,6 +859,7 @@ export default function Features() {
                                 class="category-inner"
                                 style={{
                                   "background-image": `url(${res.thumb_image})`,
+                                  "background-size":"contain"
                                 }}
                               ></span>
                               <span class="category-title">

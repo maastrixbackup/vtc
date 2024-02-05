@@ -603,7 +603,7 @@ export default function FlyerTheme5(props) {
                                         </a>
                                       ) : (
                                         <a
-                                          href={`https://virtualtourcafe.com/alpha/tour/${link}`}
+                                          href={`https://virtualtourcafe.com/tour/${link}`}
                                           style={{
                                             margin: "5px 0px 5px 0px",
                                             fontSize: "14px",
@@ -612,7 +612,7 @@ export default function FlyerTheme5(props) {
                                           target="_blank"
                                           rel="noreferrer"
                                         >
-                                          {`https://virtualtourcafe.com/alpha/tour/${link}`}
+                                          {`https://virtualtourcafe.com/tour/${link}`}
                                         </a>
                                       )}
                                     </td>

@@ -362,7 +362,7 @@ export default function FlyerTheme7(props) {
                             target="_blank"
                             rel="noreferrer"
                           >
-                            {`https://virtualtourcafe.com/alpha/tour/${link}`}
+                            {`https://virtualtourcafe.com/tour/${link}`}
                           </a>
                         )}
                       </td>
@@ -577,7 +577,7 @@ export default function FlyerTheme7(props) {
                                           target="_blank"
                                           rel="noreferrer"
                                         >
-                                          {`https://virtualtourcafe.com/alpha/tour/${link}`}
+                                          {`https://virtualtourcafe.com/tour/${link}`}
                                         </a>
                                       )}
                                     </p>
