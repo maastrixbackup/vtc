@@ -472,8 +472,9 @@ export default function FlyerTheme4(props) {
               DESCRIPTION
             </h6>
 
-            <p style={{ margin: "0px", color: allData.themeId == 1 ?"black":"white", fontSize: "14px" }}>
-              {Object.keys(tourData).length > 0 && tourData.description}
+            <p style={{ margin: "0px", color: allData.themeId == 1 ?"black":"white", fontSize: "14px" }} dangerouslySetInnerHTML={{ __html:Object.keys(tourData).length > 0 &&
+                          tourData.description }}>
+             
             </p>
           </td>
         </tr>

@@ -825,7 +825,7 @@ export default function Features() {
                                     width="100%"
                                     height="440"
                                     autoplay
-                                    src="https://my.matterport.com/show/?m=v5KwPp7TiPH"
+                                    src={featureData.feature.matterport}
                                     title="YouTube video player"
                                     frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -859,7 +859,7 @@ export default function Features() {
                                 class="category-inner"
                                 style={{
                                   "background-image": `url(${res.thumb_image})`,
-                                  "background-size":"contain"
+                                  "background-size": "cover",
                                 }}
                               ></span>
                               <span class="category-title">

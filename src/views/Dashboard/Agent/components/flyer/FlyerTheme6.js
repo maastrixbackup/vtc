@@ -555,8 +555,9 @@ export default function FlyerTheme6(props) {
                   bgcolor={bgColor}
                   style={{ padding: "10px" }}
                 >
-                  <p style={{ fontSize: "14px", color: "white" }}>
-                    {Object.keys(tourData).length > 0 && tourData.description}
+                  <p style={{ fontSize: "14px", color: "white" }} dangerouslySetInnerHTML={{ __html:Object.keys(tourData).length > 0 &&
+                          tourData.description }}>
+                    
                   </p>
                 </td>
               </tr>

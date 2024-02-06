@@ -629,10 +629,14 @@ export default function FlyerTheme7(props) {
                               valign="top"
                               style={{ padding: "15px" }}
                             >
-                              <p style={{ fontSize: "14px", color: "white" }}>
-                                {Object.keys(tourData).length > 0 &&
-                                  tourData.description}
-                              </p>
+                              <p
+                                style={{ fontSize: "14px", color: "white" }}
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    Object.keys(tourData).length > 0 &&
+                                    tourData.description,
+                                }}
+                              ></p>
                             </td>
                           </tr>
                         </table>
