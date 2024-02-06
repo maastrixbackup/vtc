@@ -9903,7 +9903,7 @@ const AgentEditTour = React.memo((props) => {
                             href="javascript:void()"
                             onClick={() => {
                               downloadQrCode(
-                                otherLink.qr_code.mycafe_image_link
+                                otherLink.qr_code.qr_image_link
                               );
                             }}
                             class="next_btn download_btn"

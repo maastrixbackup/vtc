@@ -6736,11 +6736,11 @@ export default function AgentTourList(props) {
                           <tr>
                             <td style={{ fontSize: "12px" }}>{index + 1}</td>
                             <td style={{ fontSize: "12px" }}>
-                              {res.createdAt}
+                            {new Date(res.createdAt).toLocaleDateString('en-US')}
                             </td>
                             <td style={{ fontSize: "12px" }}>{res.domain}</td>
                             <td style={{ fontSize: "12px" }}>{res.domainId}</td>
-                            <td style={{ fontSize: "12px" }}>{res.expires}</td>
+                            <td style={{ fontSize: "12px" }}>{new Date(res.expires).toLocaleDateString('en-US')}</td>
                             <td style={{ fontSize: "12px" }}>
                               {res.renewDeadline}
                             </td>

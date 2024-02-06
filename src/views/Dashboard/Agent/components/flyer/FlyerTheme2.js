@@ -277,8 +277,10 @@ export default function FlyerTheme2(props) {
                       fontSize: "13px",
                       lineHeight: "17px",
                     }}
+                    dangerouslySetInnerHTML={{ __html:Object.keys(tourData).length > 0 &&
+                          tourData.description }}
                   >
-                    {Object.keys(tourData).length > 0 && tourData.description}
+                    
                   </p>
                 </td>
               </tr>

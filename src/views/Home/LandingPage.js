@@ -958,11 +958,12 @@ export default function LandingPage(props) {
             </div>
             <div class="wow_sellers_right">
               <iframe
-                src="https://my.matterport.com/show/?m=v5KwPp7TiPH"
+                src={homeData.professional_photos.matterport}
                 allowfullscreen=""
                 width="100%"
                 height="500"
                 frameborder="0"
+                title="matterport"
               ></iframe>
             </div>
             {/* <div class="wow_sellers_right wow fadeInDown" data-wow-duration="1.6s">
@@ -1619,7 +1620,7 @@ export default function LandingPage(props) {
             <iframe
               width="100%"
               height="440"
-              src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
+              src="https://virtualtourcafe.com/video3.31d6cfe0.mp4"
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

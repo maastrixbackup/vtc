@@ -281,9 +281,9 @@ export default function FlyerTheme1(props) {
                 >
                   <tr>
                     <td>
-                      <p>
-                        {Object.keys(tourData).length > 0 &&
-                          tourData.description}
+                      <p dangerouslySetInnerHTML={{ __html:Object.keys(tourData).length > 0 &&
+                          tourData.description }}>
+                       
                       </p>
                     </td>
                   </tr>

@@ -169,8 +169,9 @@ export default function FlyerTheme5(props) {
                     style={{ padding: "15px" }}
                     height={300}
                   >
-                    <p style={{ fontSize: "14px" }}>
-                      {Object.keys(tourData).length > 0 && tourData.description}
+                    <p style={{ fontSize: "14px" }} dangerouslySetInnerHTML={{ __html:Object.keys(tourData).length > 0 &&
+                          tourData.description }}>
+                      
                     </p>
                   </td>
                 </tr>
