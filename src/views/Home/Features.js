@@ -1017,7 +1017,7 @@ export default function Features() {
                     <iframe
                       width="100%"
                       height="440"
-                      src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
+                      src="/static/media/video3.31d6cfe0.mp4"
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
