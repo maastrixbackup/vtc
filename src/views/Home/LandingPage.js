@@ -120,7 +120,7 @@ const options2 = {
   animateOut: "fadeOut",
   animateIn: "fadeIn",
   autoplay: true,
-  autoplayTimeout: 3500,
+  autoplayTimeout: 7000,
   autoplayHoverPause: false,
   autoHeight: true,
   mouseDrag: true,
@@ -250,6 +250,7 @@ export default function LandingPage(props) {
   const [partnerData, setPartnerData] = useState([]);
   const [service, setService] = useState("serv1");
   const [openVideoModal, setOpenVideoModal] = useState(false);
+  const [videoLink, setVideoLink] = useState("");
   const [openVideoModalTwo, setOpenVideoModalTwo] = useState(false);
   const [maxWidth, setMaxWidth] = React.useState("md");
   const [currentBroker, setCurrentBroker] = useState({});
@@ -404,9 +405,9 @@ export default function LandingPage(props) {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+              <Link to={APIPath()}>
                 <img src={logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">
@@ -956,9 +957,10 @@ export default function LandingPage(props) {
                 ></div>
               </div>
             </div>
+
             <div class="wow_sellers_right">
               <iframe
-                src={homeData.professional_photos.matterport}
+                src={homeData.professional_photos.WOWYourSellers.matterport}
                 allowfullscreen=""
                 width="100%"
                 height="500"
@@ -1194,7 +1196,10 @@ export default function LandingPage(props) {
                           <div class="recent_projects_tabs_img">
                             <img src={res.design_photo} alt="" title="" />
                             <div
-                              onClick={() => setOpenVideoModal(true)}
+                              onClick={() => {
+                                setOpenVideoModal(true);
+                                setVideoLink(res.video);
+                              }}
                               class="recent_projects_tabs_img_conts"
                             >
                               <div class="recent_projects_tabs_img_conts_inner">
@@ -1650,7 +1655,11 @@ export default function LandingPage(props) {
                     <iframe
                       width="100%"
                       height="440"
-                      src="https://www.virtualtourcafe.com/alpha/static/media/video3.31d6cfe0.mp4"
+                      src={
+                        videoLink != ""
+                          ? videoLink
+                          : "https://www.virtualtourcafe.com/static/media/video3.31d6cfe0.mp4"
+                      }
                       title="YouTube video player"
                       frameborder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1705,7 +1714,6 @@ export default function LandingPage(props) {
       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      
     </div>
   );
 }

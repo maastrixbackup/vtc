@@ -16,6 +16,7 @@ import Captcha from "react-numeric-captcha";
 import { AuthContext } from "../../../CommonMethods/Authentication";
 import { APIURL, APIPath } from "../../../CommonMethods/Fetch";
 import { postRecord } from "../../../CommonMethods/Save";
+import ReCAPTCHA from "react-google-recaptcha";
 const APIGetUserData = APIURL() + "user-details";
 const APISaveStatus = APIURL() + "change-agent-status";
 const APIBrokerReferral = APIURL() + "get-broker";
@@ -62,6 +63,9 @@ export default function AgentHeader(props) {
   const [allCountries, setAllCountries] = useState([]);
   const [allStates, setAllStates] = useState([]);
   const [captchaSuccess, setCaptchaSuccess] = useState(false);
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   useEffect(() => {
     let user = props.user;
     if (user === "admin") {
@@ -1065,7 +1069,10 @@ export default function AgentHeader(props) {
                                     <input type="text" class="form-control" onChange={handleInputChange} name="code" value={subscribeData.code} />
                                 </div> */}
                 <div class="col-md-12 formbox1">
-                  <Captcha onChange={(status) => setCaptchaSuccess(status)} />
+                  <ReCAPTCHA
+                    sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
+                    onChange={onChange}
+                  />
                 </div>
               </div>
               <div class="row">

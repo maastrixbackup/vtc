@@ -30,6 +30,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { APIURL, APIPath, fetchAllRecords } from "../../CommonMethods/Fetch";
 import { postRecord, putRecord } from "../../CommonMethods/Save";
 import Footer1 from "../../components/Footer/Footer1";
+import ReCAPTCHA from "react-google-recaptcha";
 const APIRegister = APIURL() + "register-agent";
 const APIGetCountries = APIURL() + "get-countries";
 const APIGetStates = APIURL() + "get-states";
@@ -249,12 +250,8 @@ export default function Register() {
         setEmailErrorText(
           "Please enter valid email address. eg. xyz@example.com"
         );
-      }
-      else if(isEmailExist){
-        setEmailErrorText(
-            "Email Already Exists"
-          );
-
+      } else if (isEmailExist) {
+        setEmailErrorText("Email Already Exists");
       } else {
         setShowPersonal(false);
         setShowAddress(true);
@@ -381,16 +378,18 @@ export default function Register() {
   //             setOpen(false);
   //         });
   // }
-
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   return (
     <div>
       <section class="home_page">
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+              <Link to={APIPath()}>
                 <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">
@@ -956,10 +955,9 @@ export default function Register() {
                                       </div>
                                       <div class="row">
                                         <div class="col-md-12 col-lg-12 formbox1">
-                                          <Captcha
-                                            onChange={(status) =>
-                                              setCaptchaSuccess(status)
-                                            }
+                                          <ReCAPTCHA
+                                            sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
+                                            onChange={onChange}
                                           />
                                         </div>
                                       </div>

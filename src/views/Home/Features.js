@@ -161,9 +161,9 @@ export default function Features() {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+              <Link to={APIPath()}>
                 <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
 
             <div id="mobilemenu">
@@ -872,6 +872,7 @@ export default function Features() {
                                 </span>
                                 <a
                                   href={res.link}
+                                  target="_blank"
                                   class={"need_pic " + res.btn_class}
                                 >
                                   {res.link_text}{" "}

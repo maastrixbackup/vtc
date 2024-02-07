@@ -18,6 +18,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Footer1 from "../../components/Footer/Footer1";
+import ReCAPTCHA from "react-google-recaptcha";
 const APIGetSiteSetting = APIURL() + "sitesetting";
 const APIGetContactData = APIURL() + "contactuspagecontent";
 const APIGetUserData = APIURL() + "user-details";
@@ -145,15 +146,18 @@ export default function Contact() {
       return $("body").css("overflow", "auto");
     }
   };
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   return (
     <div>
       <section class="home_page">
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+              <Link to={APIPath()}>
                 <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
 
             <div id="mobilemenu">
@@ -628,7 +632,8 @@ export default function Contact() {
                   </div>
                   <div class="col-lg-6 col-md-6 col-12">
                     <div class="contact_sec_right">
-                      <form id="message-form"
+                      <form
+                        id="message-form"
                         onSubmit={(event) => {
                           event.preventDefault();
                           sendMessage();
@@ -716,9 +721,10 @@ export default function Contact() {
                           ></textarea>
                         </div>
                         <div class="contact_sec_right_single">
-                          <Captcha
-                            onChange={(status) => setCaptchaSuccess(status)}
-                          />
+                        <ReCAPTCHA
+                              sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
+                              onChange={onChange}
+                            />
                         </div>
                         <div class="contact_sec_right_single">
                           <button type="submit" class="need_pic">

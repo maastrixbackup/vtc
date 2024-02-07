@@ -119,9 +119,9 @@ export default function Terms() {
                 <div class="mobile_on mobile_slide">
                     <div class="mob_head">
                         <div class="hm_logo">
-                            <a href="#">
+                        <Link to={APIPath()}>
                                 <img src={Logo} alt="Logo" title="Logo" />
-                            </a>
+                            </Link>
                         </div>
                         <div id="mobilemenu">
                             <div class="mobilemenu-wrapper">

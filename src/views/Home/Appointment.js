@@ -165,14 +165,14 @@ export default function Appointment(props) {
   }, [metaData]);
   return (
     <div>
-    <Title title="Appointment"/>
+      <Title title="Appointment" />
       <section class="home_page">
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+              <Link to={APIPath()}>
                 <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">

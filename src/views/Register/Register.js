@@ -394,9 +394,9 @@ export default function Register(props) {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
-                <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+            <Link to={APIPath()}>
+                                <img src={Logo} alt="Logo" title="Logo" />
+                            </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">

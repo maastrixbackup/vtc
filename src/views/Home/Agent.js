@@ -736,6 +736,9 @@ export default function Agent() {
       }
     });
   };
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   const saveRegistration = () => {
     // var pattern = new RegExp(
     //     /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
@@ -844,9 +847,9 @@ export default function Agent() {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
+            <Link to={APIPath()}>
                 <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+              </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">

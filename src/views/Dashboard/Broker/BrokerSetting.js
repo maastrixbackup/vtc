@@ -61,6 +61,7 @@ import { APIURL, APIPath } from "../../../CommonMethods/Fetch";
 import { postRecord } from "../../../CommonMethods/Save";
 import { Button } from "@material-ui/core";
 import Title from "../../../CommonMethods/Title";
+import ReCAPTCHA from "react-google-recaptcha";
 const APIGetUserData = APIURL() + "user-details";
 const APISaveCompanyInfo = APIURL() + "save-Company-Info";
 const APIGetCountryList = APIURL() + "get-CountryList";
@@ -690,6 +691,9 @@ export default function BrokerSetting(props) {
         setOpen(false);
       });
   };
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   const removeLogo = () => {
     const obj = {
       authenticate_key: "abcd123XYZ",
@@ -2151,11 +2155,10 @@ export default function BrokerSetting(props) {
                               <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                   <div class="agent_sign_up_single payment-setting">
-                                    <Captcha
-                                      onChange={(status) =>
-                                        setCaptchaSuccess(status)
-                                      }
-                                    />
+                                  <ReCAPTCHA
+                              sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
+                              onChange={onChange}
+                            />
                                   </div>
                                 </div>
                               </div>

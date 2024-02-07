@@ -85,6 +85,7 @@ import { postRecord } from "../../../CommonMethods/Save";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Title from "../../../CommonMethods/Title";
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
+import ReCAPTCHA from "react-google-recaptcha";
 const APIGetUserData = APIURL() + "user-details";
 const APIAgentProfile = APIURL() + "agent-personal-information";
 const APIAgentMycafe = APIURL() + "update-agent-mycafe";
@@ -133,6 +134,7 @@ const APIRemoveSocialAuth = APIURL() + "delete-social-setting";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 9999,
@@ -1242,13 +1244,13 @@ export default function AgentSetting(props) {
         setOpen(false);
       });
   };
-  const isURL = (str)=> {
+  const isURL = (str) => {
     const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
-    console.log('==============urlRegex======================');
+    console.log("==============urlRegex======================");
     console.log(urlRegex.test(str));
-    console.log('====================================');
+    console.log("====================================");
     return urlRegex.test(str);
-  }
+  };
   const saveCompanyPictures = () => {
     setOpen(true);
     try {
@@ -2004,6 +2006,9 @@ export default function AgentSetting(props) {
         setOpen(false);
       });
   };
+  function onChange(value) {
+    setCaptchaSuccess(true);
+  }
   const onFailure = (response) => console.error(response);
   const removeYoutubeAuth = () => {
     setOpen(true);
@@ -6218,10 +6223,9 @@ export default function AgentSetting(props) {
                             <div class="row">
                               <div class="col-lg-6 col-md-6">
                                 <div class="agent_sign_up_single">
-                                  <Captcha
-                                    onChange={(status) =>
-                                      setCaptchaSuccess(status)
-                                    }
+                                  <ReCAPTCHA
+                                    sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
+                                    onChange={onChange}
                                   />
                                 </div>
                               </div>

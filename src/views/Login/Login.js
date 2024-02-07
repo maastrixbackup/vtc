@@ -144,7 +144,7 @@ export default function Login(props) {
           setOpenError(true);
           setOpen(false);
         });
-   }
+    }
   };
   const sendForgotMail = (data) => {
     setOpenModal(false);
@@ -273,9 +273,9 @@ export default function Login(props) {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-              <a href="#">
-                <img src={Logo} alt="Logo" title="Logo" />
-              </a>
+            <Link to={APIPath()}>
+                                <img src={Logo} alt="Logo" title="Logo" />
+                            </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">
@@ -540,10 +540,10 @@ export default function Login(props) {
                             {/* 6LfOR3kgAAAAAN7f4zcHQQTUrXNpbDMc6vUA0Ka_ */}
 
                             {/* 6LfUR3kgAAAAAIqP4h16I5W6EbweU_7zIDvBNyUq */}
-                              <ReCAPTCHA
+                            <ReCAPTCHA
                               sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
                               onChange={onChange}
-                            /> 
+                            />
                           </li>
                           <li>
                             <div class="row">
