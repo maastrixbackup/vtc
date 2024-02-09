@@ -1668,7 +1668,7 @@ export default function AgentImageSets() {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
+                                        "https://virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1684,7 +1684,7 @@ export default function AgentImageSets() {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
+                                        "https://virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

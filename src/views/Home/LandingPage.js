@@ -473,7 +473,7 @@ export default function LandingPage(props) {
           <OwlCarousel margin={10} {...options} id="home_slide">
             <div class="home_page_banner">
               <img
-                src="https://www.virtualtourcafe.com/alpha/static/media/hm-banner-new-3.3929ad35.webp"
+                src="https://virtualtourcafe.com/alpha/static/media/hm-banner-new-3.3929ad35.webp"
                 alt=""
                 title=""
               />
@@ -489,7 +489,7 @@ export default function LandingPage(props) {
             </div>
             <div class="home_page_banner">
               <img
-                src="https://www.virtualtourcafe.com/alpha/static/media/hm-banner-new-1.5ea1d5b3.webp"
+                src="https://virtualtourcafe.com/alpha/static/media/hm-banner-new-1.5ea1d5b3.webp"
                 alt=""
                 title=""
               />
@@ -505,7 +505,7 @@ export default function LandingPage(props) {
             </div>
             <div class="home_page_banner">
               <img
-                src="https://www.virtualtourcafe.com/alpha/static/media/hm-banner-new-2.bdfcc160.webp"
+                src="https://virtualtourcafe.com/alpha/static/media/hm-banner-new-2.bdfcc160.webp"
                 alt=""
                 title=""
               />
@@ -521,7 +521,7 @@ export default function LandingPage(props) {
             </div>
             <div class="home_page_banner">
               <img
-                src="https://www.virtualtourcafe.com/alpha/static/media/hm-banner-new.4b7e26c5.webp"
+                src="https://virtualtourcafe.com/alpha/static/media/hm-banner-new.4b7e26c5.webp"
                 alt=""
                 title=""
               />
@@ -899,7 +899,7 @@ export default function LandingPage(props) {
         class="bg_shape"
         style={{
           backgroundImage:
-            "url('https://www.virtualtourcafe.com/alpha/static/media/hm-bg-shape.270712f6.webp')",
+            "url('https://virtualtourcafe.com/alpha/static/media/hm-bg-shape.270712f6.webp')",
         }}
       >
         <hr class="spacer40px"></hr>
@@ -1397,7 +1397,7 @@ export default function LandingPage(props) {
         class="subscribe_newsletter"
         style={{
           backgroundImage:
-            "url('https://www.virtualtourcafe.com/alpha/static/media/subscribe-bg.5c04d448.webp')",
+            "url('https://virtualtourcafe.com/alpha/static/media/subscribe-bg.5c04d448.webp')",
         }}
       >
         <div class="container">
@@ -1658,7 +1658,7 @@ export default function LandingPage(props) {
                       src={
                         videoLink != ""
                           ? videoLink
-                          : "https://www.virtualtourcafe.com/static/media/video3.31d6cfe0.mp4"
+                          : "https://virtualtourcafe.com/static/media/video3.31d6cfe0.mp4"
                       }
                       title="YouTube video player"
                       frameborder="0"

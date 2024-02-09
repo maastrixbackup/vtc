@@ -347,7 +347,7 @@ export default function AgentSetting(props) {
   const [offeredBannerImg, setOfferedBannerImg] = useState("");
   const [sync, setSync] = useState(true);
   const [defaultBanner, setDefaultBanner] = useState(
-    "https://www.virtualtourcafe.com/alpha/static/media/default-banner.87685114.jpg"
+    "https://virtualtourcafe.com/alpha/static/media/default-banner.87685114.jpg"
   );
   const [allBanners, setAllBanners] = useState([]);
   const [allThemes, setAllThemes] = useState({});
@@ -6512,7 +6512,7 @@ export default function AgentSetting(props) {
                                       authorizationUrl="https://accounts.google.com/o/oauth2/v2/auth"
                                       responseType="token"
                                       clientId="135052239263-v0kkieg2gevagsvggksaih17e95e5vgc.apps.googleusercontent.com"
-                                      redirectUri="https://www.virtualtourcafe.com/agent-setting"
+                                      redirectUri="https://virtualtourcafe.com/agent-setting"
                                       onSuccess={onSuccess}
                                       onFailure={onFailure}
                                     />
@@ -6669,7 +6669,7 @@ export default function AgentSetting(props) {
                         }
                         onLoginStart={onLoginStart}
                         onLogoutSuccess={onLogoutSuccess}
-                        redirect_uri="https://www.virtualtourcafe.com/agent-setting"
+                        redirect_uri="https://virtualtourcafe.com/agent-setting"
                         onResolve={({ provider, data }) => {
                           saveFacebookAuth(data);
                         }}
@@ -6698,7 +6698,7 @@ export default function AgentSetting(props) {
                         }
                         onLoginStart={onLoginStart}
                         onLogoutSuccess={onLogoutSuccess}
-                        redirect_uri="https://www.virtualtourcafe.com/agent-setting"
+                        redirect_uri="https://virtualtourcafe.com/agent-setting"
                         onResolve={({ provider, data }) => {
                           // console.log(provider);
                           // console.log(data);

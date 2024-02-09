@@ -1290,7 +1290,7 @@ export default function TrafficReport(props) {
     //                                                         </tr>
 
     //                                                         <tr>
-    //                                                             <td>www.virtualtourcafe.com</td>
+    //                                                             <td>virtualtourcafe.com</td>
     //                                                             <td align="center" valign="middle">Doe</td>
     //                                                             <td align="center" valign="middle"> 45</td>
     //                                                             <td align="center" valign="middle">7.41%</td>
