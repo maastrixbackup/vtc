@@ -666,6 +666,7 @@ export default function Contact() {
                             value={msgData.mobile}
                             onChange={handleMobchange}
                             required
+                            specialLabel=""
                           />
                           {/* <input type="text" name="mobile" placeholder="Mobile No" onChange={handlePhoneChange} value={msgData.mobile} maxLength={10} required /> */}
                         </div>
