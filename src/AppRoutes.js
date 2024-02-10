@@ -301,7 +301,7 @@ export default function AppRoutes() {
             path={APIPath() + "agent-view-flyer/:flyerid?"}
             component={AgentViewFlyer}
           /> */}
-          <PrivateRoute
+          <Route
             path={APIPath() + "my-cafe-gellary/:agentId"}
             component={MyCafeGellary}
           />

@@ -96,7 +96,7 @@ export default function AgentViewFlyerActive(props) {
     }
   }, [sync, context.state.user, flyerId]);
   const handleViewFlyerActiveLink = () => {
-    window.location.href = APIPath() + "tour/" + flyerId;
+    window.location.href = APIPath() + "https://virtualtourcafe.com/tour/" + flyerId;
   };
   const allImagesLoaded = useRef(false);
 

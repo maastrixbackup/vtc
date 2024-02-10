@@ -101,6 +101,7 @@ const APIcropImage = APIURL() + "save-cropper-image-tour";
 const APIDeleteImage = APIURL() + "delete-image-editimageset";
 const APIOtherMail = APIURL() + "other-link-send-email";
 const APIServiceMail = APIURL() + "tour-send-mail";
+const APIUpdateQR = APIURL() + "update-qr-code";
 const APIAgentTrafficOption = APIURL() + "agent-update-traffic";
 const APIOtherLink = APIURL() + "tourotherlink";
 const APIGetNewsLetter = APIURL() + "get-newsletter";
@@ -881,19 +882,19 @@ const AgentEditTour = React.memo((props) => {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 2) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 3) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 4) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 5) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       }
     }
@@ -3121,6 +3122,39 @@ const AgentEditTour = React.memo((props) => {
   const handleOtherInputChange = (event) => {
     const { name, value } = event.target;
     setOtherLink({ ...otherLink, [name]: value });
+  };
+  const updateQrCode = async (type) => {
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      agentId: JSON.parse(context.state.user)?.agentId,
+      tourId: tour_id,
+      type: type,
+    };
+    const res = await postRecord(APIUpdateQR, obj);
+    if (res.data[0].response.status === "success") {
+      if (type == "tour") {
+        setOtherLink({
+          ...otherLink,
+          qr_code: {
+            ...otherLink.qr_code,
+            qr_image_link: res.data[0].response.data,
+          },
+        });
+      } else {
+        setOtherLink({
+          ...otherLink,
+          qr_code: {
+            ...otherLink.qr_code,
+            mycafe_image_link: res.data[0].response.data,
+          },
+        });
+      }
+      setMessage(res.data[0].response.message);
+      setOpenSuccess(true);
+    } else {
+      setMessage(res.data[0].response.message);
+      setOpenError(true);
+    }
   };
   const downloadQrCode = (image) => {
     toDataURL(image, function (dataUrl) {
@@ -8301,15 +8335,19 @@ const AgentEditTour = React.memo((props) => {
                     <hr class=""></hr>
                     <div class="row">
                       <div class="col-md-4 formbox1 formBox2">
-                      <div className="row"><div className="col-12"><label htmlFor="">Date</label></div>
-                      <div className="col-12"> <DatePicker
-                          // selected={announcementData.announcedate}
-                          onChange={handleDateChange}
-                          selected={startDate}
-                        />      </div></div>
-                      
-                      
-                                        
+                        <div className="row">
+                          <div className="col-12">
+                            <label htmlFor="">Date</label>
+                          </div>
+                          <div className="col-12">
+                            {" "}
+                            <DatePicker
+                              // selected={announcementData.announcedate}
+                              onChange={handleDateChange}
+                              selected={startDate}
+                            />{" "}
+                          </div>
+                        </div>
                       </div>
                       <div class="col-md-4 formbox1">
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -9850,6 +9888,15 @@ const AgentEditTour = React.memo((props) => {
                           title=""
                           style={{ margin: "0 0 10px 0" }}
                         />
+                        <a
+                          href="javascript:void()"
+                          onClick={() => {
+                            updateQrCode("tour");
+                          }}
+                          class="next_btn download_btn"
+                        >
+                          Update QR Code
+                        </a>
                       </div>
                       <div class="download_qr">
                         <div class="switchToggle custom-control custom-switch">
@@ -9902,9 +9949,7 @@ const AgentEditTour = React.memo((props) => {
                           <a
                             href="javascript:void()"
                             onClick={() => {
-                              downloadQrCode(
-                                otherLink.qr_code.qr_image_link
-                              );
+                              downloadQrCode(otherLink.qr_code.qr_image_link);
                             }}
                             class="next_btn download_btn"
                           >
@@ -9928,6 +9973,15 @@ const AgentEditTour = React.memo((props) => {
                           title=""
                           style={{ margin: "0 0 10px 0" }}
                         />
+                        <a
+                          href="javascript:void()"
+                          onClick={() => {
+                            updateQrCode("mycafegallery");
+                          }}
+                          class="next_btn download_btn"
+                        >
+                          Update QR Code
+                        </a>
                       </div>
                       <div class="download_qr">
                         <div class="switchToggle custom-control custom-switch">

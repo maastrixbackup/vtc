@@ -2118,7 +2118,7 @@ export default function AgentFloorPlan(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (defaultsThemeId && isPremium === 0) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour" + tour_id, "_blank");
         setDefaultsThemeId("");
       }
     }

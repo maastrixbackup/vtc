@@ -12,6 +12,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Title from "../../../CommonMethods/Title";
+import dateFormat from "dateformat";
 
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
 const APIGetOrderDetails = APIURL() + "pending-orders-details";
@@ -264,7 +265,7 @@ export default function AgentOrderList(props) {
                           </td>
                           <td style={{ textAlign: "center" }}>{res.amount}</td>
                           <td style={{ textAlign: "center" }}>
-                            {res.payment_date}
+                            {dateFormat(res.payment_date, "mm-dd-yyyy HH:MM:ss")}
                           </td>
                           <td style={{ textAlign: "center" }}>
                             {res.payment_status == 1 ? (

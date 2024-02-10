@@ -268,19 +268,24 @@ export default function AgentTourList(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1 && isPremium === 1) {
-        window.open("/tour/" + id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+
         setThemeId("");
       } else if (themeId === 2 && isPremium === 1) {
-        window.open("/tour/" + id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+
         setThemeId("");
       } else if (themeId === 3 && isPremium === 1) {
-        window.open("/tour/" + id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+
         setThemeId("");
       } else if (themeId === 4 && isPremium === 1) {
-        window.open("/tour/" + id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+
         setThemeId("");
       } else if (themeId === 5) {
-        window.open("/tour/" + id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+
         setThemeId("");
       }
     }

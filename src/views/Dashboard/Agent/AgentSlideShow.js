@@ -2058,19 +2058,19 @@ export default function AgentSlideShow(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 2) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 3) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 4) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 5) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       }
     }
@@ -2079,7 +2079,7 @@ export default function AgentSlideShow(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (defaultsThemeId && isPremium === 0) {
-        window.open("/tour/" + tour_id, "_blank");
+        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
         setDefaultsThemeId("");
       }
     }

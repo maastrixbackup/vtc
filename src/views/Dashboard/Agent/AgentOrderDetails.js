@@ -352,7 +352,7 @@ export default function AgentOrderDetails(props) {
                       <b>First Choice :</b>
                     </td>
                     <td width="30%">
-                      {dateFormat(propertyInfo.first_choice, "dd-mm-yyyy") +
+                      {dateFormat(propertyInfo.first_choice, "mm-dd-yyyy HH:MM:ss") +
                         "  " +
                         propertyInfo.first_time}
                     </td>
@@ -369,7 +369,7 @@ export default function AgentOrderDetails(props) {
                       <b>Second Choice :</b>
                     </td>
                     <td width="30%">
-                      {dateFormat(propertyInfo.second_choice, "dd-mm-yyyy") +
+                      {dateFormat(propertyInfo.second_choice, "mm-dd-yyyy HH:MM:ss") +
                         "  " +
                         propertyInfo.second_time}
                     </td>
@@ -386,7 +386,7 @@ export default function AgentOrderDetails(props) {
                       <b>Third Choice :</b>
                     </td>
                     <td width="30%">
-                      {dateFormat(propertyInfo.third_choice, "dd-mm-yyyy") +
+                      {dateFormat(propertyInfo.third_choice, "mm-dd-yyyy HH:MM:ss") +
                         "  " +
                         propertyInfo.third_time}
                     </td>
