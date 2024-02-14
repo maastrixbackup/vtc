@@ -245,7 +245,10 @@ export default function AgentImageSets() {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setImagesetData({ ...imagesetData, stateid: "" });
     });
   }, [imagesetData.countryid]);
   useEffect(() => {
@@ -1668,7 +1671,7 @@ export default function AgentImageSets() {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1684,7 +1687,7 @@ export default function AgentImageSets() {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

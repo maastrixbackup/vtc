@@ -163,7 +163,10 @@ export default function AgentFlyerList(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData?.countryid]);
   useEffect(() => {
@@ -1264,7 +1267,7 @@ export default function AgentFlyerList(props) {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/" +
+                                        "https://www.virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1280,7 +1283,7 @@ export default function AgentFlyerList(props) {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/" +
+                                        "https://www.virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

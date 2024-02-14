@@ -107,7 +107,10 @@ export default function AgentFlashVideo() {
       // console.log(res);
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData.countryid]);
   useEffect(() => {
@@ -1084,7 +1087,7 @@ export default function AgentFlashVideo() {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1100,7 +1103,7 @@ export default function AgentFlashVideo() {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

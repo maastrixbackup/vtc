@@ -124,7 +124,7 @@ export default function AgentMylisting(props) {
                 });
         }
     }, [context.state.user]);
-    // https://virtualtourcafe.com/tour/
+    // https://www.virtualtourcafe.com/tour/
     useEffect(() => {
         if (context.state.user) {
             const agent_id = JSON.parse(context.state.user).agentId;

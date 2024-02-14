@@ -412,7 +412,10 @@ export default function AgentEditTour(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData.countryid]);
   const handleClose = (event, reason) => {
@@ -2469,7 +2472,7 @@ export default function AgentEditTour(props) {
                                   <input
                                     readonly="true"
                                     type="text"
-                                    value="https://virtualtourcafe.com/tour/576170"
+                                    value="https://www.virtualtourcafe.com/tour/576170"
                                   />
                                 </td>
                                 <td style={{ textAlign: "center" }}>
@@ -2492,7 +2495,7 @@ export default function AgentEditTour(props) {
                                   <input
                                     readonly="true"
                                     type="text"
-                                    value="https://virtualtourcafe.com/tour/576170"
+                                    value="https://www.virtualtourcafe.com/tour/576170"
                                   />
                                 </td>
                                 <td style={{ textAlign: "center" }}>

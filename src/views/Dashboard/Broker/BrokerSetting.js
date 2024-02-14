@@ -372,7 +372,10 @@ export default function BrokerSetting(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPaymentProfile({ ...paymentProfile, stateid: "" });
     });
   }, [paymentProfile.country]);
   const saveCompanyInfo = () => {

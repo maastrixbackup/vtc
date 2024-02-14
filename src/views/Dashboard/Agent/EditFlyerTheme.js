@@ -248,7 +248,10 @@ export default function EditFlyerTheme(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData.countryid]);
   useEffect(() => {

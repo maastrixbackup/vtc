@@ -211,7 +211,7 @@ export default function FlyerTheme4(props) {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {`https://virtualtourcafe.com/tour/${link}`}
+                          {`https://www.virtualtourcafe.com/tour/${link}`}
                         </a>
                       )}
                         </p>{" "}

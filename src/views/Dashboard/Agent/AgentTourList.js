@@ -243,7 +243,10 @@ export default function AgentTourList(props) {
       // console.log(res);
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setImagesetData({ ...imagesetData, stateid: "" });
     });
   }, [imagesetData.countryid]);
   useEffect(() => {
@@ -263,28 +266,27 @@ export default function AgentTourList(props) {
       }
     });
   }, []);
-  //console.log(id);
   useEffect(() => {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1 && isPremium === 1) {
-        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
 
         setThemeId("");
       } else if (themeId === 2 && isPremium === 1) {
-        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
 
         setThemeId("");
       } else if (themeId === 3 && isPremium === 1) {
-        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
 
         setThemeId("");
       } else if (themeId === 4 && isPremium === 1) {
-        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
 
         setThemeId("");
       } else if (themeId === 5) {
-        window.open("https://virtualtourcafe.com/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
 
         setThemeId("");
       }
@@ -2095,7 +2097,7 @@ export default function AgentTourList(props) {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -2111,7 +2113,7 @@ export default function AgentTourList(props) {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

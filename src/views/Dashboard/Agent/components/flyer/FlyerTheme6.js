@@ -463,7 +463,7 @@ export default function FlyerTheme6(props) {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {`https://virtualtourcafe.com/tour/${link}`}
+                          {`https://www.virtualtourcafe.com/tour/${link}`}
                         </a>
                       )}
                               </p>
@@ -515,7 +515,7 @@ export default function FlyerTheme6(props) {
                         </a>
                       ) : (
                         <a
-                          href={`https://virtualtourcafe.com/tour/${link}`}
+                          href={`https://www.virtualtourcafe.com/tour/${link}`}
                           style={{
                             margin: "5px 0px 5px 0px",
                             fontSize: "14px",
@@ -525,7 +525,7 @@ export default function FlyerTheme6(props) {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          {`https://virtualtourcafe.com/tour/${link}`}
+                          {`https://www.virtualtourcafe.com/tour/${link}`}
                         </a>
                       )}
                       </td>

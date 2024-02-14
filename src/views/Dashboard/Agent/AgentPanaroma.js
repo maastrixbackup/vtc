@@ -308,7 +308,10 @@ export default function AgentPanaroma(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData.countryid]);
   useEffect(() => {
@@ -585,19 +588,19 @@ export default function AgentPanaroma(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 2) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 3) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 4) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       } else if (themeId === 5) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setThemeId("");
       }
     }
@@ -606,7 +609,7 @@ export default function AgentPanaroma(props) {
     if (context.state.user) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (defaultsThemeId && isPremium === 0) {
-        window.open("https://virtualtourcafe.com/tour/" + tour_id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + tour_id, "_blank");
         setDefaultsThemeId("");
       }
     }

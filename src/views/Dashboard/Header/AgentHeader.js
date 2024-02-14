@@ -134,7 +134,10 @@ export default function AgentHeader(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setSubscribeData({ ...subscribeData, stateid: "" });
     });
   }, [subscribeData.countryid]);
   const handleLogout = () => {

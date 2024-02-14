@@ -26,6 +26,7 @@ import { postRecord } from "../../../CommonMethods/Save";
 import { Button } from "@material-ui/core";
 import ReactPaginate from "react-paginate";
 import Title from "../../../CommonMethods/Title";
+import Switch from "react-switch";
 const APIGetDashboardData = APIURL() + "agent-dashboard";
 const APIBrokerDashBoard = APIURL() + "get-mycafe";
 const APISaveAgentCreate = APIURL() + "agent-create";
@@ -35,6 +36,7 @@ const APIGetCountries = APIURL() + "get-countries";
 const APIGetStates = APIURL() + "get-states";
 const APIResendMail = APIURL() + "resend-Mail";
 const CheckMail = APIURL() + "check-email";
+const APIChangeEz = APIURL() + "flash-status-update";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -183,7 +185,10 @@ export default function BrokerAgensts(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setPropertyData({ ...propertyData, stateid: "" });
     });
   }, [propertyData.countryid]);
   const filterData = async () => {
@@ -210,19 +215,16 @@ export default function BrokerAgensts(props) {
   };
   const checkEmail = async (e) => {
     var response = "";
-    response = await fetch(
-      CheckMail,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          authenticate_key: "abcd123XYZ",
-          email: e.target.value,
-        }),
-      }
-    );
+    response = await fetch(CheckMail, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        authenticate_key: "abcd123XYZ",
+        email: e.target.value,
+      }),
+    });
     response = await response.json();
     if (response[0].response.status == "error") {
       setinputErrors((prevState) => ({
@@ -263,6 +265,32 @@ export default function BrokerAgensts(props) {
       }
       setSync(false);
     });
+  };
+  const handleChangeEzStatus = (event, id) => {
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      agentId: id,
+      flash_status: event ? 1 : 0,
+    };
+    // console.log(obj);
+    postRecord(APIChangeEz, obj)
+      .then((res) => {
+        if (res.data[0].response.status === "success") {
+          setMessage(res.data[0].response.message);
+          setOpenSuccess(true);
+          setSync(false);
+        } else {
+          setMessage(res.data[0].response.message);
+          setOpenError(true);
+          setSync(false);
+        }
+        setSync(true);
+      })
+      .catch((err) => {
+        setMessage("Something Went Wrong. Please try again later...");
+        setOpenError(true);
+        setOpen(false);
+      });
   };
   const handleEditModal = () => {
     if (id === "") {
@@ -895,7 +923,11 @@ export default function BrokerAgensts(props) {
                             <div class="profile_listing_single_inner">
                               <div class="socila_avatar">
                                 <div class="socila_avatar_img">
-                                  <img class="" alt="agentimage" src={res.src} />
+                                  <img
+                                    class=""
+                                    alt="agentimage"
+                                    src={res.src}
+                                  />
                                 </div>
                                 <div class="socila_avatar_cont">
                                   <h6>
@@ -905,8 +937,60 @@ export default function BrokerAgensts(props) {
                                   <p>Company Name :{res.company}</p>
                                   <p class="">{res.address} </p>
                                   <p>Email:{res.email}</p>
+                                  <div class="socila_status_single d-flex justify-content-start">
+                                    <label>Flashvideo Subscription</label>
+                                    <div class="switchToggle custom-control custom-switch c1">
+                                      <Switch
+                                        onChange={(event) =>
+                                          handleChangeEzStatus(event, res.id)
+                                        }
+                                        checked={res.flash_status}
+                                        handleDiameter={17}
+                                        offColor="#5D5D5D"
+                                        onColor="#F6AD17"
+                                        offHandleColor="#fff"
+                                        onHandleColor="#fff"
+                                        height={25}
+                                        width={45}
+                                        disabled={!agentData.broker_flash_status}
+                                        borderRadius={6}
+                                        uncheckedIcon={
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              height: "100%",
+                                              fontSize: 13,
+                                              color: "white",
+                                              paddingRight: 2,
+                                            }}
+                                          >
+                                            No
+                                          </div>
+                                        }
+                                        checkedIcon={
+                                          <div
+                                            style={{
+                                              display: "flex",
+                                              justifyContent: "center",
+                                              alignItems: "center",
+                                              height: "100%",
+                                              fontSize: 13,
+                                              color: "white",
+                                              paddingRight: 2,
+                                            }}
+                                          >
+                                            Yes
+                                          </div>
+                                        }
+                                        className="react-switch"
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
+
                               <div class="socila_body">
                                 <div class="socila_body_btn">
                                   <button onClick={() => handleEditAgent(res)}>
@@ -935,8 +1019,8 @@ export default function BrokerAgensts(props) {
                               <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                   <Button
-                                    className="brokerAgentBtn notLoggedIn" 
-                                    disabled                             
+                                    className="brokerAgentBtn notLoggedIn"
+                                    disabled
                                   >
                                     <i
                                       class="fa fa-user"

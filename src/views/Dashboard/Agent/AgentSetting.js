@@ -419,9 +419,10 @@ export default function AgentSetting(props) {
         if (res.data[0].response.message === "Authorization Required") {
           setYoutubeAccessToken({});
         } else {
-          setYoutubeAccessToken(
-            JSON.parse(res.data[0].response.data.access_token)
-          );
+          res.data[0].response.data.access_token &&
+            setYoutubeAccessToken(
+              JSON.parse(res.data[0].response.data.access_token)
+            );
         }
       });
     }
@@ -802,7 +803,10 @@ export default function AgentSetting(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setCompanyInfo({ ...companyInfo, stateid: "" });
     });
   }, [paymentData.countryid]);
   useEffect(() => {
@@ -813,7 +817,10 @@ export default function AgentSetting(props) {
     postRecord(APIGetStates, objusr).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllStates(res.data[0].response.data);
+        return;
       }
+      setAllStates([]);
+      setCompanyInfo({ ...companyInfo, stateid: "" });
     });
   }, [companyInfo.countryid]);
   useEffect(() => {
@@ -3103,7 +3110,7 @@ export default function AgentSetting(props) {
                                   <div class="col-md-6 formbox1">
                                     <label>Mobile </label>
                                     <input
-                                      type="number"
+                                      type="text"
                                       name="mobile"
                                       value={profileData.mobile}
                                       onChange={handleInputChange}
