@@ -2930,7 +2930,7 @@ export default function AgentDashboard(props) {
                       {Object.keys(mostViewedData).length > 0 &&
                       mostViewedData.tour.tour_image !== "" ? (
                         <a
-                          href={`/tour/${mostViewedData.tour.tour_id}`}
+                          href={`https://www.virtualtourcafe.com/tour/${mostViewedData.tour.tour_id}`}
                           target="_blank"
                         >
                           <div class="recent_projects_tabs_img">

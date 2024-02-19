@@ -182,7 +182,7 @@ export default function CheckoutTab(props) {
       var parts = date.split("/");
       values.authenticate_key = "abcd123XYZ";
       values.agent_id = JSON.parse(context.state.user).agentId;
-      values.street_address = basicInfo.address;
+      values.address = basicInfo.address;
       values.city = basicInfo.city;
       values.zipcode = basicInfo.zip;
       values.notes = basicInfo.notes;

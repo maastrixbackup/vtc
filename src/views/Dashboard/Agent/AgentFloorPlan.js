@@ -2083,31 +2083,31 @@ export default function AgentFloorPlan(props) {
       const agent_id = JSON.parse(context.state.user).agentId;
       if (themeId === 1) {
         window.open(
-          "/tour/" + tour_id,
+          "https://www.virtualtourcafe.com/tour/" + tour_id,
           "_blank"
         );
         setThemeId("");
       } else if (themeId === 2) {
         window.open(
-          "/tour/" + tour_id,
+          "https://www.virtualtourcafe.com/tour/" + tour_id,
           "_blank"
         );
         setThemeId("");
       } else if (themeId === 3) {
         window.open(
-          "/tour/" + tour_id,
+          "https://www.virtualtourcafe.com/tour/" + tour_id,
           "_blank"
         );
         setThemeId("");
       } else if (themeId === 4) {
         window.open(
-          "/tour/" + tour_id,
+          "https://www.virtualtourcafe.com/tour/" + tour_id,
           "_blank"
         );
         setThemeId("");
       } else if (themeId === 5) {
         window.open(
-          "/tour/" + tour_id,
+          "https://www.virtualtourcafe.com/tour/" + tour_id,
           "_blank"
         );
         setThemeId("");

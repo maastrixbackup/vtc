@@ -403,7 +403,7 @@ export default function FlyerTheme7(props) {
                         </a>
                       ) : (
                         <a
-                          href={`/tour/${link}`}
+                          href={`https://www.virtualtourcafe.com/tour/${link}`}
                           style={{
                             margin: "5px 0px 5px 0px",
                             fontSize: "14px",

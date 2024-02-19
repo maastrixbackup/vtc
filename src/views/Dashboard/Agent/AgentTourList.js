@@ -298,7 +298,7 @@ export default function AgentTourList(props) {
       if (defaultsThemeId && isPremium === 0) {
         // window.location.href = "http://localhost:3001/theme-template5/" + id + APIPath() + agent_id + APIPath() + defaultsThemeId;
         // window.location.href = "/tour/theme-template5/" + id + "/" + agent_id;
-        window.open("/tour/" + id, "_blank");
+        window.open("https://www.virtualtourcafe.com/tour/" + id, "_blank");
         setDefaultsThemeId("");
       }
     }
@@ -2113,7 +2113,7 @@ export default function AgentTourList(props) {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
+                                        "https://www.virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
