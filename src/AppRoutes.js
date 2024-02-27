@@ -88,6 +88,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import DragAndDrop from "./views/Dashboard/Agent/DragAndDrop";
 import AdminVideoLogin from "./views/Login/AdminVideoLogin";
 import MetaTags from "./components/MetaTags";
+import RedirectComponent from "./components/RedirectComponent";
 
 var hist = createBrowserHistory();
 function Alert(props) {
@@ -133,6 +134,10 @@ export default function AppRoutes() {
 
       <Router history={hist} basename="/">
         <Switch>
+          <Route
+            path={APIPath() + "site/virtualtour/:tourid?"}
+            component={RedirectComponent}
+          />
           <PrivateRoute
             path={APIPath() + "my-non-brand-gallery/:agentId"}
             component={MyOfficeNonBrandedGallery}
@@ -146,6 +151,7 @@ export default function AppRoutes() {
             path={APIPath() + "order-details/:orderid/:agentId"}
             component={AgentAdminLogin}
           />
+
           <PrivateRoute
             path={APIPath() + "order-details/:orderid"}
             component={AgentOrderDetails}

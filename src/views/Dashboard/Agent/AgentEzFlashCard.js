@@ -293,7 +293,7 @@ export default function AgentEzFlashCard(props) {
             }}
             onClick={() => createSubscribeFlashVideo(data.id, data, "0")}
           >
-            Download &amp; Updates
+            Download &amp; Update
           </Button>
         </div>
       );

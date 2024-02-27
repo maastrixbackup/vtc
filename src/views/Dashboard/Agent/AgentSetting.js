@@ -286,7 +286,7 @@ export default function AgentSetting(props) {
   const [profileData, setProfileData] = useState(initialState);
   const [imageData, setImageData] = useState(initialImageState);
   const [mycafeData, setMycafeData] = useState(initialMycafeState);
-  const [companyInfo, setCompanyInfo] = useState(initialCompanyInfoState);
+  const [companyInfo, setCompanyInfo] = useState({});
   const [companyPictures, setCompanyPictures] = useState({});
   const [emailData, setEmailData] = useState(initialEmailState);
   const [phoneData, setPhoneData] = useState(initialPhoneState);
@@ -570,6 +570,7 @@ export default function AgentSetting(props) {
       });
     }
   }, [context.state.user]);
+  console.log(companyInfo);
   useEffect(() => {
     if (context.state.user) {
       const obj = {
@@ -579,7 +580,7 @@ export default function AgentSetting(props) {
       axios
         .post(APIURL() + `agent-profile-details`, obj, {})
         .then((res) => {
-          setCompanyInfo(res.data[0].response.data.agent_details);
+          // setCompanyInfo(res.data[0].response.data.agent_details);
           setMycafeData(res.data[0].response.data.agent_details);
           setProfileData(res.data[0].response.data.agent_details);
           setImageData(res.data[0].response.data);
@@ -800,28 +801,32 @@ export default function AgentSetting(props) {
       authenticate_key: "abcd123XYZ",
       country_id: paymentData.countryid,
     };
-    postRecord(APIGetStates, objusr).then((res) => {
-      if (res.data[0].response.status === "success") {
-        setAllStates(res.data[0].response.data);
-        return;
-      }
-      setAllStates([]);
-      setCompanyInfo({ ...companyInfo, stateid: "" });
-    });
+    if (paymentData.countryid) {
+      postRecord(APIGetStates, objusr).then((res) => {
+        if (res.data[0].response.status === "success") {
+          setAllStates(res.data[0].response.data);
+          return;
+        }
+        setAllStates([]);
+        setCompanyInfo({ ...companyInfo, stateid: "" });
+      });
+    }
   }, [paymentData.countryid]);
   useEffect(() => {
     const objusr = {
       authenticate_key: "abcd123XYZ",
       country_id: companyInfo.countryid,
     };
-    postRecord(APIGetStates, objusr).then((res) => {
-      if (res.data[0].response.status === "success") {
-        setAllStates(res.data[0].response.data);
-        return;
-      }
-      setAllStates([]);
-      setCompanyInfo({ ...companyInfo, stateid: "" });
-    });
+    if (companyInfo.countryid) {
+      postRecord(APIGetStates, objusr).then((res) => {
+        if (res.data[0].response.status === "success") {
+          setAllStates(res.data[0].response.data);
+          return;
+        }
+        setAllStates([]);
+        setCompanyInfo({ ...companyInfo, stateid: "" });
+      });
+    }
   }, [companyInfo.countryid]);
   useEffect(() => {
     if (context.state.user) {
@@ -1241,7 +1246,7 @@ export default function AgentSetting(props) {
           setMessage(res.data[0].response.data.message);
           setOpenSuccess(true);
         } else {
-          setMessage(res.data[0].response.data.message);
+          setMessage(res.data[0].response.message);
           setOpenError(true);
         }
       })

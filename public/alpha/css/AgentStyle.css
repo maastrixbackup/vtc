@@ -5113,8 +5113,8 @@ i.bigger-icon1 {
 
   .new_edit_tour_sec {
     margin: 0 0 60px;
-
-    min-height: 880px;
+/*min-height: 880px;*/
+    min-height: 710px;
   }
 }
 
