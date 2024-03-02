@@ -89,6 +89,8 @@ export default function BrokerReports() {
   const [trafficEmail, setTrafficeEmail] = useState("");
   const APISaveTrafficReport = APIURL() + "save-TrafficEmail";
   const [hover, setHover] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -419,7 +421,7 @@ export default function BrokerReports() {
   return (
     <div>
       <Title title="Broker Reports" />
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       <section
         className="vtc_agent_banner"
         style={{ backgroundImage: "url(" + banner + ")" }}
@@ -508,8 +510,8 @@ export default function BrokerReports() {
               <div className="col-lg-12 col-md-12">
                 <div className="vtc_btm_menu_sec">
                   <ul>
-                    <li>Yearly - Unlimited Active Tours</li>
-                    <li>Ala-Carte - Available Credits 1 </li>
+                    <li>{currentUser.paymentOption} - {currentUser.activeTours} Active Tours</li>
+                    <li>Ala-Carte - Available Credits {currentUser.credits} </li>
                   </ul>
                 </div>
               </div>

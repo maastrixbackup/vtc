@@ -33,7 +33,7 @@ const APIBrokerDashBoard = APIURL() + "get-mycafe";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-export default function AgentHeader() {
+export default function AgentHeader({setCurrentUser,currentUser}) {
   const initialSubState = {
     fname: "",
     lname: "",
@@ -45,7 +45,6 @@ export default function AgentHeader() {
   };
   const { dispatch } = useContext(AuthContext);
   const context = useContext(AuthContext);
-  const [currentUser, setCurrentUser] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [opensubModal, setOpenSubModal] = useState(false);
   const [subscribeData, setSubscribeData] = useState(initialSubState);

@@ -88,6 +88,7 @@ export default function BrokerAgensts(props) {
   const [openCompanyBanner, setOpenCompanyBanner] = useState(false);
   const [bannerData, setBannerData] = useState({});
   const [allBanners, setAllBanners] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const [defaultBanner, setDefaultBanner] = useState(
     "../static/media/default-banner.87685114.jpg"
   );
@@ -702,7 +703,7 @@ export default function BrokerAgensts(props) {
   return (
     <div>
       {/* <AgentHeader /> */}
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       <section
         class="vtc_agent_banner"
         style={{ backgroundImage: "url(" + broker_banner + ")" }}
@@ -785,8 +786,8 @@ export default function BrokerAgensts(props) {
               <div class="col-lg-12 col-md-12">
                 <div class="vtc_btm_menu_sec">
                   <ul>
-                    <li>Yearly - Unlimited Active Tours</li>
-                    <li>Ala-Carte - Available Credits 1 </li>
+                    <li>{currentUser.paymentOption} - {currentUser.activeTours} Active Tours</li>
+                    <li>Ala-Carte - Available Credits {currentUser.credits} </li>
                   </ul>
                 </div>
               </div>

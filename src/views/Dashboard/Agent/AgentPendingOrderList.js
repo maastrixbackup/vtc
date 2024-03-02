@@ -19,6 +19,7 @@ const ApiDeleteProduct = APIURL() + "delete-pending-order";
 export default function AgentPendingOrderList(props) {
   let history = useHistory();
   const context = useContext(AuthContext);
+  const [sync, setSync] = useState(true);
   const [pendingorderList, setPendingOrderList] = useState([]);
   const [packages, setPackages] = useState([]);
   const [cartePackages, setCartePackages] = useState([]);
@@ -68,7 +69,7 @@ export default function AgentPendingOrderList(props) {
         }
       });
     }
-  }, [context.state.user]);
+  }, [context.state.user, sync]);
   const handleDetails = (id) => {
     history.push(APIPath() + "pending-order-details/" + id);
   };
@@ -83,12 +84,7 @@ export default function AgentPendingOrderList(props) {
     postRecord(ApiDeleteProduct, objusr).then((res) => {
       setOpen(false);
       if (res.data[0].response.status === "success") {
-        setPendingOrderList(current =>
-          current.filter(employee => {
-            // 👇️ remove object that has id equal to 2
-            return employee.id !== id;
-          }),
-        );
+        setSync(!sync);
       }
     });
   };
@@ -162,7 +158,7 @@ export default function AgentPendingOrderList(props) {
   useEffect(() => {
     if (pendingorderList.length > 0) {
       filterData();
-    }
+    } else setAllData([]);
   }, [offset, pendingorderList]);
   const filterData = async () => {
     const endOffset = offset + postPerPage;
@@ -182,7 +178,7 @@ export default function AgentPendingOrderList(props) {
 
   return (
     <div>
-    <Title title="Agent Pending Order List"/>
+      <Title title="Agent Pending Order List" />
       <AgentHeader path={props.location.pathname} />
       <section
         class="vtc_agent_banner"
@@ -192,14 +188,14 @@ export default function AgentPendingOrderList(props) {
           <div class="container-fluid">
             <div class="row">
               <div class="col-lg-12 col-md-12">
-              <AgentDashBoardHeader ShowMenu={ShowMenu} HideMenu={HideMenu} />
+                <AgentDashBoardHeader ShowMenu={ShowMenu} HideMenu={HideMenu} />
 
                 <div class="gee_menu">
                   <ul>
                     <li class="">
                       <Link to={APIPath() + "agent-dashboard"}>My Cafe</Link>
                     </li>
-                   
+
                     <li>
                       <Link to={APIPath() + "agent-tour-list"}>Tours</Link>
                     </li>

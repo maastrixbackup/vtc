@@ -57,6 +57,7 @@ export default function BrokerDashboard() {
   const [open, setOpen] = useState(false);
   const [openWarning, setOpenWarning] = useState(false);
   const [openError, setOpenError] = useState(false);
+
   const [inputErrors, setinputErrors] = useState({
     fname: "blank",
     lname: "blank",
@@ -273,7 +274,7 @@ export default function BrokerDashboard() {
     <div>
       <Title title="Broker Dashboard" />
       {/* <AgentHeader /> */}
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       <section
         class="vtc_agent_banner"
         style={{ backgroundImage: "url(" + broker_banner + ")" }}
@@ -356,8 +357,8 @@ export default function BrokerDashboard() {
               <div class="col-lg-12 col-md-12">
                 <div class="vtc_btm_menu_sec">
                   <ul>
-                    <li>Yearly - Unlimited Active Tours</li>
-                    <li>Ala-Carte - Available Credits 1 </li>
+                    <li>{currentUser.paymentOption} - {currentUser.activeTours} Active Tours</li>
+                    <li>Ala-Carte - Available Credits {currentUser.credits} </li>
                   </ul>
                 </div>
               </div>

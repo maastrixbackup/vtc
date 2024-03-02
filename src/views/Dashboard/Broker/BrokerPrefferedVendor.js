@@ -75,7 +75,7 @@ export default function AgentPreferredVendor() {
   return (
     <div>
       <Title title="Broker Preffered Vendor" />
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       <section
         class="vtc_agent_banner"
         style={{ backgroundImage: "url(" + banner + ")" }}
@@ -164,8 +164,8 @@ export default function AgentPreferredVendor() {
               <div class="col-lg-12 col-md-12">
                 <div class="vtc_btm_menu_sec">
                   <ul>
-                    <li>Yearly - Unlimited Active Tours</li>
-                    <li>Ala-Carte - Available Credits 1 </li>
+                    <li>{currentUser.paymentOption} - {currentUser.activeTours} Active Tours</li>
+                    <li>Ala-Carte - Available Credits {currentUser.credits} </li>
                   </ul>
                 </div>
               </div>

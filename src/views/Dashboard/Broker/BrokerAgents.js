@@ -72,6 +72,7 @@ export default function BrokerAgensts(props) {
   const [allStates, setAllStates] = useState([]);
   const [propertyData, setPropertyData] = useState({});
   const [hover, setHover] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const [inputErrors, setinputErrors] = useState({
     fname: "",
     lname: "",
@@ -463,7 +464,7 @@ export default function BrokerAgensts(props) {
     <div>
       <Title title="Broker Agents" />
       {/* <AgentHeader /> */}
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser} />
       <section
         class="vtc_agent_banner"
         style={{ backgroundImage: "url(" + broker_banner + ")" }}
@@ -548,8 +549,13 @@ export default function BrokerAgensts(props) {
               <div class="col-lg-12 col-md-12">
                 <div class="vtc_btm_menu_sec">
                   <ul>
-                    <li>Yearly - Unlimited Active Tours</li>
-                    <li>Ala-Carte - Available Credits 1 </li>
+                    <li>
+                      {currentUser.paymentOption} - {currentUser.activeTours} Active Tours
+                    </li>
+
+                    <li>
+                      Ala-Carte - Available Credits {currentUser.credits}{" "}
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -952,7 +958,9 @@ export default function BrokerAgensts(props) {
                                         onHandleColor="#fff"
                                         height={25}
                                         width={45}
-                                        disabled={!agentData.broker_flash_status}
+                                        disabled={
+                                          !agentData.broker_flash_status
+                                        }
                                         borderRadius={6}
                                         uncheckedIcon={
                                           <div

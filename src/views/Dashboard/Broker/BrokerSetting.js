@@ -174,6 +174,8 @@ export default function BrokerSetting(props) {
   const [user, setUser] = useState({
     username: "",
   });
+  const [currentUser, setCurrentUser] = useState({});
+
   const [captcha, setCaptcha] = useState("");
   const [paymentProfile, setPaymentProfile] = useState({});
   const characters = "abc123";
@@ -829,7 +831,7 @@ export default function BrokerSetting(props) {
   return (
     <div>
       <Title title="Broker Setting" />
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       <section
         class="vtc_agent_banner"
         style={{ backgroundImage: "url(" + banner + ")" }}

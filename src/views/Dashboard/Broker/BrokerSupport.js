@@ -55,7 +55,7 @@ export default function AgentSupport() {
   return (
     <>
       <Title title="Broker Support" />
-      <BrokerHeader />
+      <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser}/>
       {/* <section class="vtc_agent_banner" style={{ backgroundImage: "url(" + banner + ")" }}>
                 <div class="vtc_top_menu">
                     <div class="container-fluid">
