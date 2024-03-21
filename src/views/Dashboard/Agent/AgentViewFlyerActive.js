@@ -1,37 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Recorder } from "react-voice-recorder";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import axios from "axios";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import banner from "../../../images/vtc-banner.jpg";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import up_img from "../../../images/up.png";
-import middle_img from "../../../images/middle.png";
-import bottom_img from "../../../images/bottom.png";
-import man from "../../../images/man.png";
-import house_img from "../../../images/house-img.jpg";
-import CancelIcon from "@material-ui/icons/Cancel";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import AddIcon from "@material-ui/icons/Add";
-import SaveIcon from "@material-ui/icons/Save";
-import Footer from "../../../components/Footer/AgentFooter";
-import AgentHeader from "../Header/AgentHeader";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import { AuthContext } from "../../../CommonMethods/Authentication";
 import { APIURL, APIPath } from "../../../CommonMethods/Fetch";
 import { postRecord } from "../../../CommonMethods/Save";
-import logo from "../../../images/wallpaper.jpg";
 import photo from "../../../images/photo.jpg";
 import logo1 from "../../../images/logo.jpg";
 import FlyerTheme1 from "./components/flyer/FlyerTheme1";
@@ -76,11 +50,9 @@ export default function AgentViewFlyerActive(props) {
   };
   
   useEffect(() => {
-    if (context.state.user) {
       const objusr = {
         authenticate_key: "abcd123XYZ",
         tourId: flyerId,
-        agent_id: JSON.parse(context.state.user).agentId,
       };
       setLoading(true);
       postRecord(APIGetViewFlyerData, objusr).then((res) => {
@@ -93,8 +65,7 @@ export default function AgentViewFlyerActive(props) {
           setopenAlertModal(true);
         }
       });
-    }
-  }, [sync, context.state.user, flyerId]);
+  }, [sync, flyerId]);
   const handleViewFlyerActiveLink = () => {
     window.location.href = APIPath() + "https://www.virtualtourcafe.com/tour/" + flyerId;
   };
@@ -145,33 +116,33 @@ export default function AgentViewFlyerActive(props) {
       };
     }
   }, [tourData, printids, loading]);
-  useEffect(() => {
-    const handleDOMContentLoaded = () => {
-      setTimeout(() => {
-        const element = document.querySelector('.uwy.userway_p1');
+  // useEffect(() => {
+  //   const handleDOMContentLoaded = () => {
+  //     setTimeout(() => {
+  //       const element = document.querySelector('.uwy.userway_p1');
 
-        if (element) {
-          console.log('Element found:', element);
-          element.style.display = 'none';
-        } else {
-          console.log('Element not found');
-        }
-      }, 1000); // Adjust the delay as needed
-    };
+  //       if (element) {
+  //         console.log('Element found:', element);
+  //         element.style.display = 'none';
+  //       } else {
+  //         console.log('Element not found');
+  //       }
+  //     }, 1000); // Adjust the delay as needed
+  //   };
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
-    } else {
-      handleDOMContentLoaded();
-    }
+  //   if (document.readyState === 'loading') {
+  //     document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
+  //   } else {
+  //     handleDOMContentLoaded();
+  //   }
 
-    return () => {
-      const element = document.querySelector('.uwy.userway_p1');
-      if (element) {
-        element.style.display = '';
-      }
-    };
-  }, []);
+  //   return () => {
+  //     const element = document.querySelector('.uwy.userway_p1');
+  //     if (element) {
+  //       element.style.display = '';
+  //     }
+  //   };
+  // }, []);
   if (loading) {
     return (
       <div className="showcase">

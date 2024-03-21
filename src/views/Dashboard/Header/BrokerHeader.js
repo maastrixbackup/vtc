@@ -42,6 +42,7 @@ export default function AgentHeader({setCurrentUser,currentUser}) {
     zipcode: "",
     countryid: "",
     city: "",
+    userimage: "",
   };
   const { dispatch } = useContext(AuthContext);
   const context = useContext(AuthContext);
@@ -90,6 +91,7 @@ export default function AgentHeader({setCurrentUser,currentUser}) {
       subscribeData.fname = currentUser.name.split(" ")[0];
       subscribeData.lname = currentUser.name.split(" ")[1];
       subscribeData.email = currentUser.email;
+      subscribeData.userimage = currentUser.profile_img
     }
   }, [currentUser]);
   useEffect(() => {
@@ -311,7 +313,7 @@ export default function AgentHeader({setCurrentUser,currentUser}) {
                             aria-expanded="true"
                           >
                             <div class="user_img">
-                              <img src={user} alt="" title="" />
+                              <img src={subscribeData?.userimage} alt="" title="" />
                             </div>
                           </a>
                           <div
@@ -320,7 +322,7 @@ export default function AgentHeader({setCurrentUser,currentUser}) {
                           >
                             <div class="profile-header d-flex align-items-center">
                               <div class="thumb-area">
-                                <img src={user} alt="profile" />
+                                <img src={subscribeData?.userimage} alt="profile" />
                               </div>
                               <div class="content-text">
                                 <h6>{currentUser.name}</h6>

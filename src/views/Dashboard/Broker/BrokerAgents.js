@@ -466,7 +466,7 @@ export default function BrokerAgensts(props) {
       {/* <AgentHeader /> */}
       <BrokerHeader setCurrentUser={setCurrentUser} currentUser={currentUser} />
       <section
-        class="vtc_agent_banner"
+        class="vtc_agent_banner "
         style={{ backgroundImage: "url(" + broker_banner + ")" }}
       >
         <div class="vtc_top_menu">
@@ -566,7 +566,7 @@ export default function BrokerAgensts(props) {
           <h2>Manage Your Agents</h2>
         </div>
       </section>
-      <section class="action_sec">
+      <section class="action_sec ">
         <div class="container-fluid">
           <div class="row">
             <div class="col-lg-12 col-md-12">
@@ -907,7 +907,7 @@ export default function BrokerAgensts(props) {
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row customBrokerCard">
             <div class="col-lg-12 col-md-12">
               <div class="profile_listing_main">
                 <div class="row">
@@ -919,7 +919,7 @@ export default function BrokerAgensts(props) {
                             setId(res.id);
                             handleImageSetId(res);
                           }}
-                          class="col-lg-4 col-md-4"
+                          class="col-lg-4 col-md-4 mb-4"
                         >
                           <div
                             id={"myDiv" + res.id}
@@ -1024,8 +1024,7 @@ export default function BrokerAgensts(props) {
                                   </ul>
                                 </div>
                               </div>
-                              <div class="row">
-                                <div class="col-lg-6 col-md-6">
+                              <div class="broker-agent-login-btns">
                                   <Button
                                     className="brokerAgentBtn notLoggedIn"
                                     disabled
@@ -1036,8 +1035,6 @@ export default function BrokerAgensts(props) {
                                     ></i>
                                     Agent Has not Logged In
                                   </Button>
-                                </div>
-                                <div class="col-lg-6 col-md-6">
                                   <Button
                                     className="brokerAgentBtn loginAgent"
                                     onClick={() => LoginSelectedAgent()}
@@ -1047,7 +1044,6 @@ export default function BrokerAgensts(props) {
                                     </span>
                                     Login For This Agent
                                   </Button>
-                                </div>
                               </div>
                             </div>
                           </div>

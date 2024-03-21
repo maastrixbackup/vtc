@@ -147,6 +147,7 @@ export default function Login(props) {
     }
   };
   const sendForgotMail = (data) => {
+    data.user_type = "agent";
     setOpenModal(false);
     if (data.email === "") {
       setMessage("Please enter email id");

@@ -937,7 +937,7 @@ export default function BrokerAgensts(props) {
                         <div class="row">
                           <div class="col-md-6 formbox1">
                             <label>
-                              Licence No{" "}
+                            License No{" "}
                               <span style={{ color: "#ffa12d" }}></span>
                             </label>
                             <input
@@ -945,7 +945,7 @@ export default function BrokerAgensts(props) {
                               class="form-control"
                               name="licenceno"
                               value={agentInfoData.licenceno}
-                              placeholder="Licence no"
+                              placeholder="Enter your license no"
                               onChange={handleInputChangeAgent}
                             />
                           </div>
@@ -963,7 +963,7 @@ export default function BrokerAgensts(props) {
                               }
                               name="fname"
                               value={agentInfoData.fname}
-                              placeholder="First name"
+                              placeholder="Enter your first name"
                               onChange={handleInputChangeAgent}
                               onKeyUp={(e) =>
                                 e.target.value.length > 0
@@ -1000,7 +1000,7 @@ export default function BrokerAgensts(props) {
                                   : "form-control"
                               }
                               name="lname"
-                              placeholder="Last Name  "
+                              placeholder="Enter your last Name  "
                               value={agentInfoData.lname}
                               onChange={handleInputChangeAgent}
                               onKeyUp={(e) =>
@@ -1036,7 +1036,7 @@ export default function BrokerAgensts(props) {
                                   : "form-control"
                               }
                               name="username"
-                              placeholder="User Name   "
+                              placeholder="Enter your user Name   "
                               value={agentInfoData.username}
                               onChange={handleInputChangeAgent}
                               onKeyUp={(e) =>
@@ -1069,7 +1069,7 @@ export default function BrokerAgensts(props) {
                                   : "form-control"
                               }
                               name="email"
-                              placeholder="Email    "
+                              placeholder="Enter your email"
                               value={agentInfoData.email}
                               onChange={handleInputChangeAgent}
                               onKeyUp={(e) =>
@@ -1096,7 +1096,7 @@ export default function BrokerAgensts(props) {
                               type="tel"
                               class="form-control"
                               name="mobile"
-                              placeholder="Mobile    "
+                              placeholder="Enter your mobile number"
                               value={agentInfoData.mobile}
                               onChange={handleInputChangeAgent}
                             />
@@ -1110,7 +1110,7 @@ export default function BrokerAgensts(props) {
                               type="text"
                               class="form-control"
                               name="agentprofile"
-                              placeholder="Agent Profile    "
+                              placeholder="Enter your agent profile"
                               value={agentInfoData.agentprofile}
                               onChange={handleInputChangeAgent}
                             />
@@ -1124,7 +1124,7 @@ export default function BrokerAgensts(props) {
                               type="text"
                               class="form-control"
                               name="credentials"
-                              placeholder="Credentials    "
+                              placeholder="Enter your credentials"
                               value={agentInfoData.redentials}
                               onChange={handleInputChangeAgent}
                             />
@@ -1189,7 +1189,7 @@ export default function BrokerAgensts(props) {
                               type="text"
                               class="form-control"
                               name="mycafegallery"
-                              placeholder="Link Name"
+                              placeholder="Enter your link name"
                               value={link}
                               onChange={(event) => {
                                 setLink(event.target.value);
@@ -1422,7 +1422,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="company"
                             value={companyInfo.company}
-                            placeholder="Virtual Tourcafe LLC"
+                            placeholder="Enter your Virtual Tourcafe LLC"
                             onKeyUp={(e) =>
                               e.target.value.length > 0
                                 ? (e.target.classList.add("success"),
@@ -1571,7 +1571,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="zipcode"
                             value={companyInfo.zipcode}
-                            placeholder="Zip"
+                            placeholder="Enter your Zip Code"
                             onKeyUp={(e) =>
                               e.target.value.length > 0
                                 ? (e.target.classList.add("success"),
@@ -1604,7 +1604,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="officephone"
                             value={companyInfo.officephone}
-                            placeholder="Office Phone"
+                            placeholder="Enter your Office Phone"
                             onKeyUp={(e) =>
                               e.target.value.length > 0
                                 ? (e.target.classList.add("success"),
@@ -1639,7 +1639,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="fax"
                             value={companyInfo.fax}
-                            placeholder="fax"
+                            placeholder="Enter your fax"
                           />
                         </div>
                         <div class="col-md-6 formbox1">
@@ -1652,7 +1652,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="website"
                             value={companyInfo.website}
-                            placeholder="Website"
+                            placeholder="Enter your Website"
                           />
                         </div>
                       </div>
@@ -1667,7 +1667,7 @@ export default function BrokerAgensts(props) {
                             onChange={handleCompanyInputChange}
                             name="address"
                             value={companyInfo.address}
-                            placeholder="Address"
+                            placeholder="Enter your address"
                           ></textarea>
                         </div>
                       </div>

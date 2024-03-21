@@ -135,6 +135,7 @@ export default function BrokerLogin(props) {
     }
   };
   const sendForgotMail = (data) => {
+    data.user_type = "broker";
     setOpenModal(false);
     if (data.email === "") {
       setMessage("Please enter email id");
@@ -172,9 +173,9 @@ export default function BrokerLogin(props) {
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">
-            <Link to={APIPath()}>
-                                <img src={Logo} alt="Logo" title="Logo" />
-                            </Link>
+              <Link to={APIPath()}>
+                <img src={Logo} alt="Logo" title="Logo" />
+              </Link>
             </div>
             <div id="mobilemenu">
               <div class="mobilemenu-wrapper">
