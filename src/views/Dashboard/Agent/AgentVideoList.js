@@ -1072,6 +1072,7 @@ export default function AgentFlashVideo() {
                               />
                             )}
                             <div class="profile-screen-name">{res.caption}</div>
+                            <div class="profile-screen-name address">{`${res.address?res.address:""} ${res.city?res.city:""} ${res.zipcode?res.zipcode:""}`}</div>
                             <div class="profile-screen-desc">
                               <div class="profile-screen-desc1">
                                 <a onClick={() => handleEditImageset(res)}>

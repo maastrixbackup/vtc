@@ -39,7 +39,7 @@ const SessionTimeout = (props) => {
     clearTimeout(startTimerInterval.current);
     warningInactiveInterval.current = setInterval(() => {
       const diff = moment.duration(moment().diff(moment(timeString)));
-      if (diff.minutes() === 15) {
+      if (diff.minutes() === 30) {
         clearInterval(warningInactiveInterval.current);
         sessionStorage.removeItem("lastTimeStamp");
         setOpen(true);

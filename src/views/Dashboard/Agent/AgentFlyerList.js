@@ -723,7 +723,7 @@ export default function AgentFlyerList(props) {
       return;
     }
     const tourData = res.data[0].response.tourData;
-    const allData2 = res.data[0].response;    
+    const allData2 = res.data[0].response;
     const objusr1 = {
       authenticate_key: "abcd123XYZ",
       tourData: tourData,
@@ -1252,6 +1252,7 @@ export default function AgentFlyerList(props) {
                               />
                             )}
                             <div class="profile-screen-name">{res.caption}</div>
+                            <div class="profile-screen-name address">{`${res.address?res.address:""} ${res.city?res.city:""} ${res.zipcode?res.zipcode:""}`}</div>
                             <div class="profile-screen-desc">
                               <div class="profile-screen-desc1">
                                 <a onClick={() => handleEditImageset(res)}>

@@ -4258,6 +4258,11 @@ i.bigger-icon1 {
   transform: translateY(-40%);
   padding: 10px;
 }
+.profile-screen-name.address{
+  top: 58%;
+  font-size: 14px;
+  color: #ffa12d;
+}
 
 .profile-screen:after {
   position: absolute;

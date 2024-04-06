@@ -358,7 +358,7 @@ export default function AppRoutes() {
             component={AgentPanaroma}
           />
           <Route
-            path={APIPath() + "reset-password/:id?"}
+            path={APIPath() + "reset-password/:type?/:id?"}
             component={ResetPassword}
           />
           <PrivateRoute
