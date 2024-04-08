@@ -12063,4 +12063,13 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
   .head_cont_right ul li {display: inline-block;margin: 10px 20px 0 0;}
   .create-vtc-website .onclick-video-play iframe {height: 200px;}
 }
+.socila_status_single.createdDate {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+}
+.socila_status_single.createdDate.left {
+  left: 0;
+}
 

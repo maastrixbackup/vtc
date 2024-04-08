@@ -2082,7 +2082,11 @@ export default function AgentTourList(props) {
                               style={{ height: "178px", width: "355px" }}
                             />
                             <div class="profile-screen-name">{res.caption}</div>
-                            <div class="profile-screen-name address">{`${res.address?res.address:""} ${res.city?res.city:""} ${res.zipcode?res.zipcode:""}`}</div>
+                            <div class="profile-screen-name address">{`${
+                              res.address ? res.address : ""
+                            } ${res.city ? res.city : ""} ${
+                              res.zipcode ? res.zipcode : ""
+                            }`}</div>
                             <div class="profile-screen-desc">
                               <div class="profile-screen-desc1">
                                 <a onClick={() => handleEditImageset(res)}>
@@ -2132,6 +2136,14 @@ export default function AgentTourList(props) {
                           </div>
                           <div class="profile_listing_single_inner">
                             <div class="socila_status">
+                              <div class="socila_status_single createdDate left">
+                                <label>Created Date :-</label>
+                                <p>{res.createdDate}</p>
+                              </div>
+                              <div class="socila_status_single createdDate">
+                                <label>Updated Date :-</label>
+                                <p>{res.updatedDate}</p>
+                              </div>
                               <div class="row">
                                 <div class="col-lg-6 col-md-6">
                                   <div class="socila_status_single">
