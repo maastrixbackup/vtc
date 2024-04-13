@@ -12072,4 +12072,9 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
 .socila_status_single.createdDate.left {
   left: 0;
 }
+.datesContainer {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
 

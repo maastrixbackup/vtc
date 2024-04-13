@@ -309,8 +309,8 @@ export default function AgentSetting(props) {
   const [flyerTourThemeData, setFlyerTourThemeData] = useState(
     initialFlyerTourThemeState
   );
-  const [flyerPremiumThemeData, setFlyerPremiumThemeData] = useState(
-    initialFlyerPremiumThemeState
+  const [flyerPremiumThemeData, setFlyerPremiumThemeData] = useState({}
+    
   );
   const [newsLetterData, setNewsLetterData] = useState(initialNewsLetterState);
   const [musicData, setMusicData] = useState(initialMusicState);
@@ -727,6 +727,10 @@ export default function AgentSetting(props) {
       axios
         .post(APIURL() + `agent-get-theme-default-settings`, obj)
         .then((res) => {
+          setFlyerTourThemeData(res.data[0].response.data.tour_theme);
+          setFlyerPremiumThemeData(
+            res.data[0].response.data.premium_tour_theme
+          );
           flyerThemeData.flyertheme_pagename =
             res.data[0].response.data.flyer_theme.flyertheme_pagename.split(
               "-"
@@ -738,10 +742,7 @@ export default function AgentSetting(props) {
             "-" +
             res.data[0].response.data.flyer_theme.flyertheme;
           // setFlyerThemeData(res.data[0].response.data.flyer_theme);
-          setFlyerTourThemeData(res.data[0].response.data.tour_theme);
-          setFlyerPremiumThemeData(
-            res.data[0].response.data.premium_tour_theme
-          );
+          
         })
         .catch((err) => console.log(err));
     }

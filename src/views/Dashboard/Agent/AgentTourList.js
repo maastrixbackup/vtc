@@ -2136,13 +2136,15 @@ export default function AgentTourList(props) {
                           </div>
                           <div class="profile_listing_single_inner">
                             <div class="socila_status">
-                              <div class="socila_status_single createdDate left">
+                            <div className="datesContainer">
+                              <div class="socila_status_single">
                                 <label>Created Date :-</label>
                                 <p>{res.createdDate}</p>
                               </div>
-                              <div class="socila_status_single createdDate">
+                              <div class="socila_status_single">
                                 <label>Updated Date :-</label>
                                 <p>{res.updatedDate}</p>
+                              </div>
                               </div>
                               <div class="row">
                                 <div class="col-lg-6 col-md-6">
