@@ -428,7 +428,7 @@ export default function FlyerTheme2(props) {
                     </a>
                   ) : (
                     <a
-                      href={`https://www.virtualtourcafe.com/tour/${link}`}
+                      href={`https://virtualtourcafe.com/tour/${link}`}
                       style={{
                         margin: "5px 0px 5px 0px",
                         fontSize: "14px",
@@ -438,7 +438,7 @@ export default function FlyerTheme2(props) {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {`https://www.virtualtourcafe.com/tour/${link}`}
+                      {`https://virtualtourcafe.com/tour/${link}`}
                     </a>
                   )}
 

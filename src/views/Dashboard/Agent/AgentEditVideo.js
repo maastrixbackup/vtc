@@ -2952,7 +2952,7 @@ export default function AgentEditVideo(props) {
                                   <input
                                     readonly="true"
                                     type="text"
-                                    value="https://www.virtualtourcafe.com/tour/576170"
+                                    value="https://virtualtourcafe.com/tour/576170"
                                   />
                                 </td>
                                 <td style={{ textAlign: "center" }}>
@@ -2975,7 +2975,7 @@ export default function AgentEditVideo(props) {
                                   <input
                                     readonly="true"
                                     type="text"
-                                    value="https://www.virtualtourcafe.com/tour/576170"
+                                    value="https://virtualtourcafe.com/tour/576170"
                                   />
                                 </td>
                                 <td style={{ textAlign: "center" }}>

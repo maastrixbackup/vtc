@@ -67,7 +67,7 @@ export default function AgentViewFlyerActive(props) {
       });
   }, [sync, flyerId]);
   const handleViewFlyerActiveLink = () => {
-    window.location.href = APIPath() + "https://www.virtualtourcafe.com/tour/" + flyerId;
+    window.location.href = APIPath() + "https://virtualtourcafe.com/tour/" + flyerId;
   };
   const allImagesLoaded = useRef(false);
 

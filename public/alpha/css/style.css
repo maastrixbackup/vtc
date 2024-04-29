@@ -12077,4 +12077,13 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
   gap: 10px;
   justify-content: space-between;
 }
+.agent_pop_img label {
+    display: block;
+}
+.download_qr .custom-switch {
+  padding-left:0px;
+}
+.agent_pop_img .download_btn {
+  margin: 0px;
+}
 

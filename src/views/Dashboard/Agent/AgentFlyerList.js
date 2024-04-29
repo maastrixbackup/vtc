@@ -1268,7 +1268,7 @@ export default function AgentFlyerList(props) {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/" +
+                                        "https://virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1284,7 +1284,7 @@ export default function AgentFlyerList(props) {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/" +
+                                        "https://virtualtourcafe.com/tour/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }

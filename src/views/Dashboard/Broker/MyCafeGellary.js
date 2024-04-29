@@ -288,7 +288,7 @@ export default function MyCafeGellary(props) {
                     tourData.map((res) => (
                       <div class="col-lg-4 col-md-4">
                         <a
-                          href={`https://www.virtualtourcafe.com/tour/${res.id}`}
+                          href={`https://virtualtourcafe.com/tour/${res.id}`}
                           target="_blank"
                           rel="noreferrer"
                         >

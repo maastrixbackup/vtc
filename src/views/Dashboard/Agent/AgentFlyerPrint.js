@@ -148,7 +148,7 @@ export default function AgentFlyerPrint(props) {
                             <div class="col-lg-4 col-md-4" style={{ backgroundColor: "rgb(52, 52, 52)", marginLeft: "10px" }}>
                                 <div class="row">
                                     <div style={{ textAlign: "center", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", marginTop: "80px" }}>
-                                        <p style={{ color: "white" }}>https://www.virtualtourcafe.com/tour/4778003</p>
+                                        <p style={{ color: "white" }}>https://virtualtourcafe.com/tour/4778003</p>
                                         <p style={{ color: "white" }}>All information deemed reliable, but not guaranteed.</p>
                                     </div>
                                 </div>
@@ -356,7 +356,7 @@ export default function AgentFlyerPrint(props) {
                       marginTop: "80px",
                     }}
                   >
-                    {/* <p style={{ color: "white" }}>https://www.virtualtourcafe.com/tour/4778003</p> */}
+                    {/* <p style={{ color: "white" }}>https://virtualtourcafe.com/tour/4778003</p> */}
                     <p class="img_set_para">
                       <a style={{ color: "black" }}>
                         <span

@@ -1088,7 +1088,7 @@ export default function AgentFlashVideo() {
                                     <label>Share:</label>
                                     <ShareLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
+                                        "https://virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
@@ -1104,7 +1104,7 @@ export default function AgentFlashVideo() {
                                   <li>
                                     <TwitterLink
                                       link={
-                                        "https://www.virtualtourcafe.com/tour/theme-template/" +
+                                        "https://virtualtourcafe.com/tour/theme-template/" +
                                         id +
                                         JSON.parse(context.state.user).agentId
                                       }
