@@ -3126,15 +3126,18 @@ const AgentEditTour = React.memo((props) => {
     const { name, value } = event.target;
     setOtherLink({ ...otherLink, [name]: value });
   };
-  const updateQrCode = async (type) => {
+  const updateQrCode = async () => {
+    const type = 'tour'
     const obj = {
       authenticate_key: "abcd123XYZ",
       agentId: JSON.parse(context.state.user)?.agentId,
       tourId: tour_id,
-      type: type,
+      type: 'tour',
     };
+    
     const res = await postRecord(APIUpdateQR, obj);
     if (res.data[0].response.status === "success") {
+      updateQrCode2();
       if (type == "tour") {
         setOtherLink({
           ...otherLink,
@@ -3159,6 +3162,45 @@ const AgentEditTour = React.memo((props) => {
       setOpenError(true);
     }
   };
+
+  const updateQrCode2 = async() => {
+    const type = 'mycafegallery'
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      agentId: JSON.parse(context.state.user)?.agentId,
+      tourId: tour_id,
+      type: 'mycafegallery',
+    };
+    
+    const res = await postRecord(APIUpdateQR, obj);
+    if (res.data[0].response.status === "success") {
+      if (type == "mycafegallery") {
+        setOtherLink({
+          ...otherLink,
+          qr_code: {
+            ...otherLink.qr_code,
+            mycafe_image_link: res.data[0].response.data,
+          },
+        });
+      } else {
+        setOtherLink({
+          ...otherLink,
+          qr_code: {
+            ...otherLink.qr_code,
+            qr_image_link: res.data[0].response.data,
+          },
+        });
+      }
+      setMessage(res.data[0].response.message);
+      setOpenSuccess(true);
+    } else {
+      setMessage(res.data[0].response.message);
+      setOpenError(true);
+    }
+  }
+
+  
+  
   const downloadQrCode = (image) => {
     toDataURL(image, function (dataUrl) {
       var link = document.createElement("a");
@@ -3471,7 +3513,9 @@ const AgentEditTour = React.memo((props) => {
                             </a>
                           </li>
 
-                          <li>
+                          <li onClick={() => {
+                            updateQrCode("tour");
+                          }}>
                             <a
                               class="dropdown-item"
                               data-toggle="modal"
@@ -9891,7 +9935,7 @@ const AgentEditTour = React.memo((props) => {
                           title=""
                           style={{ margin: "0 0 10px 0" }}
                         />
-                        <a
+                        {/* <a
                           href="javascript:void()"
                           onClick={() => {
                             updateQrCode("tour");
@@ -9899,7 +9943,7 @@ const AgentEditTour = React.memo((props) => {
                           class="next_btn download_btn"
                         >
                           Update QR Code
-                        </a>
+                        </a> */}
                       </div>
                       <div class="download_qr">
                         <div class="switchToggle custom-control custom-switch">
@@ -9976,7 +10020,7 @@ const AgentEditTour = React.memo((props) => {
                           title=""
                           style={{ margin: "0 0 10px 0" }}
                         />
-                        <a
+                        {/* <a
                           href="javascript:void()"
                           onClick={() => {
                             updateQrCode("mycafegallery");
@@ -9984,7 +10028,7 @@ const AgentEditTour = React.memo((props) => {
                           class="next_btn download_btn"
                         >
                           Update QR Code
-                        </a>
+                        </a> */}
                       </div>
                       <div class="download_qr">
                         <div class="switchToggle custom-control custom-switch">
