@@ -3032,6 +3032,7 @@ export default function AgentSetting(props) {
                                       value={profileData.username}
                                       onChange={handleInputChange}
                                       class="form-control"
+                                      autoComplete="new-off"
                                     />
                                   </div>
                                 </div>
@@ -3053,6 +3054,7 @@ export default function AgentSetting(props) {
                                       value={profileData.password}
                                       onChange={handleInputChange}
                                       class="form-control"
+                                      autoComplete="new-off"
                                     />
                                     <IconButton
                                       className={classes.btn_pwd}

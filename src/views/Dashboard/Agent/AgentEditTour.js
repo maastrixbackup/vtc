@@ -9921,6 +9921,7 @@ const AgentEditTour = React.memo((props) => {
                   <div class="agent_pop_main_head">
                     <h5>QR Codes</h5>
                   </div>
+                  <p class="text-danger m-0">Note : If the QR code is not visible please update the QR code using the button below.</p>
                   <div class="row">
                     <div class="col-lg-3 col-md-3">
                       <div class="agent_pop_img">
