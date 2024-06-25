@@ -165,7 +165,9 @@ export default function PropertyTab(props) {
             <div class="form-group">
               <label for="text1">Bedrooms</label>
               <input
-                type="text"
+                type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                 onChange={handleInputchange}
                 name="bed_room"
                 value={data.bed_room}
@@ -180,7 +182,9 @@ export default function PropertyTab(props) {
             <div class="form-group">
               <label for="text1">Bathrooms</label>
               <input
-                type="text"
+                type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                 onChange={handleInputchange}
                 name="bath_room"
                 value={data.bath_room}
@@ -192,7 +196,8 @@ export default function PropertyTab(props) {
             <div class="form-group">
               <label for="text1">Year Built</label>
               <input
-                type="text"
+                type="number"
+                onWheel={(e) => e.currentTarget.blur()}
                 onChange={handleInputchange}
                 name="year_built"
                 value={data.year_built}
@@ -206,7 +211,9 @@ export default function PropertyTab(props) {
             <div class="form-group">
               <label for="text1">Square Footage</label>
               <input
-                type="text"
+                type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                 onChange={handleInputchange}
                 name="square_footage"
                 value={data.square_footage}
@@ -232,7 +239,9 @@ export default function PropertyTab(props) {
             <div class="form-group">
               <label for="text1">Price (Optional)</label>
               <input
-                type="text"
+                type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                 onChange={handleInputchange}
                 name="price"
                 value={data.price}

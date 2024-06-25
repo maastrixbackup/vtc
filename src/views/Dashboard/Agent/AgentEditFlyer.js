@@ -5162,6 +5162,8 @@ export default function AgentEditTour(props) {
                                   </label>
                                   <input
                                     type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbedrooms"
                                     value={propertyData.totalbedrooms}
@@ -5175,6 +5177,8 @@ export default function AgentEditTour(props) {
                                   </label>
                                   <input
                                     type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbathrooms"
                                     value={propertyData.totalbathrooms}
@@ -5340,6 +5344,8 @@ export default function AgentEditTour(props) {
                                   </label>
                                   <input
                                     type="number"
+                onWheel={(e) => e.currentTarget.blur()}
+                step={0.1}
                                     onChange={handleInputChange}
                                     name="price"
                                     value={propertyData.price}

@@ -51,6 +51,7 @@ import "cropperjs/dist/cropper.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import AutocompleteAgents from "../../../components/AutocompleteAgents";
 
 const APITourService = APIURL() + "tourservicelink";
 
@@ -3127,14 +3128,14 @@ const AgentEditTour = React.memo((props) => {
     setOtherLink({ ...otherLink, [name]: value });
   };
   const updateQrCode = async () => {
-    const type = 'tour'
+    const type = "tour";
     const obj = {
       authenticate_key: "abcd123XYZ",
       agentId: JSON.parse(context.state.user)?.agentId,
       tourId: tour_id,
-      type: 'tour',
+      type: "tour",
     };
-    
+
     const res = await postRecord(APIUpdateQR, obj);
     if (res.data[0].response.status === "success") {
       updateQrCode2();
@@ -3163,15 +3164,15 @@ const AgentEditTour = React.memo((props) => {
     }
   };
 
-  const updateQrCode2 = async() => {
-    const type = 'mycafegallery'
+  const updateQrCode2 = async () => {
+    const type = "mycafegallery";
     const obj = {
       authenticate_key: "abcd123XYZ",
       agentId: JSON.parse(context.state.user)?.agentId,
       tourId: tour_id,
-      type: 'mycafegallery',
+      type: "mycafegallery",
     };
-    
+
     const res = await postRecord(APIUpdateQR, obj);
     if (res.data[0].response.status === "success") {
       if (type == "mycafegallery") {
@@ -3197,10 +3198,8 @@ const AgentEditTour = React.memo((props) => {
       setMessage(res.data[0].response.message);
       setOpenError(true);
     }
-  }
+  };
 
-  
-  
   const downloadQrCode = (image) => {
     toDataURL(image, function (dataUrl) {
       var link = document.createElement("a");
@@ -3513,9 +3512,11 @@ const AgentEditTour = React.memo((props) => {
                             </a>
                           </li>
 
-                          <li onClick={() => {
-                            updateQrCode("tour");
-                          }}>
+                          <li
+                            onClick={() => {
+                              updateQrCode("tour");
+                            }}
+                          >
                             <a
                               class="dropdown-item"
                               data-toggle="modal"
@@ -7224,208 +7225,278 @@ const AgentEditTour = React.memo((props) => {
                 </h4>
               </div>
               <div class="modal-body">
-                <div class="">
-                  <div class="browse_img_head">
-                    <h5>Viewer</h5>
+                <ul
+                  className="tab-mod nav nav-pills mb-3"
+                  id="pills-tab"
+                  role="tablist"
+                >
+                  <li className="nav-item">
+                    <a
+                      className="nav-link active customNava"
+                      id="pills-profile-tab"
+                      data-toggle="pill"
+                      href="#pills-profile"
+                      role="tab"
+                      aria-controls="pills-profile"
+                      aria-selected="false"
+                    >
+                      Add new agent
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      id="pills-home-tab"
+                      data-toggle="pill"
+                      href="#pills-home"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected="true"
+                    >
+                      Choose from exising agents
+                    </a>
+                  </li>
+                </ul>
+
+                <div className="tab-content" id="pills-tabContent">
+                  <div
+                    className="tab-pane fade show"
+                    id="pills-home"
+                    role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                  >
+                    <AutocompleteAgents
+                      tourId={tour_id}
+                      setMessage={setMessage}
+                      setOpenSuccess={setOpenSuccess}
+                      setSync={setSync}
+                      sync={sync}
+                      setOpenError={setOpenError}
+                    />
                   </div>
-                  <div class="agent_pop_tab_sec">
-                    <div class="row">
-                      <div class="col-lg-6 col-md-6 mx-auto">
-                        <div class="agent_pop_tab_sec_single">
-                          <div class="agent_pop_tab_sec_single_img">
-                            <img src={agentPhoto} alt="" title="" />
-                          </div>
-                          <div class="agent_pop_tab_sec_single_cont uploadimage p-0">
-                            <div class="custom-file" style={{ width: "40%" }}>
-                              <input
-                                onChange={handleAgentImageChange}
-                                type="file"
-                                class="custom-file-input"
-                                id="customFileInput"
-                                aria-describedby="customFileInput"
-                              />
-                              <label
-                                class="custom-file-label"
-                                for="customFileInput"
-                              >
-                                Select file
-                              </label>
+                  <div
+                    className="tab-pane fade show active"
+                    id="pills-profile"
+                    role="tabpanel"
+                    aria-labelledby="pills-profile-tab"
+                  >
+                    <div class="">
+                      <div class="browse_img_head">
+                        <h5>Viewer</h5>
+                      </div>
+                      <div class="agent_pop_tab_sec">
+                        <div class="row">
+                          <div class="col-lg-6 col-md-6 mx-auto">
+                            <div class="agent_pop_tab_sec_single">
+                              <div class="agent_pop_tab_sec_single_img">
+                                <img src={agentPhoto} alt="" title="" />
+                              </div>
+                              <div class="agent_pop_tab_sec_single_cont uploadimage p-0">
+                                <div
+                                  class="custom-file"
+                                  style={{ width: "40%" }}
+                                >
+                                  <input
+                                    onChange={handleAgentImageChange}
+                                    type="file"
+                                    class="custom-file-input"
+                                    id="customFileInput"
+                                    aria-describedby="customFileInput"
+                                  />
+                                  <label
+                                    class="custom-file-label"
+                                    for="customFileInput"
+                                  >
+                                    Select file
+                                  </label>
+                                </div>
+                                <button
+                                  onClick={() => deleteAgentImage()}
+                                  type="button"
+                                  class="btn-style-two border-0"
+                                >
+                                  Remove
+                                </button>
+                              </div>
                             </div>
-                            <button
-                              onClick={() => deleteAgentImage()}
-                              type="button"
-                              class="btn-style-two border-0"
-                            >
-                              Remove
-                            </button>
                           </div>
                         </div>
+                      </div>
+                      <div class="browse_img_head">
+                        <h5>Personal Information</h5>
+                      </div>
+                      <div class="personalinfo">
+                        <form
+                          onSubmit={(event) => {
+                            event.preventDefault();
+                            saveAgentInfo();
+                          }}
+                        >
+                          <div class="row">
+                            <div class="col-md-6 formbox1">
+                              <label>License No.</label>
+                              <input
+                                name="licenceno"
+                                value={agentData.licenceno}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                              />
+                            </div>
+                            <div class="col-md-6 formbox1">
+                              <label>
+                                First Name{" "}
+                                <span style={{ color: "#ffa12d" }}>*</span>
+                              </label>
+                              <input
+                                name="fname"
+                                value={agentData.fname}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 formbox1">
+                              <label>
+                                Last Name{" "}
+                                <span style={{ color: "#ffa12d" }}>*</span>
+                              </label>
+                              <input
+                                name="lname"
+                                value={agentData.lname}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                                required
+                              />
+                            </div>
+                            <div class="col-md-6 formbox1">
+                              <label>
+                                Email{" "}
+                                <span style={{ color: "#ffa12d" }}>*</span>
+                              </label>
+                              <input
+                                name="email"
+                                value={agentData.email}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 formbox1">
+                              <label>
+                                Website{" "}
+                                <span style={{ color: "#ffa12d" }}>*</span>
+                              </label>
+                              <input
+                                name="website"
+                                value={agentData.website}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                                required
+                              />
+                            </div>
+                            <div class="col-md-6 formbox1">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label>
+                                    Mobile{" "}
+                                    <span style={{ color: "#ffa12d" }}>*</span>
+                                  </label>
+                                  <input
+                                    name="mobile"
+                                    value={agentData.mobile}
+                                    onChange={handleAgentChange}
+                                    type="text"
+                                    class="form-control"
+                                    required
+                                  />
+                                </div>
+                                <div class="col-md-6">
+                                  <label>
+                                    Office Phone{" "}
+                                    <span style={{ color: "#ffa12d" }}>*</span>
+                                  </label>
+                                  <input
+                                    name="officephone"
+                                    value={agentData.officephone}
+                                    onChange={handleAgentChange}
+                                    type="text"
+                                    class="form-control"
+                                    required
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 formbox1">
+                              <label>
+                                Company name{" "}
+                                <span style={{ color: "#ffa12d" }}>*</span>
+                              </label>
+                              <input
+                                name="companyname"
+                                value={agentData.companyname}
+                                onChange={handleAgentChange}
+                                type="text"
+                                class="form-control"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6 formbox1">
+                              <label>Agent Profile </label>
+                              <textarea
+                                name="profile"
+                                value={agentData.profile}
+                                onChange={handleAgentChange}
+                                class="form-control"
+                              ></textarea>
+                            </div>
+                            <div class="col-md-6 formbox1">
+                              <label>Credentials </label>
+                              <textarea
+                                name="credentials"
+                                value={agentData.credentials}
+                                onChange={handleAgentChange}
+                                class="form-control"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <button type="submit" class="next_btn border-0">
+                                UPDATE
+                              </button>
+                              <button
+                                onClick={() => deleteAgent()}
+                                type="button"
+                                class="next_btn grey border-0"
+                              >
+                                REMOVE
+                              </button>
+                            </div>
+                          </div>
+                        </form>
                       </div>
                     </div>
                   </div>
-                  <div class="browse_img_head">
-                    <h5>Personal Information</h5>
-                  </div>
-                  <div class="personalinfo">
-                    <form
-                      onSubmit={(event) => {
-                        event.preventDefault();
-                        saveAgentInfo();
-                      }}
-                    >
-                      <div class="row">
-                        <div class="col-md-6 formbox1">
-                          <label>License No.</label>
-                          <input
-                            name="licenceno"
-                            value={agentData.licenceno}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                          />
-                        </div>
-                        <div class="col-md-6 formbox1">
-                          <label>
-                            First Name{" "}
-                            <span style={{ color: "#ffa12d" }}>*</span>
-                          </label>
-                          <input
-                            name="fname"
-                            value={agentData.fname}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 formbox1">
-                          <label>
-                            Last Name{" "}
-                            <span style={{ color: "#ffa12d" }}>*</span>
-                          </label>
-                          <input
-                            name="lname"
-                            value={agentData.lname}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                            required
-                          />
-                        </div>
-                        <div class="col-md-6 formbox1">
-                          <label>
-                            Email <span style={{ color: "#ffa12d" }}>*</span>
-                          </label>
-                          <input
-                            name="email"
-                            value={agentData.email}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 formbox1">
-                          <label>
-                            Website <span style={{ color: "#ffa12d" }}>*</span>
-                          </label>
-                          <input
-                            name="website"
-                            value={agentData.website}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                            required
-                          />
-                        </div>
-                        <div class="col-md-6 formbox1">
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>
-                                Mobile{" "}
-                                <span style={{ color: "#ffa12d" }}>*</span>
-                              </label>
-                              <input
-                                name="mobile"
-                                value={agentData.mobile}
-                                onChange={handleAgentChange}
-                                type="text"
-                                class="form-control"
-                                required
-                              />
-                            </div>
-                            <div class="col-md-6">
-                              <label>
-                                Office Phone{" "}
-                                <span style={{ color: "#ffa12d" }}>*</span>
-                              </label>
-                              <input
-                                name="officephone"
-                                value={agentData.officephone}
-                                onChange={handleAgentChange}
-                                type="text"
-                                class="form-control"
-                                required
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 formbox1">
-                          <label>
-                            Company name{" "}
-                            <span style={{ color: "#ffa12d" }}>*</span>
-                          </label>
-                          <input
-                            name="companyname"
-                            value={agentData.companyname}
-                            onChange={handleAgentChange}
-                            type="text"
-                            class="form-control"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6 formbox1">
-                          <label>Agent Profile </label>
-                          <textarea
-                            name="profile"
-                            value={agentData.profile}
-                            onChange={handleAgentChange}
-                            class="form-control"
-                          ></textarea>
-                        </div>
-                        <div class="col-md-6 formbox1">
-                          <label>Credentials </label>
-                          <textarea
-                            name="credentials"
-                            value={agentData.credentials}
-                            onChange={handleAgentChange}
-                            class="form-control"
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          <button type="submit" class="next_btn border-0">
-                            UPDATE
-                          </button>
-                          <button
-                            onClick={() => deleteAgent()}
-                            type="button"
-                            class="next_btn grey border-0"
-                          >
-                            REMOVE
-                          </button>
-                        </div>
-                      </div>
-                    </form>
+                  <div
+                    className="tab-pane fade"
+                    id="pills-contact"
+                    role="tabpanel"
+                    aria-labelledby="pills-contact-tab"
+                  >
+                    ...
                   </div>
                 </div>
               </div>
@@ -7587,6 +7658,8 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbedrooms"
                                     value={propertyData.totalbedrooms}
@@ -7600,6 +7673,8 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbathrooms"
                                     value={propertyData.totalbathrooms}
@@ -7628,6 +7703,7 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
                                     onChange={handleInputChange}
                                     name="yearbuilt"
                                     value={propertyData.yearbuilt}
@@ -7764,6 +7840,8 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="price"
                                     value={propertyData.price}
@@ -7977,6 +8055,7 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
                                     onChange={handleInputChange}
                                     name="zipcode"
                                     value={propertyData.zipcode}
@@ -9103,6 +9182,8 @@ const AgentEditTour = React.memo((props) => {
                                   <label>Bedrooms</label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbedrooms"
                                     value={propertyData.totalbedrooms}
@@ -9113,6 +9194,8 @@ const AgentEditTour = React.memo((props) => {
                                   <label>Bathrooms</label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="totalbathrooms"
                                     value={propertyData.totalbathrooms}
@@ -9135,6 +9218,7 @@ const AgentEditTour = React.memo((props) => {
                                   <label>Year Built</label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
                                     onChange={handleInputChange}
                                     name="yearbuilt"
                                     value={propertyData.yearbuilt}
@@ -9261,6 +9345,8 @@ const AgentEditTour = React.memo((props) => {
                                   </label>
                                   <input
                                     type="number"
+                                    onWheel={(e) => e.currentTarget.blur()}
+                                    step={0.1}
                                     onChange={handleInputChange}
                                     name="price"
                                     value={propertyData.price}
@@ -9921,7 +10007,10 @@ const AgentEditTour = React.memo((props) => {
                   <div class="agent_pop_main_head">
                     <h5>QR Codes</h5>
                   </div>
-                  <p class="text-danger m-0">Note : If the QR code is not visible please update the QR code using the button below.</p>
+                  <p class="text-danger m-0">
+                    Note : If the QR code is not visible please update the QR
+                    code using the button below.
+                  </p>
                   <div class="row">
                     <div class="col-lg-3 col-md-3">
                       <div class="agent_pop_img">
