@@ -7392,7 +7392,7 @@ const AgentEditTour = React.memo((props) => {
                             <div class="col-md-6 formbox1">
                               <label>
                                 Website{" "}
-                                <span style={{ color: "#ffa12d" }}>*</span>
+                                {/* <span style={{ color: "#ffa12d" }}>*</span> */}
                               </label>
                               <input
                                 name="website"
@@ -7400,7 +7400,7 @@ const AgentEditTour = React.memo((props) => {
                                 onChange={handleAgentChange}
                                 type="text"
                                 class="form-control"
-                                required
+                                // required
                               />
                             </div>
                             <div class="col-md-6 formbox1">
