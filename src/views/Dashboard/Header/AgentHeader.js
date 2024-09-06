@@ -42,6 +42,7 @@ export default function AgentHeader(props) {
   };
   const { dispatch } = useContext(AuthContext);
   const context = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [opensubModal, setOpenSubModal] = useState(false);
@@ -311,6 +312,7 @@ export default function AgentHeader(props) {
       setMessage("Please enter a valid captcha code");
       setOpenError(true);
     } else {
+      setLoading(true);
       setMessage("Please Wait ....");
       setOpenWarning(true);
       subscribeData.authenticate_key = "abcd123XYZ";
@@ -339,6 +341,9 @@ export default function AgentHeader(props) {
         .catch((err) => {
           setMessage("Something Went Wrong. Please try again later...");
           setOpenError(true);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -1130,8 +1135,12 @@ export default function AgentHeader(props) {
                   />
                 </div>
               </div>
-              <button class="need_pic" style={{ float: "right" }}>
-                Save
+              <button
+                class="need_pic"
+                style={{ float: "right" }}
+                disabled={loading}
+              >
+                {loading?<><i class="loaderrr fas fa-spinner fa-spin"></i> Loading</>:"Save"}
               </button>
             </form>
           </div>

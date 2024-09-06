@@ -538,7 +538,7 @@ export default function AgentTourList(props) {
           setOpenSuccess(true);
           setSync(false);
         } else {
-          setMessage(res.data[0].response.message);
+          setMessage(res.data[0].response.message || "Something Went Wrong. Please try again later...");
           setOpenError(true);
           setSync(false);
         }
