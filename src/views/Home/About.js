@@ -929,7 +929,7 @@ export default function About() {
                     >
                       <div class="image">
                         <img src={res.image_url} alt="Team Member" />
-                        <div class="social-style-two">
+                        {/* <div class="social-style-two">
                           <a href={res.facebook_url}>
                             <i class="fab fa-facebook-f"></i>
                           </a>
@@ -942,7 +942,7 @@ export default function About() {
                           <a href="#">
                             <i class="fab fa-linkedin"></i>
                           </a>
-                        </div>
+                        </div> */}
                       </div>
                       <div class="member-description">
                         <h4>{res.name}</h4>
