@@ -1103,6 +1103,7 @@ export default function AgentEditTour(props) {
         <FlyerTheme1 tourData={tourData} allData={allData} link={link} />
       );
     }
+    
     const formData = new FormData();
     formData.append("htmlString", htmlString);
 
@@ -1372,23 +1373,23 @@ export default function AgentEditTour(props) {
   function changeHover(e) {
     setHover(true);
   }
-  // useEffect(() => {
-  //   if (context.state.user) {
-  //     const objusr = {
-  //       authenticate_key: "abcd123XYZ",
-  //       tourId: imageset_id,
-  //       agent_id: JSON.parse(context.state.user).agentId,
-  //     };
-  //     postRecord(APIGetViewFlyerData, objusr).then((res) => {
-  //       if (res.data[0].response.status === "success") {
-  //         setAllData(res.data[0].response);
-  //         setTourData(res.data[0].response.tourData);
-  //         setLink(res.data[0].response.tourData.tourid);
-  //       } else {
-  //       }
-  //     });
-  //   }
-  // }, [sync, context.state.user, imageset_id]);
+  useEffect(() => {
+    if (context.state.user) {
+      const objusr = {
+        authenticate_key: "abcd123XYZ",
+        tourId: imageset_id,
+        agent_id: JSON.parse(context.state.user).agentId,
+      };
+      postRecord(APIGetViewFlyerData, objusr).then((res) => {
+        if (res.data[0].response.status === "success") {
+          setAllData(res.data[0].response);
+          setTourData(res.data[0].response.tourData);
+          setLink(res.data[0].response.tourData.tourid);
+        } else {
+        }
+      });
+    }
+  }, [sync, context.state.user, imageset_id]);
   const downloadPdf = async () => {
     setOpen(true);
     const objusr = {
