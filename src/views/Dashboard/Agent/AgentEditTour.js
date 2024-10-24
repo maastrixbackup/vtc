@@ -54,6 +54,7 @@ import { format } from "date-fns";
 import AutocompleteAgents from "../../../components/AutocompleteAgents";
 
 const APITourService = APIURL() + "tourservicelink";
+const APIGetSocialIconLink = APIURL() + "getsocialicons";
 
 const APIGetUserData = APIURL() + "user-details";
 const APIGetAmenities = APIURL() + "get-amenities";
@@ -3303,6 +3304,23 @@ const AgentEditTour = React.memo((props) => {
   function changeHover2(e) {
     setHover2(true);
   }
+  useEffect(() => {
+    if (context.state.user) {
+      const obj = {
+        authenticate_key: "abcd123XYZ",
+        agent_id: JSON.parse(context.state.user).agentId,
+        tourId: tour_id,
+      };
+      if (JSON.parse(context.state.user).agentId) {
+        postRecord(APIGetSocialIconLink, obj).then((res) => {
+          // console.log(res);
+          if (res.data[0].response.status === "success") {
+            setYoutubeLinkData(res.data[0].response.data.allVideos);
+          }
+        });
+      }
+    }
+  }, [context.state.user]);
 
   return (
     <>
