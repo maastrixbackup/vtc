@@ -287,6 +287,9 @@ export default function TrafficReport(props) {
   const PrintPdf = () => {
     window.print();
   };
+  console.log('====================================');
+  console.log(trafficData);
+  console.log('====================================');
   return (
     <body style={heading} id="container">
       <div style={{ margin: "0 auto", maxWidth: "1000px" }}>
@@ -649,18 +652,16 @@ export default function TrafficReport(props) {
                                 bgcolor="#FFFFFF"
                                 style={{ textAlign: "center" }}
                               >
-                                Visits
+                                Views
                               </th>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td bgcolor="#f5f5f5">
-                                  {trafficData.youtube_link}
-                                </td>
-                                <td bgcolor="#f5f5f5">
-                                  {trafficData.youtube_view}
-                                </td>
-                              </tr>
+                              {trafficData?.youtube_link?.map((yt) => (
+                                <tr>
+                                  <td bgcolor="#f5f5f5">{yt.youtubeurl}</td>
+                                  <td bgcolor="#f5f5f5">{yt.views}</td>
+                                </tr>
+                              ))}
                             </tbody>
                           </table>
                         </td>

@@ -33,6 +33,7 @@ const APIOtherLink = APIURL() + "tourotherlink";
 const APIServiceMail = APIURL() + "tour-send-mail";
 const APIOtherMail = APIURL() + "other-link-send-email";
 const APITourService = APIURL() + "tourservicelink";
+const APITourView = APIURL() + "add-views";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -137,6 +138,15 @@ export default function AgentViewSelectedVideo(props) {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [category, setCategory] = useState("");
   console.log(isActive,"isActive",AgentId,tourDetailsData);
+
+  useEffect(() => {
+    const objusr = {
+      authenticate_key: "abcd123XYZ",
+      tourid: TourId,
+      type: 3,
+    };
+    postRecord(APITourView, objusr).then((res) => {});
+  }, [TourId]);
 
   useEffect(() => {
     const objusr = { authenticate_key: "abcd123XYZ", agent_id: AgentId };

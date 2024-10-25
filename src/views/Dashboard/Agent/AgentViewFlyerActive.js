@@ -17,6 +17,8 @@ import FlyerTheme6 from "./components/flyer/FlyerTheme6";
 import FlyerTheme7 from "./components/flyer/FlyerTheme7";
 import FlyerTheme8 from "./components/flyer/FlyerTheme8";
 import AgentViewFlyer from "./AgentViewFlyer";
+const APITourView = APIURL() + "add-views";
+
 const APIGetViewFlyerData = APIURL() + "view-flyer";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -48,7 +50,14 @@ export default function AgentViewFlyerActive(props) {
     setOpenSuccess(false);
     setOpenError(false);
   };
-  
+  useEffect(() => {
+    const objusr = {
+      authenticate_key: "abcd123XYZ",
+      tourid: flyerId,
+      type: 2,
+    };
+    postRecord(APITourView, objusr).then((res) => {});
+  }, [flyerId]);
   useEffect(() => {
       const objusr = {
         authenticate_key: "abcd123XYZ",
