@@ -3155,7 +3155,7 @@ export default function AgentImageSets() {
                     />
                     <button type="button" class="next_btn">
                       {" "}
-                      View Our VirtualTorCafe Inventory{" "}
+                      View Our VirtualTourCafe Inventory{" "}
                     </button>
                   </div>
                 </div>
