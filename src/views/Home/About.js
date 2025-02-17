@@ -688,7 +688,12 @@ export default function About() {
                     </h2>
                     <p>
                       {Object.keys(aboutData).length > 0 ? (
-                        aboutData.time_spend_sec_right.desc
+                        <div
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{
+                          __html: aboutData.time_spend_sec_right.desc,
+                        }}
+                      ></div>
                       ) : (
                         <Skeleton
                           variant="text"

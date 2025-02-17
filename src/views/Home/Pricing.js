@@ -593,7 +593,7 @@ export default function Pricing() {
                   <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item">
                       <a
-                        class="nav-link active"
+                        class="nav-link"
                         data-toggle="tab"
                         href="#home"
                         onClick={handleTop}
@@ -605,7 +605,7 @@ export default function Pricing() {
                     </li>
                     <li class="nav-item">
                       <a
-                        class="nav-link"
+                        class="nav-link active"
                         data-toggle="tab"
                         href="#menu1"
                         onClick={handleTop}
@@ -631,7 +631,7 @@ export default function Pricing() {
               <div class="row">
                 <div class="col-lg-12 col-md-12">
                   <div class="tab-content">
-                    <div id="home" class="container tab-pane active">
+                    <div id="home" class="container tab-pane fade">
                       {Object.keys(pricingData).length > 0
                         ? pricingData.standard_package.map((res) => (
                             <div class="row pricing-main-frame">
@@ -740,7 +740,7 @@ export default function Pricing() {
                           ))
                         : ""}
                     </div>
-                    <div id="menu1" class="container tab-pane fade">
+                    <div id="menu1" class="container tab-pane active">
                       {Object.keys(pricingData).length > 0
                         ? pricingData.signature_package.map((res) => (
                             <div class="row pricing-main-frame">
