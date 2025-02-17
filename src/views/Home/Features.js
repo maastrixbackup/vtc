@@ -814,7 +814,7 @@ export default function Features() {
                         index ===
                         featureData.amazing_features.features.length - 1 ? (
                           <div class="col-lg-12 col-md-6">
-                            <div
+                            {/* <div
                               id="kb"
                               class="carousel slide kb_elastic animate_text kb_wrapper"
                               data-ride="carousel"
@@ -831,7 +831,7 @@ export default function Features() {
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen
                                   ></iframe>
-                                  {/* <img src="https://youriguide.com/ezwk2_4266_barbara_ct_pleasanton_ca/" alt="slider 01" /> */}
+                                  <img src="https://youriguide.com/ezwk2_4266_barbara_ct_pleasanton_ca/" alt="slider 01" />
                                 </div>
                               </div>
                               <div class="my-bottom-img">
@@ -850,7 +850,7 @@ export default function Features() {
                                   </h1>
                                 </div>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         ) : (
                           <div class="col-lg-4 col-md-6">
