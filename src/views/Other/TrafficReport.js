@@ -4,14 +4,16 @@ import HighchartsReact from "highcharts-react-official";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { APIURL, APIPath } from "../../CommonMethods/Fetch";
 import { postRecord } from "../../CommonMethods/Save";
-import DownloadImage from "../../images/download-btn.gif";
-import DownloadPrint from "../../images/print-btn.gif";
-import html2PDF from "jspdf-html2canvas";
+import DownloadImage from "../../images/download.png";
+import DownloadPrint from "../../images/print.png";
+// import html2PDF from "jspdf-html2canvas";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { Chart } from "react-google-charts";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 const APIGetTrafficReport = APIURL() + "trafficreportcontent";
 
 export default function TrafficReport(props) {
@@ -245,27 +247,47 @@ export default function TrafficReport(props) {
   // console.log(yaxisData);
   // console.log(xaxisData);
   // console.log(videoServices);
+  // const generatePDF = () => {
+  //   const pages = document.getElementById("container");
+  //   html2PDF(pages, {
+  //     jsPDF: {
+  //       format: "a4",
+  //     },
+  //     html2canvas: {
+  //       scrollX: 0,
+  //       scrollY: -window.scrollY,
+  //     },
+  //     watermark: {
+  //       handler({ pdf, imgNode, pageNumber2, totalPageNumber }) {
+  //         const props = pdf.getImageProperties(imgNode);
+      
+  //         pdf.addImage(imgNode, "PNG", 0, 0, 40, 40);
+  //       },
+  //     },
+  //     imageType: "image/png",
+  //     output: "./AgentTrafficReport.pdf",
+  //   });
+  // };
   const generatePDF = () => {
-    const pages = document.getElementById("container");
-    html2PDF(pages, {
-      jsPDF: {
-        format: "a4",
-      },
-      html2canvas: {
-        scrollX: 0,
-        scrollY: -window.scrollY,
-      },
-      watermark: {
-        handler({ pdf, imgNode, pageNumber2, totalPageNumber }) {
-          const props = pdf.getImageProperties(imgNode);
-          // do something...
-          pdf.addImage(imgNode, "PNG", 0, 0, 40, 40);
-        },
-      },
-      imageType: "image/png",
-      output: "./AgentTrafficReport.pdf",
+    const element = document.getElementById("container");
+  
+    if (!element) {
+      console.error("Container not found!");
+      return;
+    }
+  
+    html2canvas(element, { scale: 2, useCORS: true }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+  
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("AgentTrafficReport.pdf");
     });
   };
+  
 
   var weekDatas = WeeklyData.map((res) => Object.values(res));
   //console.log( parseInt(weekDatas));
@@ -1354,3 +1376,5 @@ export default function TrafficReport(props) {
     // </body>
   );
 }
+
+

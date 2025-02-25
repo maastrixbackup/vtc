@@ -158,17 +158,24 @@ export default function EditFlyerTheme(props) {
   const [tempName, setTempName] = useState("");
   const [themesId, setThemesId] = useState("");
   const [themeDataInfo, setThemeDataInfo] = useState([]);
-  const [offeredTheme, setOfferedTheme] = useState("");
-  const [offeredTheme1, setOfferedTheme1] = useState("");
-  const [flyerOneSide, setFlyerOneSide] = useState([]);
-  const [flyerTwoSide, setFlyerTwoSide] = useState([]);
-  const [bannerData, setBannerData] = useState({});
-  const [offeredThemeImage, setOfferedThemeImage] = useState("");
-  const [offeredThemeImage1, setOfferedThemeImage1] = useState("");
-  const [csvFile, setCsvFile] = useState({});
-  const [tempData, setTempdata] = useState({});
-  const [list2Data, setList2Data] = useState("");
-  const [tempTheme, setTempTheme] = useState({});
+  // const [offeredTheme, setOfferedTheme] = useState(
+    //   flyerOneSide.length > 0 ? flyerOneSide[0].img : ""
+    // );
+    const [offeredTheme1, setOfferedTheme1] = useState("");
+    const [flyerOneSide, setFlyerOneSide] = useState([]);
+    const [flyerTwoSide, setFlyerTwoSide] = useState([]);
+    const [bannerData, setBannerData] = useState({});
+    const [offeredThemeImage, setOfferedThemeImage] = useState("");
+    const [offeredThemeImage1, setOfferedThemeImage1] = useState("");
+    const [csvFile, setCsvFile] = useState({});
+    const [tempData, setTempdata] = useState({});
+    const [list2Data, setList2Data] = useState("");
+    const [tempTheme, setTempTheme] = useState({});
+    const [offeredTheme, setOfferedTheme] = useState("");
+  // const [tempTheme, setTempTheme] = useState("");
+  // const [tempTheme, setTempTheme] = useState(
+  //   flyerOneSide.length > 0 ? JSON.stringify(flyerOneSide[0]) : ""
+  // );
   const [flyerInputTxt, setFlyerInputTxt] = useState("");
   const [editthemeDesigner, setEditThemeDesigner] = useState(false);
   const [editThemeCustomizedata, setEditThemeCustomizedData] = useState({});
@@ -606,10 +613,66 @@ export default function EditFlyerTheme(props) {
     setCustomEditFlythemeData({ ...customEditFlyThemeData, [name]: value });
   };
 
+  useEffect(() => {
+    if (flyerOneSide.length > 0) {
+      setTempTheme(JSON.stringify(flyerOneSide[0]));
+      setOfferedTheme(flyerOneSide[0].img);
+    }
+  }, [flyerOneSide]);
+  
+  // const handleFlyerChnage = (event) => {
+  //   const name = event.target.name;
+  //   setTempTheme(event.target.value);
+  //   const data = JSON.parse(event.target.value);
+  //   if (data.type === "custom") {
+  //     themeData.themeId = data.templatename + "-" + data.themeid;
+  //     themeData.customid = data.id;
+  //     setThemeData({ ...themeData, [name]: "flyer0" + data.id });
+  //   } else {
+  //     setThemeData({ ...themeData, [name]: "flyer0" + data.value });
+  //   }
+
+  //   const customThemeImage = flyerId.filter((res) => {
+  //     return res.value == data.value;
+  //   });
+  //   const filter_data = flyerOneSide.filter((res) => {
+  //     return res.value == data.value;
+  //   });
+  //   const filter_data1 = flyerTwoSide.filter((res) => {
+  //     return res.value == data.value;
+  //   });
+  //   if (customThemeImage.length > 0) {
+  //     setOfferedTheme(custom_theme);
+  //     setOfferedTheme1("");
+  //     setActiveSelcet(false);
+  //   }
+  //   if (filter_data.length > 0) {
+  //     setOfferedTheme(filter_data[0].img);
+  //     setOfferedTheme1("");
+  //     setActiveSelcet(true);
+  //   }
+  //   if (filter_data1.length > 0) {
+  //     setOfferedTheme(filter_data1[0].img);
+  //     setOfferedTheme1(filter_data1[0].img2);
+  //     setActiveSelcet(true);
+  //   }
+  //   setBannerData({ ...bannerData, image: "" });
+  // };
+   
+  // useEffect(() => {
+    
+  //   handleThemeChange({
+  //     target: {
+  //       value: JSON.stringify({ title: "Default", value: "default-1" }),
+  //     },
+  //   });
+  // }, []);
+  
   const handleFlyerChnage = (event) => {
     const name = event.target.name;
     setTempTheme(event.target.value);
     const data = JSON.parse(event.target.value);
+  
     if (data.type === "custom") {
       themeData.themeId = data.templatename + "-" + data.themeid;
       themeData.customid = data.id;
@@ -617,41 +680,35 @@ export default function EditFlyerTheme(props) {
     } else {
       setThemeData({ ...themeData, [name]: "flyer0" + data.value });
     }
-
-    const customThemeImage = flyerId.filter((res) => {
-      return res.value == data.value;
-    });
-    const filter_data = flyerOneSide.filter((res) => {
-      return res.value == data.value;
-    });
-    const filter_data1 = flyerTwoSide.filter((res) => {
-      return res.value == data.value;
-    });
-    if (customThemeImage.length > 0) {
-      setOfferedTheme(custom_theme);
+  
+    const customThemeImage = flyerId.find((res) => res.value === data.value);
+    const filter_data = flyerOneSide.find((res) => res.value === data.value);
+    const filter_data1 = flyerTwoSide.find((res) => res.value === data.value);
+  
+    if (customThemeImage) {
+      setOfferedTheme(customThemeImage.img);
       setOfferedTheme1("");
       setActiveSelcet(false);
-    }
-    if (filter_data.length > 0) {
-      setOfferedTheme(filter_data[0].img);
+    } else if (filter_data) {
+      setOfferedTheme(filter_data.img);
       setOfferedTheme1("");
       setActiveSelcet(true);
-    }
-    if (filter_data1.length > 0) {
-      setOfferedTheme(filter_data1[0].img);
-      setOfferedTheme1(filter_data1[0].img2);
+    } else if (filter_data1) {
+      setOfferedTheme(filter_data1.img);
+      setOfferedTheme1(filter_data1.img2);
       setActiveSelcet(true);
     }
+  
     setBannerData({ ...bannerData, image: "" });
   };
-  useEffect(() => {
-    // This effect will run whenever themeData is updated
-    handleThemeChange({
-      target: {
-        value: JSON.stringify({ title: "Default", value: "default-1" }),
-      },
-    });
-  }, [themeData]);
+  
+  const handleThemeChange = (event) => {
+    // const name = event.target.name;
+    setTempdata(event.target.value);
+    const data = JSON.parse(event.target.value);
+    var themevalue = data.value;
+    editImageSecondDropdownThemeFlyers(themevalue);
+  };
   //console.log(offeredTheme);
   //console.log(offeredTheme1);
   // const handleThemeChange = (event) => {
@@ -689,13 +746,6 @@ export default function EditFlyerTheme(props) {
   //         })
   // }
 
-  const handleThemeChange = (event) => {
-    // const name = event.target.name;
-    setTempdata(event.target.value);
-    const data = JSON.parse(event.target.value);
-    var themevalue = data.value;
-    editImageSecondDropdownThemeFlyers(themevalue);
-  };
   const editImageSecondDropdownThemeFlyers = (data) => {
     themeData.authenticate_key = "abcd123XYZ";
     themeData.agentId = JSON.parse(context.state.user)?.agentId;
@@ -1457,7 +1507,7 @@ export default function EditFlyerTheme(props) {
                         className="custom-select"
                         style={{ height: "45px" }}
                       >
-                        <option value="">Choose a flyer theme</option>
+                        {/* <option value="">Choose a flyer theme</option> */}
                         <optgroup label="Custom">
                           {Object.keys(flyerId).length > 0 ? (
                             flyerId.map((res) => (
@@ -1554,25 +1604,7 @@ export default function EditFlyerTheme(props) {
                       </div>
                     ) : (
                       ""
-                    )}
-                    {/* {
-                                                offeredThemeImage === "" ? (
-                                                    <img src="" alt="" style={{}} />
-                                                ) : (
-                                                    <div>
-                                                        <img src={offeredThemeImage}></img>
-                                                        <img src={offeredThemeImage1}></img>
-                                                    </div>
-                                                )
-                                            } */}
-                    {/* {offeredTheme === "" ? (
-                                                <img src={defaultTheme} alt="" style={{}} />
-                                            ) : (
-                                                <div>
-                                                    <img src={offeredTheme} alt="" style={{}} />
-                                                    <img src={offeredTheme1} alt="" style={{}} />
-                                                </div>
-                                            )} */}
+                    )} 
                   </div>
                   <div class="row">
                     <div class="col-lg-12 col-md-12 text-center">
