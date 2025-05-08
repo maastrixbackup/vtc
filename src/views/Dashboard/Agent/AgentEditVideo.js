@@ -45,6 +45,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import AgentDashBoardHeader from "./AgentDashBoardHeader";
+import DragAndDrop from "./DragAndDrop";
 const APIGetUserData = APIURL() + "user-details";
 const APIGetVideoList = APIURL() + "get-videoList";
 const APIChangeService = APIURL() + "change-tour-service";
@@ -77,6 +78,7 @@ export default function AgentEditVideo(props) {
   const { dispatch } = useContext(AuthContext);
   const context = useContext(AuthContext);
   const [currentUser, setCurrentUser] = useState({});
+  const [showDynamicModal, setShowDynamicModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videoLIst, setVideoList] = useState([]);
   const [sync, setSync] = useState(true);
@@ -149,6 +151,62 @@ export default function AgentEditVideo(props) {
       $(".gee_hamburger").show();
     });
   };
+  let isDragging = false;
+  let scrollFrame = null;
+  let lastMouseY = 0;
+  
+  function startAutoScroll(container) {
+    function smoothScroll() {
+      if (!isDragging || !container) return;
+  
+      const rect = container.getBoundingClientRect();
+      const topZone = rect.top + rect.height * 0.2;
+      const bottomZone = rect.bottom - rect.height * 0.2;
+  
+      let scrollDelta = 0;
+      if (lastMouseY < topZone) {
+        scrollDelta = -Math.max(2, (topZone - lastMouseY) / 5);
+      } else if (lastMouseY > bottomZone) {
+        scrollDelta = Math.max(2, (lastMouseY - bottomZone) / 5);
+      }
+  
+      const maxScrollTop = container.scrollHeight - container.clientHeight;
+      const newScrollTop = container.scrollTop + scrollDelta;
+  
+      // Clamp scroll to prevent overflow
+      if (newScrollTop >= 0 && newScrollTop <= maxScrollTop) {
+        container.scrollTop = newScrollTop;
+      }
+  
+      scrollFrame = requestAnimationFrame(smoothScroll);
+    }
+  
+    scrollFrame = requestAnimationFrame(smoothScroll);
+  }
+  
+  function stopAutoScroll() {
+    if (scrollFrame) cancelAnimationFrame(scrollFrame);
+    scrollFrame = null;
+    isDragging = false;
+    document.body.style.userSelect = "";
+  }
+  function handleDragStart() {
+    const container = document.getElementById("gridContainer");
+    if (!container) return;
+  
+    isDragging = true;
+    document.body.style.userSelect = "none";
+    startAutoScroll(container);
+  }
+  
+  function handleDrag(e) {
+    lastMouseY = e.clientY;
+  }
+  
+  function handleDragEnd() {
+    stopAutoScroll();
+  }
+  
   useEffect(() => {
     if (context.state.user) {
       const obj = {
@@ -718,12 +776,7 @@ export default function AgentEditVideo(props) {
       ["posttotruveo"]: checked === true ? 1 : 0,
     });
   };
-  // const filterData = async () => {
-  //     const slice = videoLIst.slice(offset - 1, offset - 1 + postPerPage);
-  //     setTotalData(slice);
-  //     setAllData(slice);
-  //     (Math.ceil(videoLIst.length / postPerPage));
-  // }
+
   const filterData = async () => {
     const endOffset = offset + postPerPage;
     setTotalData(videoLIst.slice(offset, endOffset));
@@ -878,10 +931,12 @@ export default function AgentEditVideo(props) {
     }
     return new File([u8arr], filename, { type: mime });
   }
+  const [idsArray, setIdsArray] = useState([]);
   function onChange(sourceId, sourceIndex, targetIndex, targetId) {
     const nextState = swap(dragImages, sourceIndex, targetIndex);
     setDragImages(nextState);
     console.log(dragImages);
+
     var arr = [];
     nextState.forEach((res) => {
       arr.push(res.id);
@@ -1146,6 +1201,15 @@ export default function AgentEditVideo(props) {
                             >
                               <i class="fas fa-newspaper"></i> Go to related
                               Tour
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={() => setShowDynamicModal(true)}
+                              style={{ marginBottom: "20px" }}
+                            >
+                              <i class="fas fa-magic"></i> Change Order
                             </a>
                           </li>
                         </ul>
@@ -1919,215 +1983,6 @@ export default function AgentEditVideo(props) {
               </GridDropZone>
             </div>
           </GridContextProvider>
-          {/* <DragDropContext onDragEnd={handleOnDragEnd}>
-                        <Droppable droppableId="characters" direction="horizontal">
-                            {(provided) => (
-                                <div className="row padd_top characters" {...provided.droppableProps} ref={provided.innerRef}>
-                                    {dragImages.map((res, index) => {
-                                        return (
-                                            <Draggable key={res.id} draggableId={res.id.toString()} index={index}>
-                                                {(provided) => (
-                                                    <div onClick={() => {
-                                                        setImageUrl(res.filepath);
-                                                        setImageId(res.id);
-                                                        handleImageId(res);
-                                                    }} class="col-lg-4 col-md-12" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                        <div id={"myDiv" + res.id} style={{ cursor: "pointer" }} class="select_img_set_box new_edit_tour_sec">
-                                                            <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                                                                <div class="tab-pane fade show active" id={"nav-home" + res.id} role="tabpanel" aria-labelledby={"nav-home-tab" + res.id}>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-4 col-md-4">
-                                                                            <div class="select_img_set_box_img">
-                                                                                <img src={res.filepath} alt="" />
-                                                                                {res.image_type === "panoramas" ? (
-                                                                                    <img src={res.flag_img} style={{ position: "absolute", width: "90px", right: "5px", top: "5px", border: "none", boxShadow: "none" }} alt="" />
-                                                                                ) : (
-                                                                                    <i onClick={() => {
-                                                                                        setOpenEditImageModal(true);
-                                                                                        setFilename(res.filename);
-                                                                                    }} class="far fa-edit edit-btn" style={{ top: "20px" }}></i>
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-8 col-md-8">
-                                                                            <div class="select_img_set_box_cont">
-                                                                                <input type="text" name="" placeholder={res.filename} class="form-control" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-9 formbox1" style={{ marginTop: "10px" }}>
-                                                                            <label style={{ marginRight: "35px" }}>Use this Image on video ?<span style={{ color: "#ffa12d" }}></span></label>
-                                                                        </div>
-                                                                        <div class="col-md-3 formbox1" style={{ marginTop: "7px" }}>
-                                                                            <Switch
-                                                                                onChange={event => { handleVideoTourChange(event, res.id) }}
-                                                                                checked={res.enableonvideo === 1 ? true : false}
-                                                                                handleDiameter={28}
-                                                                                offColor="#5D5D5D"
-                                                                                onColor="#F6AD17"
-                                                                                offHandleColor="#fff"
-                                                                                onHandleColor="#fff"
-                                                                                height={35}
-                                                                                width={60}
-                                                                                borderRadius={6}
-                                                                                uncheckedIcon={
-                                                                                    <div
-                                                                                        style={{
-                                                                                            display: "flex",
-                                                                                            justifyContent: "center",
-                                                                                            alignItems: "center",
-                                                                                            height: "100%",
-                                                                                            fontSize: 15,
-                                                                                            color: "white",
-                                                                                            paddingRight: 2
-                                                                                        }}
-                                                                                    >
-                                                                                        No
-                                                                                    </div>
-                                                                                }
-                                                                                checkedIcon={
-                                                                                    <div
-                                                                                        style={{
-                                                                                            display: "flex",
-                                                                                            justifyContent: "center",
-                                                                                            alignItems: "center",
-                                                                                            height: "100%",
-                                                                                            fontSize: 15,
-                                                                                            color: "white",
-                                                                                            paddingRight: 2
-                                                                                        }}
-                                                                                    >
-                                                                                        Yes
-                                                                                    </div>
-                                                                                }
-
-                                                                                className="react-switch"
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                    <hr class="brdr" />
-                                                                </div>
-                                                                <div class="tab-pane fade" id={"nav-profile" + res.id} role="tabpanel" aria-labelledby={"nav-profile-tab" + res.id}>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-4 col-md-4">
-                                                                            <div class="select_img_set_box_img">
-                                                                                <img src={res.filepath} alt="" />
-                                                                                {res.image_type === "image" ? (
-                                                                                    <i data-toggle="modal" data-target="#edit_img" class="far fa-edit edit-btn"></i>
-                                                                                ) : (
-                                                                                    res.image_type === "panoramas" ? (
-                                                                                        <img src={res.flag_img} style={{ position: "absolute", width: "80px", right: "5px", top: "5px", border: "none", boxShadow: "none" }} alt="" />
-                                                                                    ) : (
-                                                                                        ""
-                                                                                    )
-                                                                                )}
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-8 col-md-8">
-                                                                            <div class="caption_setting">
-                                                                                <h6>Caption Setting</h6>
-                                                                            </div>
-                                                                            <div class="row">
-                                                                                <div class="col-lg-12 col-md-12">
-                                                                                    <div class="table-responsive">
-                                                                                        <table class="table image-settings">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>Horizontal</th>
-                                                                                                    <th>Vertical</th>
-                                                                                                    <th>Zooming</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody><tr class="mini-chk">
-                                                                                                <td>
-                                                                                                    <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleHorRadioChange(event, res.id) }} name={"hor" + res.id} value="none" id={"hra" + res.id} checked={res.camera_horizontal === "none" ? true : false} />
-                                                                                                    <label id="lbl" for={"hra" + res.id}>
-                                                                                                        <img src={one} />
-                                                                                                    </label>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleVerRadioChange(event, res.id) }} name={"ver" + res.id} value="none" id={"vra" + res.id} checked={res.camera_vertical === "none" ? true : false} />
-                                                                                                    <label id="lbl" for={"vra" + res.id}>
-                                                                                                        <img src={four} />
-                                                                                                    </label>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleZoomRadioChange(event, res.id) }} name={"zoom" + res.id} value="none" id={"zooma" + res.id} checked={res.camera_zoom === "none" ? true : false} />
-                                                                                                    <label id="lbl" for={"zooma" + res.id}>
-                                                                                                        <img src={seven} />
-                                                                                                    </label>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                                <tr class="mini-chk">
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleHorRadioChange(event, res.id) }} name={"hor" + res.id} value="right" id={"hrb" + res.id} checked={res.camera_horizontal === "right" ? true : false} />
-                                                                                                        <label id="lbl" for={"hrb" + res.id}>
-                                                                                                            <img src={two} />
-                                                                                                        </label>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleVerRadioChange(event, res.id) }} name={"ver" + res.id} value="top" id={"vrb" + res.id} checked={res.camera_vertical === "top" ? true : false} />
-                                                                                                        <label id="lbl" for={"vrb" + res.id}>
-                                                                                                            <img src={five} />
-                                                                                                        </label>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleZoomRadioChange(event, res.id) }} name={"zoom" + res.id} value="in" id={"zoomb" + res.id} checked={res.camera_zoom === "in" ? true : false} />
-                                                                                                        <label id="lbl" for={"zoomb" + res.id}>
-                                                                                                            <img src={eight} />
-                                                                                                        </label>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <tr class="mini-chk">
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleHorRadioChange(event, res.id) }} name={"hor" + res.id} value="left" id={"hrc" + res.id} checked={res.camera_horizontal === "left" ? true : false} />
-                                                                                                        <label id="lbl" for={"hrc" + res.id}>
-                                                                                                            <img src={three} />
-                                                                                                        </label>
-
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleVerRadioChange(event, res.id) }} name={"ver" + res.id} value="bottom" id={"vrc" + res.id} checked={res.camera_vertical === "bottom" ? true : false} />
-                                                                                                        <label id="lbl" for={"vrc" + res.id}>
-                                                                                                            <img src={six} />
-                                                                                                        </label>
-                                                                                                        
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <input style={{ display: "none" }} class="radio" type="radio" onChange={event => { handleZoomRadioChange(event, res.id) }} name={"zoom" + res.id} value="out" id={"zoomc" + res.id} checked={res.camera_zoom === "out" ? true : false} />
-                                                                                                        <label id="lbl" for={"zoomc" + res.id}>
-                                                                                                            <img src={nine} />
-                                                                                                        </label>
-                                                                                                       
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody></table>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="nav_tab_sec">
-                                                                <nav>
-                                                                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                                                        <a class="nav-item active first" id={"nav-home-tab" + res.id} data-toggle="tab" href={"#nav-home" + res.id} role="tab" aria-controls={"#nav-home" + res.id} aria-selected="true"><i class="far fa-dot-circle"></i></a>
-                                                                        <a style={{ marginRight: "-120px" }} class="nav-item middle" id={"nav-profile-tab" + res.id} data-toggle="tab" href={"#nav-profile" + res.id} role="tab" aria-controls={"nav-profile" + res.id} aria-selected="false"><i class="far fa-dot-circle"></i></a>
-                                                                    </div>
-                                                                </nav>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                            </Draggable>
-                                        );
-                                    })}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext> */}
         </div>
       </section>
 
@@ -5887,6 +5742,103 @@ export default function AgentEditVideo(props) {
       <Backdrop className={classes.backdrop} open={open}>
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      <Dialog
+        open={showDynamicModal}
+        onClose={() => setShowDynamicModal(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle>
+          Edit Video Frames
+          <CancelIcon
+            onClick={() => setShowDynamicModal(false)}
+            style={{ float: "right", cursor: "pointer" }}
+          />
+        </DialogTitle>
+        <DialogContent
+          dividers
+          style={{
+            padding: "16px",
+            height: "80vh",
+            position: "relative"
+          }}
+        >
+          {/* --- Start Modal Content --- */}
+          <GridContextProvider
+            onChange={onChange}
+            scrollable={true}
+            scrollSpeed={15}
+          >
+            <div
+              id="gridContainer"
+              className="grid-container videoeditmodal"
+              style={{
+                height: "100%",
+                position: "relative",
+                overflowY: "auto",
+                overflowX: "hidden",
+              }}
+            >
+              <GridDropZone
+                boxesPerRow={3}
+                rowHeight={200}
+                style={{
+                  height: Math.ceil(dragImages.length / 3) * 200 + "px",
+                  position: "relative",
+                  width: "100%",
+                  paddingBottom: "60px",
+                }}
+              >
+                {dragImages.map((res, index) => (
+                  <GridItem
+                    key={res.id}
+                    onDragStart={handleDragStart}
+                    onDrag={handleDrag}
+                    onDragEnd={handleDragEnd}
+                  >
+                    <div
+                      onClick={() => {
+                        setImageUrl(res.filepath);
+                        setImageId(res.id);
+                        handleImageId(res);
+                      }}
+                      className="col-lg-12 col-md-12"
+                    >
+                      <div
+                        id={"myDiv" + res.id}
+                        style={{ cursor: "pointer" }}
+                        class="select_img_set_box new_edit_tour_sec"
+                      >
+                        <div
+                          class="tab-content py-3 px-3 px-sm-0 py-sm-0"
+                          id="nav-tabContent"
+                        >
+                          <div
+                            class="tab-pane fade show active"
+                            id={"nav-home" + res.id}
+                            role="tabpanel"
+                            aria-labelledby={"nav-home-tab" + res.id}
+                          >
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="select_img_set_box_img">
+                                  <img src={res.filepath} alt="" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </GridItem>
+                ))}
+              </GridDropZone>
+            </div>
+          </GridContextProvider>
+          {/* --- End Modal Content --- */}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

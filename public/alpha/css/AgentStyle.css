@@ -54,6 +54,17 @@ a {
   border: none;
 }
 
+.videoeditmodal .new_edit_tour_sec
+{
+  height: auto;
+  min-height: auto !important;
+}
+
+.videoeditmodal  .select_img_set_box
+{
+  padding: 0;
+}
+
 h1 {
   margin: 0 0 30px;
 
