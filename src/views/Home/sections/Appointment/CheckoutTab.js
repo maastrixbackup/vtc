@@ -137,12 +137,20 @@ export default function CheckoutTab(props) {
   //   setPrice(price);
   // }, [allData, miscData]);
   useEffect(() => {
+    console.log("✅ allData:", allData);
+    console.log("✅ combopackage:", allData?.combopackage);
+    console.log("✅ combopackage length:", allData?.combopackage?.length);
+    console.log("✅ Has Combo Packages:", allData?.combopackage?.length > 0);
+  }, [allData]);
+  
+  useEffect(() => {
     let total = 0;
 
     const subPackages = JSON.parse(localStorage.getItem("Sub_Package")) || [];
     const comboSubPackages =
       JSON.parse(localStorage.getItem("Combo_Sub_Package")) || [];
     const miscSelected = JSON.parse(localStorage.getItem("Misc_Package")) || [];
+
 
     // A-La-Carte packages (carte)
     if (allData?.package?.length > 0) {
@@ -156,8 +164,8 @@ export default function CheckoutTab(props) {
     }
 
     // ✅ Combo packages from backend response
-    if (allData?.combopackage?.length > 0) {
-      allData.combopackage.forEach((pkg) => {
+    if (allData?.combo_package?.length > 0) {
+      allData.combo_package.forEach((pkg) => {
         pkg.package_details.forEach((detail) => {
           if (comboSubPackages.includes(detail.id)) {
             total += parseFloat(detail.price);
@@ -165,7 +173,6 @@ export default function CheckoutTab(props) {
         });
       });
     }
-
     // Misc packages
     if (miscData?.miscellaneous_details?.length > 0) {
       miscData.miscellaneous_details.forEach((detail) => {

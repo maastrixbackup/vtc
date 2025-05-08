@@ -129,12 +129,20 @@ export default function Packages(props) {
   //   setSubPackages((prevArray) => [...prevArray, id]);
   //   setSignaturePackage(allPackages.combopackage[0]);
   // };
+
+  const [comboSubPackages, setComboSubPackages] = useState(
+    JSON.parse(localStorage.getItem("Combo_Sub_Package")) === null
+      ? []
+      : JSON.parse(localStorage.getItem("Combo_Sub_Package"))
+  );
+
   const addComboSubPackages = (id) => {
-    setSubPackages((prevArray) => [...prevArray, id]);
+    const updated = [...subPackages, id];
+    setSubPackages(updated);
     setSignaturePackageData([allPackages.combopackage[0]]); // full object
+    localStorage.setItem("Combo_Sub_Package", JSON.stringify(updated));
   };
-  
-  
+
   // const removeComboSubPackages = (id) => {
   //   const index = arrayRemove(subPackages, id);
   //   setSubPackages(index);
@@ -143,21 +151,18 @@ export default function Packages(props) {
   const removeComboSubPackages = (id) => {
     const updated = arrayRemove(subPackages, id);
     setSubPackages(updated);
-    setSignaturePackageData([]); // clear full object
+    setSignaturePackageData([]);
+    localStorage.setItem("Combo_Sub_Package", JSON.stringify(updated));
   };
-  
-  
-  const [comboSubPackages, setComboSubPackages] = useState(
-    JSON.parse(localStorage.getItem("Combo_Sub_Package")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("Combo_Sub_Package"))
-  );
+
   const savePackage = () => {
     if (subPackages.length === 0) {
       setMessage("Please select any package");
       setOpenError(true);
     } else {
       localStorage.setItem("Sub_Package", JSON.stringify(subPackages));
+      localStorage.setItem("Combo_Sub_Package", JSON.stringify(subPackages));
+
       localStorage.setItem(
         "Combo_Package",
         JSON.stringify(signaturePackageData)
@@ -503,7 +508,7 @@ export default function Packages(props) {
               </div>
               <div class="package_sec_cont">
                 {Object.keys(allPackages).length > 0 ? (
-                  allPackages.combopackage.map((res,index) => (
+                  allPackages.combopackage.map((res, index) => (
                     <div>
                       <div
                         className="package-box-appointment package-productlist"
@@ -542,12 +547,7 @@ export default function Packages(props) {
                                   <AccordionDetails style={{ padding: "0px" }}>
                                     <div className="card-body">
                                       <div className="pricing-box-photo">
-                                        <img
-                                          src={
-                                            res.image
-                                          }
-                                          alt
-                                        />
+                                        <img src={res.image} alt />
                                         <div className="pricing-box-price-amount">
                                           Starting at $200
                                         </div>
