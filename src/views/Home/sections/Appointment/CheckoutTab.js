@@ -112,30 +112,72 @@ export default function CheckoutTab(props) {
   }, []);
   // console.log(allData);
   // console.log(packages);
+  // useEffect(() => {
+  //   let price = 0;
+  //   if (Object.keys(allData).length > 0) {
+  //     allData.package.forEach((element) => {
+  //       element.package_details.forEach((res) => {
+  //         JSON.parse(localStorage.getItem("Sub_Package")).forEach((sd) => {
+  //           if (res.id === sd) {
+  //             price += res.price;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   }
+  //   if (Object.keys(miscData).length > 0) {
+  //     miscData.miscellaneous_details.forEach((element) => {
+  //       JSON.parse(localStorage.getItem("Misc_Package")).forEach((res) => {
+  //         if (element.id === res) {
+  //           price += element.price;
+  //         }
+  //       });
+  //     });
+  //   }
+  //   setPrice(price);
+  // }, [allData, miscData]);
   useEffect(() => {
-    var price = 0;
-    if (Object.keys(allData).length > 0) {
-      allData.package.forEach((element) => {
-        element.package_details.forEach((res) => {
-          JSON.parse(localStorage.getItem("Sub_Package")).forEach((sd) => {
-            if (res.id === sd) {
-              price += res.price;
-            }
-          });
-        });
-      });
-    }
-    if (Object.keys(miscData).length > 0) {
-      miscData.miscellaneous_details.forEach((element) => {
-        JSON.parse(localStorage.getItem("Misc_Package")).forEach((res) => {
-          if (element.id === res) {
-            price += element.price;
+    let total = 0;
+
+    const subPackages = JSON.parse(localStorage.getItem("Sub_Package")) || [];
+    const comboSubPackages =
+      JSON.parse(localStorage.getItem("Combo_Sub_Package")) || [];
+    const miscSelected = JSON.parse(localStorage.getItem("Misc_Package")) || [];
+
+    // A-La-Carte packages (carte)
+    if (allData?.package?.length > 0) {
+      allData.package.forEach((pkg) => {
+        pkg.package_details.forEach((detail) => {
+          if (subPackages.includes(detail.id)) {
+            total += parseFloat(detail.price);
           }
         });
       });
     }
-    setPrice(price);
+
+    // ✅ Combo packages from backend response
+    if (allData?.combopackage?.length > 0) {
+      allData.combopackage.forEach((pkg) => {
+        pkg.package_details.forEach((detail) => {
+          if (comboSubPackages.includes(detail.id)) {
+            total += parseFloat(detail.price);
+          }
+        });
+      });
+    }
+
+    // Misc packages
+    if (miscData?.miscellaneous_details?.length > 0) {
+      miscData.miscellaneous_details.forEach((detail) => {
+        if (miscSelected.includes(detail.id)) {
+          total += parseFloat(detail.price);
+        }
+      });
+    }
+
+    setPrice(total);
   }, [allData, miscData]);
+
   function insert(str, index, value) {
     return str.substr(0, index) + value + str.substr(index);
   }
@@ -160,7 +202,7 @@ export default function CheckoutTab(props) {
       }
     }
   }
-  
+
   const onSubmit1 = async (values) => {
     if (values.number === undefined) {
       setMessage("Please enter card number");
@@ -186,9 +228,8 @@ export default function CheckoutTab(props) {
       values.city = basicInfo.city;
       values.zipcode = basicInfo.zip;
       values.notes = basicInfo.notes;
-      values.combocategories = JSON.parse(
-        localStorage.getItem("Combo_Package")
-      );
+      values.combocategories =
+        JSON.parse(localStorage.getItem("Combo_Package")) || [];
       values.categories = JSON.parse(localStorage.getItem("Carte_Package"));
       values.packageid = JSON.parse(localStorage.getItem("Sub_Package"));
       values.combopackageid = JSON.parse(
@@ -480,110 +521,6 @@ export default function CheckoutTab(props) {
             </tbody>
           </table>
         </div>
-
-        {/* <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel-body paymentmethod_form">
-                            <div class="form-group">
-                                <label for="cardNumber">CARD NUMBER</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="cc_num" value={cardDetails.cc_num} onChange={handlePhoneChange} name="cc_num" placeholder="Valid Card Number" minLength={16} maxLength={18} />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">CARD HOLDER NAME</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="cc_name" value={cardDetails.cc_name} onChange={handlechange} name="cc_name" placeholder="Card Holder Name" required="" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class=" col-lg-12">
-                                    <div class="form-group">
-                                        <label for="expityMonth"> EXPIRY DATE</label>
-                                        <div class="row">
-                                            <div class="col-xs-6 col-lg-6 pl-ziro">
-                                                <input type="text" class="form-control" id="cc_month" value={cardDetails.cc_month} onChange={handlePhoneChange} name="cc_month" placeholder="MM" maxLength={2} />
-                                            </div>
-                                            <div class="col-xs-6 col-lg-6 pl-ziro">
-                                                <input type="text" class="form-control" id="cc_year" value={cardDetails.cc_year} onChange={handlePhoneChange} name="cc_year" placeholder="YYYY" maxLength={4} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cardNumber">CVV</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="cvv" value={cardDetails.cvv} onChange={handlePhoneChange} name="cvv" placeholder="cvv" maxLength={3} />
-                                </div>
-                            </div>
-                            <hr class="spacer10px"></hr>
-                            <hr class="spacer30px"></hr>
-                            <hr class="spacer30px"></hr>
-
-                            <div class="row">
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="checkout_pricebox">
-                            <table width="100%" cellspacing="5" cellpadding="5" border="0">
-                                <tbody>
-                                    <tr>
-                                        <td width="60%">Order Total</td>
-                                        <td width="40%" align="right"><strong>$ {price + ".00"}</strong></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Estimated Tax</td>
-                                        <td align="right"><strong>$0.00</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2" height="5px"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" style={{ padding: "0" }} height="3px" bgcolor="#dedede"></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" height="5px"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Order total (1 item)</td>
-                                        <td align="right"><strong>$ {price + ".00"}</strong></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2" height="15px"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2" align="center">
-                                            <div class="placeoder">
-                                                <a onClick={onSubmit}>Place Your Order</a>
-                                                <a onClick={() => {
-                                                    setCheckoutTab(false);
-                                                    setPackageTab(true);
-                                                }}>Add/Update Package</a>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="disclaimer_order4"><h6>Disclaimer:</h6>
-                            <p>Your order will be reviewed
-                                confirmed by our amazing
-                                staff! If any changes are
-                                necessary, or we are not able to
-                                your requirements, your order
-                                promptly refunded.</p>
-                        </div>
-
-                    </div>
-                </div> */}
 
         <div class="row" style={{ display: "grid" }}>
           <Styles>

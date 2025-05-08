@@ -125,15 +125,28 @@ export default function Packages(props) {
       return false;
     }
   };
+  // const addComboSubPackages = (id) => {
+  //   setSubPackages((prevArray) => [...prevArray, id]);
+  //   setSignaturePackage(allPackages.combopackage[0]);
+  // };
   const addComboSubPackages = (id) => {
     setSubPackages((prevArray) => [...prevArray, id]);
-    setSignaturePackage(allPackages.combopackage[0]);
+    setSignaturePackageData([allPackages.combopackage[0]]); // full object
   };
+  
+  
+  // const removeComboSubPackages = (id) => {
+  //   const index = arrayRemove(subPackages, id);
+  //   setSubPackages(index);
+  //   setSignaturePackage([]);
+  // };
   const removeComboSubPackages = (id) => {
-    const index = arrayRemove(subPackages, id);
-    setSubPackages(index);
-    setSignaturePackage([]);
+    const updated = arrayRemove(subPackages, id);
+    setSubPackages(updated);
+    setSignaturePackageData([]); // clear full object
   };
+  
+  
   const [comboSubPackages, setComboSubPackages] = useState(
     JSON.parse(localStorage.getItem("Combo_Sub_Package")) === null
       ? []
@@ -154,126 +167,6 @@ export default function Packages(props) {
       setMiscPackageTab(true);
     }
   };
-  // useEffect(() => {
-  //   cartePackageData.forEach((res) => {
-  //     var element = document.getElementById("myDIV" + res);
-  //     if (res === 21) {
-  //       if (headshot === false) {
-  //         setHeadshot(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setHeadshot(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "21");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 19) {
-  //       if (twlightPhoto === false) {
-  //         setTwlightPhoto(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setTwlightPhoto(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "19");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 18) {
-  //       if (virtualStag === false) {
-  //         setVirtualStag(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setVirtualStag(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "18");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 17) {
-  //       if (iguide === false) {
-  //         setIguide(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setIguide(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "17");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 16) {
-  //       if (virtual === false) {
-  //         setVirtual(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setVirtual(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "16");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 15) {
-  //       if (photoshoot === false) {
-  //         setPhotoshoot(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setPhotoshoot(false);
-  //         element.classList.remove("op");
-  //         setCartePackageData(
-  //           cartePackageData.filter((item) => item.id !== 15)
-  //         );
-  //         const index = arrayRemove(cartePackageData, "15");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 12) {
-  //       if (Walkthrough === false) {
-  //         setWalkthrough(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setWalkthrough(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "12");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     if (res === 11) {
-  //       if (aerialDrone === false) {
-  //         setAerialDrone(true);
-  //         element.classList.add("op");
-  //         setCartePackageData((prevArray) => [...prevArray, res]);
-  //       } else {
-  //         setAerialDrone(false);
-  //         element.classList.remove("op");
-  //         const index = arrayRemove(cartePackageData, "11");
-  //         setCartePackageData(index);
-  //       }
-  //     }
-  //     signaturePackageData.forEach((res) => {
-  //       var element = document.getElementById("sigDIV" + res);
-  //       if (res === 9) {
-  //         if (signature === false) {
-  //           setSignature(true);
-  //           element.classList.add("op");
-  //           setSignaturePackageData((prevArray) => [...prevArray, res]);
-  //         } else {
-  //           setSignature(false);
-  //           element.classList.remove("op");
-  //           setSignaturePackageData(
-  //             signaturePackageData.filter((item) => item.id === res)
-  //           );
-  //         }
-  //       }
-  //     });
-  //   });
-  // }, []);
   const setCartePackage = (data) => {
     var element = document.getElementById("myDIV" + data.id);
     if (data.id === 21) {
