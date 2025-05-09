@@ -246,7 +246,7 @@ export default function AgentOrderList(props) {
                       <th style={{ textAlign: "center" }}>Payment Status</th>
                       <th style={{ textAlign: "center" }}>Amount</th>
                       <th style={{ textAlign: "center" }}>Payment Date</th>
-                      <th style={{ textAlign: "center" }}>Action</th>
+                      {/* <th style={{ textAlign: "center" }}>Action</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -267,7 +267,7 @@ export default function AgentOrderList(props) {
                           <td style={{ textAlign: "center" }}>
                             {dateFormat(res.payment_date, "mm-dd-yyyy HH:MM:ss")}
                           </td>
-                          <td style={{ textAlign: "center" }}>
+                          {/* <td style={{ textAlign: "center" }}>
                             {res.payment_status == 1 ? (
                               <a
                                 style={{ marginRight: "20px" }}
@@ -287,7 +287,7 @@ export default function AgentOrderList(props) {
                                 Complete payment
                               </a>
                             )}
-                          </td>
+                          </td> */}
                         </tr>
                       ))
                     ) : (

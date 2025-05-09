@@ -93,12 +93,18 @@ export default function Packages(props) {
       ? []
       : JSON.parse(localStorage.getItem("Sub_Package"))
   );
+
+
   console.log("subPackages", subPackages);
   console.log("cartepackage", cartePackageData);
+
+
   const addSubPackages = (id, main_id) => {
     setSubPackages((prevArray) => [...prevArray, id]);
     setCartePackageData((prevArray) => [...prevArray, main_id]);
   };
+
+
   const removeSubPackages = (id, main_id) => {
     const index = arrayRemove(subPackages, id);
     setSubPackages(index);
@@ -125,11 +131,6 @@ export default function Packages(props) {
       return false;
     }
   };
-  // const addComboSubPackages = (id) => {
-  //   setSubPackages((prevArray) => [...prevArray, id]);
-  //   setSignaturePackage(allPackages.combopackage[0]);
-  // };
-
   const [comboSubPackages, setComboSubPackages] = useState(
     JSON.parse(localStorage.getItem("Combo_Sub_Package")) === null
       ? []
@@ -137,23 +138,36 @@ export default function Packages(props) {
   );
 
   const addComboSubPackages = (id) => {
-    const updated = [...subPackages, id];
-    setSubPackages(updated);
-    setSignaturePackageData([allPackages.combopackage[0]]); // full object
-    localStorage.setItem("Combo_Sub_Package", JSON.stringify(updated));
+   
+    if (!comboSubPackages.includes(id)) {
+      const updated = [...comboSubPackages, id];
+      setComboSubPackages(updated);
+      localStorage.setItem("Combo_Sub_Package", JSON.stringify(updated));
+  
+      if (allPackages?.combopackage?.length) {
+        setSignaturePackageData([allPackages.combopackage[0]]);
+      }
+      console.log(updated);
+    } else {
+      console.log("ID already exists. Not adding again:", id);
+    }
   };
+  
+  
 
-  // const removeComboSubPackages = (id) => {
-  //   const index = arrayRemove(subPackages, id);
-  //   setSubPackages(index);
-  //   setSignaturePackage([]);
-  // };
+  const isComboSubPackageSelected = (id) => {
+    return comboSubPackages.includes(id);
+  };
+  
+
   const removeComboSubPackages = (id) => {
-    const updated = arrayRemove(subPackages, id);
-    setSubPackages(updated);
-    setSignaturePackageData([]);
+    const updated = comboSubPackages.filter((item) => item !== id);
+    setComboSubPackages(updated);
     localStorage.setItem("Combo_Sub_Package", JSON.stringify(updated));
   };
+  
+  
+  
 
   const savePackage = () => {
     if (subPackages.length === 0) {
@@ -161,7 +175,8 @@ export default function Packages(props) {
       setOpenError(true);
     } else {
       localStorage.setItem("Sub_Package", JSON.stringify(subPackages));
-      localStorage.setItem("Combo_Sub_Package", JSON.stringify(subPackages));
+      localStorage.setItem("Combo_Sub_Package", JSON.stringify(comboSubPackages));
+  
 
       localStorage.setItem(
         "Combo_Package",
@@ -186,31 +201,6 @@ export default function Packages(props) {
         setCartePackageData(index);
       }
     }
-    // if (data.id === 19) {
-    //   // if (signaturePackageData.length === 0) {
-    //   if (twlightPhoto === false) {
-    //     setTwlightPhoto(true);
-    //     element.classList.add("op");
-    //     setCartePackageData((prevArray) => [...prevArray, data.id]);
-    //   } else {
-    //     setTwlightPhoto(false);
-    //     element.classList.remove("op");
-    //     const index = arrayRemove(cartePackageData, "19");
-    //     setCartePackageData(index);
-    //   }
-    // }
-    // if (data.id === 18) {
-    //   if (virtualStag === false) {
-    //     setVirtualStag(true);
-    //     element.classList.add("op");
-    //     setCartePackageData((prevArray) => [...prevArray, data.id]);
-    //   } else {
-    //     setVirtualStag(false);
-    //     element.classList.remove("op");
-    //     const index = arrayRemove(cartePackageData, "18");
-    //     setCartePackageData(index);
-    //   }
-    // }
     if (data.id === 17) {
       if (iguide === false) {
         setIguide(true);
@@ -508,7 +498,7 @@ export default function Packages(props) {
               </div>
               <div class="package_sec_cont">
                 {Object.keys(allPackages).length > 0 ? (
-                  allPackages.combopackage.map((res, index) => (
+                  allPackages.combopackage.map((res,index) => (
                     <div>
                       <div
                         className="package-box-appointment package-productlist"
@@ -547,7 +537,12 @@ export default function Packages(props) {
                                   <AccordionDetails style={{ padding: "0px" }}>
                                     <div className="card-body">
                                       <div className="pricing-box-photo">
-                                        <img src={res.image} alt />
+                                        <img
+                                          src={
+                                            res.image
+                                          }
+                                          alt
+                                        />
                                         <div className="pricing-box-price-amount">
                                           Starting at $200
                                         </div>
@@ -600,16 +595,12 @@ export default function Packages(props) {
                                                       textAlign: "right",
                                                     }}
                                                   >
-                                                    {checkId(subpackage.id) ===
-                                                    true ? (
+                                                    {isComboSubPackageSelected(subpackage.id) ? (
                                                       <a
                                                         className="addtocart-btn"
                                                         onClick={() => {
                                                           removeComboSubPackages(
-                                                            subpackage.id,
-                                                            allPackages
-                                                              .combopackage[0]
-                                                              .id
+                                                            subpackage.id
                                                           );
                                                         }}
                                                       >
@@ -621,10 +612,7 @@ export default function Packages(props) {
                                                         className="addtocart-btn"
                                                         onClick={() => {
                                                           addComboSubPackages(
-                                                            subpackage.id,
-                                                            allPackages
-                                                              .combopackage[0]
-                                                              .id
+                                                            subpackage.id
                                                           );
                                                         }}
                                                       >

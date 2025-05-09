@@ -208,10 +208,10 @@ export default function FinalPreview(props) {
                               res.package_details.map(
                                 (sd) =>
                                   JSON.parse(
-                                    localStorage.getItem("Sub_Package")
+                                    localStorage.getItem("Combo_Sub_Package")
                                   ).length > 0 &&
                                   JSON.parse(
-                                    localStorage.getItem("Sub_Package")
+                                    localStorage.getItem("Combo_Sub_Package")
                                   ).map((pkg) =>
                                     sd.id === pkg ? (
                                       <div class="col-md-6">

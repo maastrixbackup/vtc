@@ -96,9 +96,6 @@ export default function CheckoutTab(props) {
     postRecord(APIGetOrderPackages, obj).then((res) => {
       if (res.data[0].response.status === "success") {
         setAllData(res.data[0].response.data);
-        // res.data[0].response.data.package.forEach(res => {
-        //     setPackages([...packages, res.package_details])
-        // })
       }
     });
   }, []);
@@ -110,32 +107,7 @@ export default function CheckoutTab(props) {
       }
     });
   }, []);
-  // console.log(allData);
-  // console.log(packages);
-  // useEffect(() => {
-  //   let price = 0;
-  //   if (Object.keys(allData).length > 0) {
-  //     allData.package.forEach((element) => {
-  //       element.package_details.forEach((res) => {
-  //         JSON.parse(localStorage.getItem("Sub_Package")).forEach((sd) => {
-  //           if (res.id === sd) {
-  //             price += res.price;
-  //           }
-  //         });
-  //       });
-  //     });
-  //   }
-  //   if (Object.keys(miscData).length > 0) {
-  //     miscData.miscellaneous_details.forEach((element) => {
-  //       JSON.parse(localStorage.getItem("Misc_Package")).forEach((res) => {
-  //         if (element.id === res) {
-  //           price += element.price;
-  //         }
-  //       });
-  //     });
-  //   }
-  //   setPrice(price);
-  // }, [allData, miscData]);
+
   useEffect(() => {
     console.log("✅ allData:", allData);
     console.log("✅ combopackage:", allData?.combopackage);
