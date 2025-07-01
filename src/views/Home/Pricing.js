@@ -639,9 +639,12 @@ export default function Pricing() {
                                 <div class="pricing-box-wh">
                                   <div class="pricing-box-photo">
                                     <img src={res.image} alt="" />
-                                    <div class="pricing-box-price-amount">
-                                      Starting at at ${res.min_price}
-                                    </div>
+                                    {res.id != 12 && (
+                                      <div class="pricing-box-price-amount">
+                                        Starting at ${res.min_price}
+                                      </div>
+                                    )}
+
                                     <div class="pricing-box-photo-title">
                                       {res.title}
                                     </div>

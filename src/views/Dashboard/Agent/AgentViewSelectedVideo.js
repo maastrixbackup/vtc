@@ -3,7 +3,7 @@ import { APIURL, APIPath } from "../../../CommonMethods/Fetch";
 import { postRecord } from "../../../CommonMethods/Save";
 import { Link, useHistory } from "react-router-dom";
 import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
+import "react-image-lightbox/style.css";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -137,7 +137,7 @@ export default function AgentViewSelectedVideo(props) {
   const [openGallery, setOpenGallery] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [category, setCategory] = useState("");
-  console.log(isActive,"isActive",AgentId,tourDetailsData);
+  console.log(isActive, "isActive", AgentId, tourDetailsData);
 
   useEffect(() => {
     const objusr = {
@@ -192,7 +192,7 @@ export default function AgentViewSelectedVideo(props) {
     if (AgentId && AgentId != "") {
       postRecord(APIGetTourInfo, objusr).then((res) => {
         if (res.data[0].response.status === "success") {
-          setTourDetailsData(res.data[0].response.dataDetails.tourdetails);         
+          setTourDetailsData(res.data[0].response.dataDetails.tourdetails);
         }
       });
     }
@@ -274,10 +274,7 @@ export default function AgentViewSelectedVideo(props) {
   };
   const viewFlyer = () => {
     // history.push(APIPath() + "agent-view-flyer-active/" + TourId + "/" + AgentId);
-    window.open(
-      APIPath() + "site/flyer/" + TourId + "/" + AgentId,
-      "_blank"
-    );
+    window.open(APIPath() + "site/flyer/" + TourId + "/" + AgentId, "_blank");
   };
   const amenityHandleChange = (event) => {
     const { name, value } = event.target;
