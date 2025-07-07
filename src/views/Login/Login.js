@@ -218,59 +218,6 @@ export default function Login(props) {
     <div>
       <Title title="Login" />
       <section class="home_page">
-        {/* <div class="mobile_on mobile_slide">
-                    <div class="mob_head">
-                        <div class="hm_logo">
-                            <Link to={APIPath()}>
-                                <img src={Logo} alt="Logo" title="Logo" />
-                            </Link>
-                        </div>
-                        <div class="">
-                            <div class="gee_mobile">
-                                <button class="gee_hamburger">&#9776;</button>
-                                <button class="gee_cross">&#735;</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gee_menu">
-                        <ul>
-                            <li>
-                                <Link to={APIPath() + "login"}>Login</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "register"}>Register</Link>
-                            </li>
-                            <li class="">
-                                <Link to={APIPath()}>Home</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "features"}>Features</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "agent"}>Agents</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "broker"}>Brokers</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "association"}>Associations</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "preferred-vendors"}>Preferred Vendors</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "about-us"}>About</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "example"}>Example</Link>
-                            </li>
-                            <li>
-                                <Link to={APIPath() + "pricing"}>Pricing</Link>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div> */}
         <div class="mobile_on mobile_slide">
           <div class="mob_head">
             <div class="hm_logo">

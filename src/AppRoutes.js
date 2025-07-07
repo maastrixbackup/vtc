@@ -14,6 +14,10 @@ import Broker from "./views/Home/Broker";
 import Pricing from "./views/Home/Pricing";
 import Login from "./views/Login/Login";
 import LoginAuth from "./views/Login/LoginAuth";
+
+import SSOAgentLogin from "./views/Login/SSOAgentLogin";
+import SSOAgentRegister from "./views/Login/SSOAgentRegister";
+
 import BrokerLogin from "./views/Login/BrokerLogin";
 import Register from "./views/Register/Register";
 import AgentRegister from "./views/Register/AgentRegister";
@@ -389,6 +393,16 @@ export default function AppRoutes() {
           <Route path={APIPath() + "register"} component={Register} />
           <Route path={APIPath() + "login"} component={LoginAuth} />
           <Route path={APIPath() + "agent-login"} component={Login} />
+
+          <Route
+            path={APIPath() + "sso-agent-login"}
+            component={SSOAgentLogin}
+          />
+          <Route
+            path={APIPath() + "sso-agent-register/:listingagentid"}
+            component={SSOAgentRegister}
+          />
+
           <Route path={APIPath() + "broker-login"} component={BrokerLogin} />
           <Route path={APIPath() + "pricing"} component={Pricing} />
           <Route path={APIPath() + "broker"} component={Broker} />
