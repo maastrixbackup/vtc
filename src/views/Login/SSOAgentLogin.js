@@ -1,5 +1,6 @@
 // File: SSOAgentLogin.jsx
 import React, { useEffect, useState, useContext } from "react";
+import $ from "jquery";
 import { useParams, Link, useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
@@ -130,10 +131,88 @@ export default function SSOAgentLogin(props) {
       });
   };
 
+    const openBox = () => {
+      if (!$("#mob_btn").hasClass("active")) {
+        $("#mob_btn").addClass("active");
+        $("#mobilemenu").addClass("active");
+        return $("body").css("overflow", "hidden");
+      } else {
+        $("#mob_btn").removeClass("active");
+        $("#mobilemenu").removeClass("active");
+        return $("body").css("overflow", "auto");
+      }
+    };
   return (
     <div>
       <Title title="SSO Agent Login" />
       <section class="home_page">
+        <div class="mobile_on mobile_slide">
+          <div class="mob_head">
+            <div class="hm_logo">
+              <Link to={APIPath()}>
+                <img src={Logo} alt="Logo" title="Logo" />
+              </Link>
+            </div>
+            <div id="mobilemenu">
+              <div class="mobilemenu-wrapper">
+                <div class="mobilemenu-trigger">
+                  <button id="mob_btn" class="trigger" onClick={openBox}>
+                    <span class="box">
+                      <span class="bar top"></span>
+                      <span class="bar middle"></span>
+                      <span class="bar bottom"></span>
+                    </span>
+                  </button>
+                </div>
+                <div class="mobilemenu-view">
+                  <div class="menu">
+                    <ul>
+                      <li>
+                        <Link to={APIPath() + "login"}>Login</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "agent"}>Register</Link>
+                      </li>
+                      <li class="">
+                        <Link to={APIPath()}>Home</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "features"}>Features</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "agent"}>Agents</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "broker"}>Brokers</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "association"}>Associations</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "preferred-vendors"}>
+                          Preferred Vendors
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "about-us"}>About</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "example"}>Example</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "pricing"}>Pricing</Link>
+                      </li>
+                      <li>
+                        <Link to={APIPath() + "faq"}>FAQ</Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="spacer1px"></hr>
         <div class="home_page_banner inner_banner">
           <img src={banner} alt="" title="" />
           <div class="inner_banner_cont">
