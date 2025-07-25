@@ -37,6 +37,7 @@ const APIVideoPromotion = APIURL() + "load-video-promotion";
 const APISaveDistributeSetting = APIURL() + "save-distribute-settings";
 const APIUpdateDistributeTour = APIURL() + "update-distribute-tour";
 const APIGetUserData = APIURL() + "user-details";
+const APIPullListing = APIURL() + "pull-listing";
 const APIGetImagesetList = APIURL() + "get-imagesetlist";
 const APIChangeService = APIURL() + "change-tour-service";
 const APIChangeStatus = APIURL() + "change-status";
@@ -195,6 +196,54 @@ export default function AgentTourList(props) {
       });
     }
   }, [context.state.user]);
+  const [agentDataPullListing, setAgentDataPullListing] = useState(null);
+
+  useEffect(() => {
+    if (context?.state?.user) {
+      const objusr = {
+        authenticate_key: "abcd123XYZ",
+        agent_id: JSON.parse(context.state.user).agentId,
+      };
+
+      postRecord(APIGetUserData, objusr).then((res) => {
+        const agentProfile = res?.data?.[0]?.response?.data?.agent_profile;
+        setAgentDataPullListing(agentProfile);
+      });
+    }
+  }, [context?.state?.user]);
+
+  const handlePullListing = async () => {
+    setLoading(true);
+    setGlobalMessage("Please wait while pulling your data...");
+    setGlobalAlertType("info");
+    setGlobalOpenPopUp(true);
+
+    const payload = {
+      mls_id: agentDataPullListing.mls_id,
+    };
+
+    try {
+      const res = await postRecord(APIPullListing, payload);
+      const data = res?.data?.[0];
+      const message = data?.response?.message || "Unexpected response";
+
+      if (data?.response?.status === "success") {
+        setGlobalMessage(message);
+        setGlobalAlertType("success");
+        setGlobalOpenPopUp(true);
+      } else {
+        setGlobalMessage(message);
+        setGlobalAlertType("error");
+        setGlobalOpenPopUp(true);
+      }
+    } catch (err) {
+      setGlobalMessage("Something went wrong!");
+      setGlobalAlertType("error");
+      setGlobalOpenPopUp(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (context.state.user) {
@@ -538,7 +587,10 @@ export default function AgentTourList(props) {
           setOpenSuccess(true);
           setSync(false);
         } else {
-          setMessage(res.data[0].response.message || "Something Went Wrong. Please try again later...");
+          setMessage(
+            res.data[0].response.message ||
+              "Something Went Wrong. Please try again later..."
+          );
           setOpenError(true);
           setSync(false);
         }
@@ -1602,6 +1654,19 @@ export default function AgentTourList(props) {
                             </a>
                             <input type="hidden" id="desktopId" value="" />
                           </li>
+                          {agentDataPullListing?.mls_id !== null && (
+                            <li>
+                              <a
+                                class="dropdown-item"
+                                onClick={handlePullListing}
+                              >
+                                {" "}
+                                <i class="far fa-file-chart-pie"></i> Pull
+                                Listing
+                              </a>
+                              <input type="hidden" id="desktopId" value="" />
+                            </li>
+                          )}
                         </ul>
                       </div>
                     </li>
@@ -1837,6 +1902,18 @@ export default function AgentTourList(props) {
                               </a>
                               <input type="hidden" id="desktopId" value="" />
                             </div>
+                            {agentDataPullListing?.mls_id !== null && (
+                              <div className="asdf">
+                                {" "}
+                                <a class="" onClick={handlePullListing}>
+                                  <span>
+                                    <i class="far fa-file-chart-pie"></i>
+                                  </span>
+                                  Pull Listing
+                                </a>
+                                <input type="hidden" id="desktopId" value="" />
+                              </div>
+                            )}
                           </OwlCarousel>
                         </div>
                       </section>
@@ -2136,15 +2213,15 @@ export default function AgentTourList(props) {
                           </div>
                           <div class="profile_listing_single_inner">
                             <div class="socila_status">
-                            <div className="datesContainer">
-                              <div class="socila_status_single">
-                                <label>Created Date :-</label>
-                                <p>{res.createdDate}</p>
-                              </div>
-                              <div class="socila_status_single">
-                                <label>Updated Date :-</label>
-                                <p>{res.updatedDate}</p>
-                              </div>
+                              <div className="datesContainer">
+                                <div class="socila_status_single">
+                                  <label>Created Date :-</label>
+                                  <p>{res.createdDate}</p>
+                                </div>
+                                <div class="socila_status_single">
+                                  <label>Updated Date :-</label>
+                                  <p>{res.updatedDate}</p>
+                                </div>
                               </div>
                               <div class="row">
                                 <div class="col-lg-6 col-md-6">
