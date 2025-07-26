@@ -206,8 +206,9 @@ export default function AgentTourList(props) {
       };
 
       postRecord(APIGetUserData, objusr).then((res) => {
-        const agentProfile = res?.data?.[0]?.response?.data?.agent_profile;
+        const agentProfile = res?.data?.[0]?.response?.data?.agent_profile.mls_id;
         setAgentDataPullListing(agentProfile);
+   
       });
     }
   }, [context?.state?.user]);
@@ -219,15 +220,15 @@ export default function AgentTourList(props) {
     setGlobalOpenPopUp(true);
 
     const payload = {
-      mls_id: agentDataPullListing.mls_id,
+      mls_id: agentDataPullListing,
     };
 
     try {
       const res = await postRecord(APIPullListing, payload);
-      const data = res?.data?.[0];
-      const message = data?.response?.message || "Unexpected response";
+      const data = res?.data;
+      const message = data?.message || "Unexpected response";
 
-      if (data?.response?.status === "success") {
+      if (data?.status === "success") {
         setGlobalMessage(message);
         setGlobalAlertType("success");
         setGlobalOpenPopUp(true);
