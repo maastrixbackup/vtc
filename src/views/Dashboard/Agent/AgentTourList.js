@@ -206,9 +206,9 @@ export default function AgentTourList(props) {
       };
 
       postRecord(APIGetUserData, objusr).then((res) => {
-        const agentProfile = res?.data?.[0]?.response?.data?.agent_profile.mls_id;
+        const agentProfile =
+          res?.data?.[0]?.response?.data?.agent_profile.mls_id;
         setAgentDataPullListing(agentProfile);
-   
       });
     }
   }, [context?.state?.user]);
@@ -1655,7 +1655,7 @@ export default function AgentTourList(props) {
                             </a>
                             <input type="hidden" id="desktopId" value="" />
                           </li>
-                          {agentDataPullListing?.mls_id !== null && (
+                          {agentDataPullListing !== null && (
                             <li>
                               <a
                                 class="dropdown-item"
@@ -1903,7 +1903,7 @@ export default function AgentTourList(props) {
                               </a>
                               <input type="hidden" id="desktopId" value="" />
                             </div>
-                            {agentDataPullListing?.mls_id !== null && (
+                            {agentDataPullListing !== null && (
                               <div className="asdf">
                                 {" "}
                                 <a class="" onClick={handlePullListing}>
