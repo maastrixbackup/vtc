@@ -197,6 +197,8 @@ export default function AgentTourList(props) {
     }
   }, [context.state.user]);
   const [agentDataPullListing, setAgentDataPullListing] = useState(null);
+  const [showPullListingModal, setShowPullListingModal] = useState(false);
+  const [customAgentId, setCustomAgentId] = useState("");
 
   useEffect(() => {
     if (context?.state?.user) {
@@ -221,6 +223,40 @@ export default function AgentTourList(props) {
 
     const payload = {
       mls_id: agentDataPullListing,
+    };
+
+    try {
+      const res = await postRecord(APIPullListing, payload);
+      const data = res?.data;
+      const message = data?.message || "Unexpected response";
+
+      if (data?.status === "success") {
+        setGlobalMessage(message);
+        setGlobalAlertType("success");
+        setGlobalOpenPopUp(true);
+      } else {
+        setGlobalMessage(message);
+        setGlobalAlertType("error");
+        setGlobalOpenPopUp(true);
+      }
+    } catch (err) {
+      setGlobalMessage("Something went wrong!");
+      setGlobalAlertType("error");
+      setGlobalOpenPopUp(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePullListingById = async (agent_Id) => {
+    setLoading(true);
+    setGlobalMessage("Please wait while pulling your data...");
+    setGlobalAlertType("info");
+    setGlobalOpenPopUp(true);
+
+    const payload = {
+      mls_id: agentDataPullListing,
+      listing_id: agent_Id,
     };
 
     try {
@@ -1655,7 +1691,7 @@ export default function AgentTourList(props) {
                             </a>
                             <input type="hidden" id="desktopId" value="" />
                           </li>
-                          {agentDataPullListing !== null && (
+                          {/* {agentDataPullListing !== null && (
                             <li>
                               <a
                                 class="dropdown-item"
@@ -1667,6 +1703,88 @@ export default function AgentTourList(props) {
                               </a>
                               <input type="hidden" id="desktopId" value="" />
                             </li>
+                          )} */}
+                          {agentDataPullListing !== null && (
+                            <li>
+                              <a
+                                className="dropdown-item"
+                                onClick={() => setShowPullListingModal(true)}
+                              >
+                                <i className="far fa-file-chart-pie"></i> Pull
+                                Listing
+                              </a>
+                            </li>
+                          )}
+                          {showPullListingModal && (
+                            <>
+                              <div
+                                className="modal fade show"
+                                style={{ display: "block" }}
+                                role="dialog"
+                              >
+                                <div className="modal-dialog">
+                                  <div className="modal-content">
+                                    <div className="modal-header">
+                                      <h4 className="modal-title">
+                                        Pull Listing Options
+                                      </h4>
+                                    </div>
+
+                                    <div className="modal-body">
+                                      {/* Option 1: All Agent Listings */}
+                                      <button
+                                        className="btn btn-primary mb-3"
+                                        onClick={() => {
+                                          handlePullListing(); // existing function
+                                          setShowPullListingModal(false);
+                                        }}
+                                      >
+                                        All Listings
+                                      </button>
+
+                                      <hr />
+
+                                      {/* Option 2: Custom Agent ID */}
+                                      <div>
+                                        <label>Enter Agent ID</label>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          value={customAgentId}
+                                          onChange={(e) =>
+                                            setCustomAgentId(e.target.value)
+                                          }
+                                        />
+                                        <button
+                                          className="btn btn-success mt-2"
+                                          onClick={() =>
+                                            handlePullListingById(customAgentId)
+                                          }
+                                        >
+                                          Pull one listing
+                                        </button>
+                                      </div>
+                                    </div>
+
+                                    <div className="modal-footer">
+                                      <button
+                                        type="button"
+                                        className="btn btn-default"
+                                        onClick={() =>
+                                          setShowPullListingModal(false)
+                                        }
+                                      >
+                                        Close
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                className="modal-backdrop fade show"
+                                style={{ backdropFilter: "blur(6px)" }}
+                              ></div>
+                            </>
                           )}
                         </ul>
                       </div>
@@ -1903,7 +2021,7 @@ export default function AgentTourList(props) {
                               </a>
                               <input type="hidden" id="desktopId" value="" />
                             </div>
-                            {agentDataPullListing !== null && (
+                            {/* {agentDataPullListing !== null && (
                               <div className="asdf">
                                 {" "}
                                 <a class="" onClick={handlePullListing}>
@@ -1914,6 +2032,17 @@ export default function AgentTourList(props) {
                                 </a>
                                 <input type="hidden" id="desktopId" value="" />
                               </div>
+                            )} */}
+                            {agentDataPullListing !== null && (
+                              <li>
+                                <a
+                                  className="dropdown-item"
+                                  onClick={() => setShowPullListingModal(true)}
+                                >
+                                  <i className="far fa-file-chart-pie"></i> Pull
+                                  Listing
+                                </a>
+                              </li>
                             )}
                           </OwlCarousel>
                         </div>
