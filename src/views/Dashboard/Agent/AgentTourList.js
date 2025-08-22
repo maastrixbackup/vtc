@@ -38,6 +38,7 @@ const APISaveDistributeSetting = APIURL() + "save-distribute-settings";
 const APIUpdateDistributeTour = APIURL() + "update-distribute-tour";
 const APIGetUserData = APIURL() + "user-details";
 const APIPullListing = APIURL() + "pull-listing";
+const APIMlsListing = APIURL() + "mlsListingIds";
 const APIGetImagesetList = APIURL() + "get-imagesetlist";
 const APIChangeService = APIURL() + "change-tour-service";
 const APIChangeStatus = APIURL() + "change-status";
@@ -198,7 +199,8 @@ export default function AgentTourList(props) {
   }, [context.state.user]);
   const [agentDataPullListing, setAgentDataPullListing] = useState(null);
   const [showPullListingModal, setShowPullListingModal] = useState(false);
-  const [customAgentId, setCustomAgentId] = useState("");
+  const [availableListingIds, setAvailableListingIds] = useState([]);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     if (context?.state?.user) {
@@ -214,6 +216,23 @@ export default function AgentTourList(props) {
       });
     }
   }, [context?.state?.user]);
+  useEffect(() => {
+    if (agentDataPullListing) {
+      const payload = { mls_id: agentDataPullListing };
+
+      postRecord(APIMlsListing, payload)
+        .then((res) => {
+          const ids =
+            res?.data?.response?.listingIds?.map((item) => item.listingId) ||
+            [];
+          setAvailableListingIds(ids);
+          setSelectedIds([]);
+        })
+        .catch(() => {
+          setAvailableListingIds([]);
+        });
+    }
+  }, [agentDataPullListing]);
 
   const handlePullListing = async () => {
     setLoading(true);
@@ -248,15 +267,22 @@ export default function AgentTourList(props) {
     }
   };
 
-  const handlePullListingById = async (agent_Id) => {
+  const handlePullListingByIds = async () => {
+    if (selectedIds.length === 0) {
+      setGlobalMessage("Please select at least one ID!");
+      setGlobalAlertType("error");
+      setGlobalOpenPopUp(true);
+      return;
+    }
+
     setLoading(true);
-    setGlobalMessage("Please wait while pulling your data...");
+    setGlobalMessage("Please wait while pulling selected listings...");
     setGlobalAlertType("info");
     setGlobalOpenPopUp(true);
 
     const payload = {
       mls_id: agentDataPullListing,
-      listing_id: agent_Id,
+      listing_ids: selectedIds, // array of ids
     };
 
     try {
@@ -267,19 +293,25 @@ export default function AgentTourList(props) {
       if (data?.status === "success") {
         setGlobalMessage(message);
         setGlobalAlertType("success");
-        setGlobalOpenPopUp(true);
       } else {
         setGlobalMessage(message);
         setGlobalAlertType("error");
-        setGlobalOpenPopUp(true);
       }
     } catch (err) {
       setGlobalMessage("Something went wrong!");
       setGlobalAlertType("error");
-      setGlobalOpenPopUp(true);
     } finally {
+      setGlobalOpenPopUp(true);
       setLoading(false);
+      setShowPullListingModal(false);
     }
+  };
+
+  // Toggle checkbox
+  const toggleIdSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
   };
 
   useEffect(() => {
@@ -1715,6 +1747,7 @@ export default function AgentTourList(props) {
                               </a>
                             </li>
                           )}
+
                           {showPullListingModal && (
                             <>
                               <div
@@ -1731,11 +1764,11 @@ export default function AgentTourList(props) {
                                     </div>
 
                                     <div className="modal-body">
-                                      {/* Option 1: All Agent Listings */}
+                                      {/* Option 1: All Listings */}
                                       <button
                                         className="btn btn-primary mb-3"
                                         onClick={() => {
-                                          handlePullListing(); // existing function
+                                          handlePullListing();
                                           setShowPullListingModal(false);
                                         }}
                                       >
@@ -1743,27 +1776,88 @@ export default function AgentTourList(props) {
                                       </button>
 
                                       <hr />
+                                      <div
+                                        className="border rounded p-3 mt-2"
+                                        style={{
+                                          maxHeight: "300px",
+                                          overflowY: "auto",
+                                        }}
+                                      >
+                                        <label className="fw-bold mb-3 d-block">
+                                          Select Listing IDs
+                                        </label>
 
-                                      {/* Option 2: Custom Agent ID */}
-                                      <div>
-                                        <label>Enter Agent ID</label>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          value={customAgentId}
-                                          onChange={(e) =>
-                                            setCustomAgentId(e.target.value)
-                                          }
-                                        />
-                                        <button
-                                          className="btn btn-success mt-2"
-                                          onClick={() =>
-                                            handlePullListingById(customAgentId)
-                                          }
-                                        >
-                                          Pull one listing
-                                        </button>
+                                        {/* Select All */}
+                                        <div className="form-check mb-3">
+                                          <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            id="selectAll"
+                                            checked={
+                                              selectedIds.length ===
+                                              availableListingIds.length
+                                            }
+                                            onChange={(e) => {
+                                              if (e.target.checked) {
+                                                setSelectedIds(
+                                                  availableListingIds
+                                                );
+                                              } else {
+                                                setSelectedIds([]);
+                                              }
+                                            }}
+                                          />
+                                          <label
+                                            className="form-check-label fw-bold"
+                                            htmlFor="selectAll"
+                                          >
+                                            Select All
+                                          </label>
+                                        </div>
+
+                                        {/* Grid layout for checkboxes */}
+                                        <div className="row">
+                                          {availableListingIds.map((id) => (
+                                            <div
+                                              key={id}
+                                              className="col-6 mb-2"
+                                            >
+                                              <div
+                                                className="form-check"
+                                                style={{
+                                                  background: "#f9f9f9",
+                                                }}
+                                              >
+                                                <input
+                                                  type="checkbox"
+                                                  className="form-check-input"
+                                                  id={`listing-${id}`}
+                                                  checked={selectedIds.includes(
+                                                    id
+                                                  )}
+                                                  onChange={() =>
+                                                    toggleIdSelection(id)
+                                                  }
+                                                />
+                                                <label
+                                                  className="form-check-label ms-2"
+                                                  htmlFor={`listing-${id}`}
+                                                  style={{ cursor: "pointer" }}
+                                                >
+                                                  {id}
+                                                </label>
+                                              </div>
+                                            </div>
+                                          ))}
+                                        </div>
                                       </div>
+
+                                      <button
+                                        className="btn btn-success mt-2"
+                                        onClick={handlePullListingByIds}
+                                      >
+                                        Pull Selected Listings
+                                      </button>
                                     </div>
 
                                     <div className="modal-footer">
@@ -1780,6 +1874,8 @@ export default function AgentTourList(props) {
                                   </div>
                                 </div>
                               </div>
+
+                              {/* Backdrop blur */}
                               <div
                                 className="modal-backdrop fade show"
                                 style={{ backdropFilter: "blur(6px)" }}
