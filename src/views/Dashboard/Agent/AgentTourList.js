@@ -1787,75 +1787,91 @@ export default function AgentTourList(props) {
                                           Select Listing IDs
                                         </label>
 
-                                        {/* Select All */}
-                                        <div className="form-check mb-3">
-                                          <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            id="selectAll"
-                                            checked={
-                                              selectedIds.length ===
-                                              availableListingIds.length
-                                            }
-                                            onChange={(e) => {
-                                              if (e.target.checked) {
-                                                setSelectedIds(
-                                                  availableListingIds
-                                                );
-                                              } else {
-                                                setSelectedIds([]);
-                                              }
-                                            }}
-                                          />
-                                          <label
-                                            className="form-check-label fw-bold"
-                                            htmlFor="selectAll"
-                                          >
-                                            Select All
-                                          </label>
-                                        </div>
-
-                                        {/* Grid layout for checkboxes */}
-                                        <div className="row">
-                                          {availableListingIds.map((id) => (
-                                            <div
-                                              key={id}
-                                              className="col-6 mb-2"
-                                            >
-                                              <div
-                                                className="form-check"
-                                                style={{
-                                                  background: "#f9f9f9",
-                                                }}
-                                              >
-                                                <input
-                                                  type="checkbox"
-                                                  className="form-check-input"
-                                                  id={`listing-${id}`}
-                                                  checked={selectedIds.includes(
-                                                    id
-                                                  )}
-                                                  onChange={() =>
-                                                    toggleIdSelection(id)
+                                        {availableListingIds.length === 0 ? (
+                                          <p className="text-muted">
+                                            No listing IDs available
+                                          </p>
+                                        ) : (
+                                          <>
+                                            {/* Select All */}
+                                            <div className="form-check mb-3">
+                                              <input
+                                                type="checkbox"
+                                                className="form-check-input"
+                                                id="selectAll"
+                                                checked={
+                                                  selectedIds.length > 0 &&
+                                                  selectedIds.length ===
+                                                    availableListingIds.length
+                                                }
+                                                onChange={(e) => {
+                                                  if (e.target.checked) {
+                                                    setSelectedIds(
+                                                      availableListingIds
+                                                    );
+                                                  } else {
+                                                    setSelectedIds([]);
                                                   }
-                                                />
-                                                <label
-                                                  className="form-check-label ms-2"
-                                                  htmlFor={`listing-${id}`}
-                                                  style={{ cursor: "pointer" }}
-                                                >
-                                                  {id}
-                                                </label>
-                                              </div>
+                                                }}
+                                              />
+                                              <label
+                                                className="form-check-label fw-bold"
+                                                htmlFor="selectAll"
+                                              >
+                                                Select All
+                                              </label>
                                             </div>
-                                          ))}
-                                        </div>
+
+                                            {/* Grid layout for checkboxes */}
+                                            <div className="row">
+                                              {availableListingIds.map((id) => (
+                                                <div
+                                                  key={id}
+                                                  className="col-6 mb-2"
+                                                >
+                                                  <div
+                                                    className="form-check shadow-sm p-2 rounded border hover-effect"
+                                                    style={{
+                                                      background: "#f9f9f9",
+                                                    }}
+                                                  >
+                                                    <input
+                                                      type="checkbox"
+                                                      className="form-check-input"
+                                                      id={`listing-${id}`}
+                                                      checked={selectedIds.includes(
+                                                        id
+                                                      )}
+                                                      onChange={() =>
+                                                        toggleIdSelection(id)
+                                                      }
+                                                    />
+                                                    <label
+                                                      className="form-check-label ms-2"
+                                                      htmlFor={`listing-${id}`}
+                                                      style={{
+                                                        cursor: "pointer",
+                                                      }}
+                                                    >
+                                                      #{id}
+                                                    </label>
+                                                  </div>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </>
+                                        )}
                                       </div>
 
+                                      {/* Action button */}
                                       <button
-                                        className="btn btn-success mt-2"
+                                        className="btn btn-success mt-3 w-100 fw-bold shadow"
                                         onClick={handlePullListingByIds}
+                                        disabled={
+                                          availableListingIds.length === 0
+                                        }
                                       >
+                                        <i className="fas fa-download me-2"></i>{" "}
                                         Pull Selected Listings
                                       </button>
                                     </div>

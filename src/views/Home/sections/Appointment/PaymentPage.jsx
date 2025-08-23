@@ -25,7 +25,7 @@ const APIGetMiscPackages = APIURL() + "get-miscellaneous";
 
 const APICreateSubscribeFlashVideo = APIURL() + "create-subscribe-flashvideo";
 const APIFlashPayment = APIURL() + "flash-payment";
-
+const APIValidatePromocode = APIURL() + "apply-promocode";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -96,6 +96,12 @@ export default function CheckoutTab(props) {
   const [openModal, setOpenModal] = useState(false);
   const [cardDetails, setCardDetails] = useState({});
   const [packages, setPackages] = useState([]);
+  const [promoCode, setPromoCode] = useState("");
+  const [discountedPrice, setDiscountedPrice] = useState(
+    order_download_data.design_amount
+  );
+  const [appliedPromo, setAppliedPromo] = useState(null);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -122,7 +128,12 @@ export default function CheckoutTab(props) {
         agent_id: order_download_data.agentId,
         tour_id: order_download_data.tourid,
         amount: order_download_data.design_amount,
+
         designid: order_download_data.designid,
+        ...(appliedPromo && {
+          discount_amount: appliedPromo.discount,
+          promocode: appliedPromo.code,
+        }),
       };
       postRecord(APIFlashPayment, payment_data).then((res) => {
         if (res.data[0].response.status === "success") {
@@ -143,6 +154,35 @@ export default function CheckoutTab(props) {
   };
   const cancelOrder = () => {
     localStorage.removeItem("order_download_data");
+  };
+  const applyPromoCode = () => {
+    if (!promoCode) {
+      setMessage("Please enter a promo code");
+      setOpenError(true);
+      return;
+    }
+
+    const reqData = {
+      authenticate_key: "abcd123XYZ",
+      agent_id: order_download_data.agentId,
+      promocode: promoCode,
+       amount: order_download_data.design_amount,
+    };
+
+    postRecord(APIValidatePromocode, reqData).then((res) => {
+      const response = res.data[0].response;
+      if (response.status === "success") {
+        const { discount, code } = response.data;
+        setAppliedPromo({ discount, code });
+        setDiscountedPrice(order_download_data.design_amount - discount);
+        setMessage(response.message || "Promo code applied successfully!");
+        setOpenSuccess(true);
+      } else {
+        setAppliedPromo(null);
+        setMessage(response.message || "Invalid promo code");
+        setOpenError(true);
+      }
+    });
   };
   return (
     <>
@@ -269,22 +309,28 @@ export default function CheckoutTab(props) {
                 </h4>
 
                 <div class="cart-right-body">
-                  <div class="form-group add-new">
+                  <div className="form-group add-new">
                     <input
                       type="text"
-                      class="form-control"
+                      className="form-control"
                       placeholder="Promocode"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
                       style={{
                         width: "60%",
                         display: "inline-block",
                         marginRight: "2%",
                       }}
                     />
-
-                    <button type="button" class="btn-apply" >
+                    <button
+                      type="button"
+                      className="btn-apply"
+                      onClick={applyPromoCode}
+                    >
                       Apply Now
                     </button>
                   </div>
+
                   <div class="panel-body paymentmethod_form">
                     <div class="row">
                       <div class="col-lg-12">
