@@ -23,6 +23,11 @@ export default function ReviewTab(props) {
   const [openWarning, setOpenWarning] = useState(false);
   const [message, setMessage] = useState("");
   const [currentUser, setCurrentUser] = useState({});
+  const [coListing, setCoListing] = useState("no");
+  const [coListingName, setCoListingName] = useState("");
+  const [coListingEmail, setCoListingEmail] = useState("");
+  const [coListingPhone, setCoListingPhone] = useState("");
+
   let history = useHistory();
   useEffect(() => {
     window.scrollTo(0, 400);
@@ -98,17 +103,79 @@ export default function ReviewTab(props) {
                   <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>{currentUser.name}</td>
                     <td>{currentUser.email}</td>
+                    <td>{currentUser.mobile || "N/A"}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+          {/* Co-Listing Agent Section */}
+          <div class="row" style={{ marginTop: "20px" }}>
+            <div class="col-md-12 appointment-steps">
+              <h4>Co-Listing Agent</h4>
+            </div>
+          </div>
+          <div class="row">
+            <label style={{ marginRight: "15px" }}>
+              <input
+                type="radio"
+                name="coListing"
+                value="no"
+                checked={coListing === "no"}
+                onChange={() => setCoListing("no")}
+              />{" "}
+              No
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="coListing"
+                value="yes"
+                checked={coListing === "yes"}
+                onChange={() => setCoListing("yes")}
+              />{" "}
+              Yes
+            </label>
+          </div>
+
+          {coListing === "yes" && (
+            <div class="row" style={{ marginTop: "15px" }}>
+              <div class="col-md-4">
+                <label>Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value={coListingName}
+                  onChange={(e) => setCoListingName(e.target.value)}
+                />
+              </div>
+              <div class="col-md-4">
+                <label>Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  value={coListingEmail}
+                  onChange={(e) => setCoListingEmail(e.target.value)}
+                />
+              </div>
+              <div class="col-md-4">
+                <label>Phone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  value={coListingPhone}
+                  onChange={(e) => setCoListingPhone(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -140,30 +207,6 @@ export default function ReviewTab(props) {
           </div>
         </React.Fragment>
       )}
-      {/* <div class="row ag_info">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="agent_info_sec">
-                        <img src={login_icon} alt=""/>
-							<h3>Log in / Sign up</h3>
-                            <p>If you have a VirtualTourCafe Account, please login.<br /> If not, please register to create an account to continue</p>
-                        </div>
-                        <div class="agent_info_sec_cont">
-                            <Button
-                                style={{ marginTop: "20px", left: "36%" }}
-                                variant="contained"
-                                color="primary"
-                                startIcon={<PersonAddIcon />}
-                                onClick={() => {
-                                    history.push(
-                                        APIPath() + "register/?ReturnURL=" + "appointment"
-                                    )
-                                }}
-                            >
-                                Register / Login
-                            </Button>
-                        </div>
-                    </div>
-                </div> */}
       <hr class="spacer50px" />
       <div class="row">
         <div class="col-lg-6 col-md-6 mx-auto">
@@ -187,6 +230,16 @@ export default function ReviewTab(props) {
               style={{ cursor: "pointer" }}
               class="let_start_new"
               onClick={() => {
+                const coListingData = {
+                  coListing,
+                  name: coListingName,
+                  email: coListingEmail,
+                  phone: coListingPhone,
+                };
+                localStorage.setItem(
+                  "CoListingAgent",
+                  JSON.stringify(coListingData)
+                );
                 //saveMiscPackage();
                 setReviewTab(false);
                 setPropertyTab(true);

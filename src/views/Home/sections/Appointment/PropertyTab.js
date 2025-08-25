@@ -51,6 +51,7 @@ export default function PropertyTab(props) {
     second_time: "",
     third_choice: "",
     third_time: "",
+    notes: "",
   };
   const [data, setData] = useState(
     JSON.parse(localStorage.getItem("Property_Info")) === null
@@ -123,6 +124,9 @@ export default function PropertyTab(props) {
       setOpenError(true);
     } else if (data.third_choice === "") {
       setMessage("Please Select 3rd choice");
+      setOpenError(true);
+    } else if (data.notes === "") {
+      setMessage("Please Add Notes");
       setOpenError(true);
     } else {
       localStorage.setItem("Property_Info", JSON.stringify(data));
@@ -407,6 +411,24 @@ export default function PropertyTab(props) {
             </div>
           </div>
         </div>
+        <div class="row" style={{ marginTop: "20px" }}>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="notes">Notes </label>
+              <textarea
+                onChange={handleInputchange}
+                name="notes"
+                value={data.notes}
+                id="notes"
+                class="form-control"
+                rows="3"
+                placeholder="Enter any special instructions or notes about the appointment"
+                required
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-lg-6 col-md-6 mx-auto">
             <a

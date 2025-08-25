@@ -114,7 +114,7 @@ export default function CheckoutTab(props) {
     console.log("✅ combopackage length:", allData?.combopackage?.length);
     console.log("✅ Has Combo Packages:", allData?.combopackage?.length > 0);
   }, [allData]);
-  
+
   useEffect(() => {
     let total = 0;
 
@@ -122,7 +122,6 @@ export default function CheckoutTab(props) {
     const comboSubPackages =
       JSON.parse(localStorage.getItem("Combo_Sub_Package")) || [];
     const miscSelected = JSON.parse(localStorage.getItem("Misc_Package")) || [];
-
 
     // A-La-Carte packages (carte)
     if (allData?.package?.length > 0) {
@@ -183,6 +182,9 @@ export default function CheckoutTab(props) {
   }
 
   const onSubmit1 = async (values) => {
+    const coListingAgent =
+      JSON.parse(localStorage.getItem("CoListingAgent")) || {};
+
     if (values.number === undefined) {
       setMessage("Please enter card number");
       setOpenError(true);
@@ -239,12 +241,17 @@ export default function CheckoutTab(props) {
       values.first_choice = propertyInfo.first_choice;
       values.second_choice = propertyInfo.second_choice;
       values.third_choice = propertyInfo.third_choice;
+      values.appointment_note = propertyInfo.notes;
       values.first_time = propertyInfo.first_time;
       values.second_time = propertyInfo.second_time;
       values.third_time = propertyInfo.third_time;
       values.brokerid = basicInfo.broker_id;
       values.notes = basicInfo.notes;
       values.pay_later = 1;
+      values.is_coagent = coListingAgent.coListing || "no";
+      values.coagent_name = coListingAgent.name || "";
+      values.coagent_email = coListingAgent.email || "";
+      values.coagent_phone = coListingAgent.phone || "";
       postRecord(APISaveAppointment, values)
         .then((res) => {
           setOpen(false);
@@ -273,6 +280,9 @@ export default function CheckoutTab(props) {
     }
   };
   const onSubmit = async (values) => {
+    const coListingAgent =
+      JSON.parse(localStorage.getItem("CoListingAgent")) || {};
+
     if (values.number === undefined) {
       setMessage("Please enter card number");
       setOpenError(true);
@@ -330,12 +340,17 @@ export default function CheckoutTab(props) {
       values.first_choice = propertyInfo.first_choice;
       values.second_choice = propertyInfo.second_choice;
       values.third_choice = propertyInfo.third_choice;
+      values.appointment_note = propertyInfo.notes;
       values.first_time = propertyInfo.first_time;
       values.second_time = propertyInfo.second_time;
       values.third_time = propertyInfo.third_time;
       values.brokerid = basicInfo.broker_id;
       values.notes = basicInfo.notes;
       values.pay_later = 0;
+      values.is_coagent = coListingAgent.coListing || "no";
+      values.coagent_name = coListingAgent.name || "";
+      values.coagent_email = coListingAgent.email || "";
+      values.coagent_phone = coListingAgent.phone || "";
       postRecord(APISaveAppointment, values)
         .then((res) => {
           setOpen(false);
@@ -364,6 +379,9 @@ export default function CheckoutTab(props) {
     }
   };
   const saveForLater = () => {
+    const coListingAgent =
+      JSON.parse(localStorage.getItem("CoListingAgent")) || {};
+
     const values = {};
     values.authenticate_key = "abcd123XYZ";
     values.agent_id = JSON.parse(context.state.user).agentId;
@@ -406,10 +424,15 @@ export default function CheckoutTab(props) {
     values.first_choice = propertyInfo.first_choice;
     values.second_choice = propertyInfo.second_choice;
     values.third_choice = propertyInfo.third_choice;
+    values.appointment_note = propertyInfo.notes;
     values.first_time = propertyInfo.first_time;
     values.second_time = propertyInfo.second_time;
     values.third_time = propertyInfo.third_time;
     values.brokerid = basicInfo.broker_id;
+    values.is_coagent = coListingAgent.coListing || "no";
+    values.coagent_name = coListingAgent.name || "";
+    values.coagent_email = coListingAgent.email || "";
+    values.coagent_phone = coListingAgent.phone || "";
     postRecord(APISaveLater, values).then((res) => {
       if (res.data[0].response.status === "success") {
         setMessage(res.data[0].response.message);
@@ -639,6 +662,11 @@ export default function CheckoutTab(props) {
                       <button type="submit" disabled={submitting}>
                         Pay Later
                       </button>
+                    </div>
+                    <div className="payment-info" style={{fontSize:"6px"}}>
+                      <p>
+                        Payment is required prior to the photos being delivered.  We will send you an invoice the day prior to your photo shoot.  We accept Visa/MC/Discover.  We do not accept checks or cash
+                      </p>
                     </div>
                   </form>
                 );
