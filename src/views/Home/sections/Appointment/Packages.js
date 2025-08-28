@@ -72,7 +72,13 @@ export default function Packages(props) {
           (item, i, ar) => ar.indexOf(item) === i
         )
   );
-  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(false);
+
+  const [expanded, setExpanded] = useState(
+    props.allPackages?.combopackage?.length > 0
+      ? props.allPackages.combopackage[0].id
+      : false
+  );
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded === true ? panel : 9999);
@@ -160,7 +166,7 @@ export default function Packages(props) {
   };
 
   const savePackage = () => {
-    if (subPackages.length === 0  && comboSubPackages.length === 0) {
+    if (subPackages.length === 0 && comboSubPackages.length === 0) {
       setMessage("Please select any package");
       setOpenError(true);
     } else {
@@ -316,7 +322,7 @@ export default function Packages(props) {
           <div class="col-lg-12 col-md-12">
             <div class="package_sec">
               <div class="package_sec_head">
-                <h4>Combo Package</h4>
+                <h4>Signature Packages</h4>
               </div>
               <div class="package_sec_cont">
                 {Object.keys(allPackages).length > 0 ? (
