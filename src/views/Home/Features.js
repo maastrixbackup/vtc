@@ -810,73 +810,33 @@ export default function Features() {
                 <div class="amazing_features_contents">
                   <div class="row">
                     {Object.keys(featureData).length > 0 ? (
-                      featureData.amazing_features.features.map((res, index) =>
-                        index ===
-                        featureData.amazing_features.features.length - 1 ? (
-                          <div class="col-lg-12 col-md-6">
-                            {/* <div
-                              id="kb"
-                              class="carousel slide kb_elastic animate_text kb_wrapper"
-                              data-ride="carousel"
-                            >
-                              <div class="carousel-inner">
-                                <div class="carousel-item active verticalimage">
-                                  <iframe
-                                    width="100%"
-                                    height="440"
-                                    autoplay
-                                    src={featureData.feature.matterport}
-                                    title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen
-                                  ></iframe>
-                                  <img src="https://youriguide.com/ezwk2_4266_barbara_ct_pleasanton_ca/" alt="slider 01" />
-                                </div>
-                              </div>
-                              <div class="my-bottom-img">
-                                <div id="main-title">
-                                  <h1 class="intro">
-                                    <span class="inner">
-                                      <span class="agent">
-                                        iGuide 3D Tour and Floor Plan
-                                      </span>
-                                      <hr />
-                                      <p class="subtitle">
-                                        iGuide 3D Tour includes interactive
-                                        floor plan with accurate measurements.
-                                      </p>
-                                    </span>
-                                  </h1>
-                                </div>
-                              </div>
-                            </div> */}
-                          </div>
-                        ) : (
-                          <div class="col-lg-4 col-md-6">
-                            <div class="category category-1">
+                      featureData.amazing_features.features.map(
+                        (res, index) => (
+                          <div className="col-lg-4 col-md-6" key={index}>
+                            <div className="category category-1">
                               <span
-                                class="category-inner"
+                                className="category-inner"
                                 style={{
-                                  "background-image": `url(${res.thumb_image})`,
-                                  "background-size": "cover",
+                                  backgroundImage: `url(${res.thumb_image})`,
+                                  backgroundSize: "cover",
                                 }}
                               ></span>
-                              <span class="category-title">
+                              <span className="category-title">
                                 <h2>{res.title}</h2>
                               </span>
-                              <span class="category-text">
-                                <h2 class="hidden-xs">{res.title}</h2>
-                                <span class="category-desc">
-                                  <p>{res.description}</p>{" "}
+                              <span className="category-text">
+                                <h2 className="hidden-xs">{res.title}</h2>
+                                <span className="category-desc">
+                                  <p>{res.description}</p>
                                 </span>
                                 <a
                                   href={res.link}
                                   target="_blank"
-                                  class={"need_pic " + res.btn_class}
+                                  rel="noreferrer"
+                                  className={`need_pic ${res.btn_class}`}
                                 >
                                   {res.link_text}{" "}
-                                  <i class="fas fa-arrow-right"></i>
+                                  <i className="fas fa-arrow-right"></i>
                                 </a>
                               </span>
                             </div>
