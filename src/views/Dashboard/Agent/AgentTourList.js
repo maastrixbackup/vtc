@@ -2445,9 +2445,13 @@ export default function AgentTourList(props) {
                                 <a onClick={() => handleDelete(res.id)}>
                                   <i class="far fa-trash-alt"></i>
                                 </a>
-                                {res?.listing_id &&
-                                res?.photoCounts?.tour_photo_count <
-                                  res?.photoCounts?.mls_photo_count ? (
+                                {(res?.listing_id )&&
+                                (
+                                  
+                               
+                                
+                                (res?.photoCounts?.tour_photo_count <
+                                  res?.photoCounts?.mls_photo_count) ? (
                                   <a
                                     className="update-image-listing update"
                                     onClick={() =>
@@ -2527,8 +2531,11 @@ export default function AgentTourList(props) {
                                       />
                                     </svg>
                                   </button>
-                                )}
+                                )
+                              )}
                               </div>
+
+
                               <div class="profile-screen-desc2">
                                 <ul>
                                   <li>
