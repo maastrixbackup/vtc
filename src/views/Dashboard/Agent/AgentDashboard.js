@@ -1,3 +1,4 @@
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect, useContext, useRef } from "react";
 import $ from "jquery";
@@ -155,7 +156,7 @@ export default function AgentDashboard(props) {
         setClassType("header_icon_silver");
         setSubscriptionType("Monthly");
         setDescription(
-          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`
+          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`,
         );
         break;
 
@@ -163,7 +164,7 @@ export default function AgentDashboard(props) {
         setClassType("header_icon_gold");
         setSubscriptionType("Monthly");
         setDescription(
-          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`
+          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`,
         );
         break;
 
@@ -177,7 +178,7 @@ export default function AgentDashboard(props) {
         setClassType("header_icon_silver");
         setSubscriptionType("Yearly");
         setDescription(
-          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`
+          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`,
         );
         break;
 
@@ -185,7 +186,7 @@ export default function AgentDashboard(props) {
         setClassType("header_icon_gold");
         setSubscriptionType("Yearly");
         setDescription(
-          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`
+          `Active Tours ${creditData.activeTours} of ${creditData.totalTours}`,
         );
         break;
 
@@ -336,25 +337,25 @@ export default function AgentDashboard(props) {
     setTotalDivs(
       totalDivs.filter(function (item) {
         return item !== "Div" + (totalDivs.length - 1);
-      })
+      }),
     );
   };
 
   const handleImageRemove = (data) => {
     const filteredPeople = uploadedImages.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedImages(filteredPeople);
   };
   const handleVideoRemove = (data) => {
     const filteredPeople = uploadedVideos.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedVideos(filteredPeople);
   };
   const handlePanoramaRemove = (data) => {
     const filteredPeople = uploadedPanorama.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedPanorama(filteredPeople);
   };
@@ -877,7 +878,7 @@ export default function AgentDashboard(props) {
                 property: res.data[0].response.data.property,
                 pictureAry: res.data[0].response.data.pictureAry,
               },
-              {}
+              {},
             );
           }
           if (res.data[0].response.data.panoramaImgAry.length > 0) {
@@ -890,7 +891,7 @@ export default function AgentDashboard(props) {
                 imagecapturedatepano:
                   res.data[0].response.data.imagecapturedatepano,
               },
-              {}
+              {},
             );
           }
           if (res.data[0].response.data.videoAry.length > 0) {
@@ -902,7 +903,7 @@ export default function AgentDashboard(props) {
                 videoAry: res.data[0].response.data.videoAry,
                 post: res.data[0].response.data.post,
               },
-              {}
+              {},
             );
           }
           setMessage(res.data[0].response.message);
@@ -1254,7 +1255,7 @@ export default function AgentDashboard(props) {
                                               ]);
                                             } else {
                                               setMessage(
-                                                "Please upload a valid mp4 file."
+                                                "Please upload a valid mp4 file.",
                                               );
                                               setOpenError(true);
                                             }
@@ -1314,7 +1315,7 @@ export default function AgentDashboard(props) {
                                                     }}
                                                   />
                                                 </React.Fragment>
-                                              )
+                                              ),
                                             )}
                                           </div>
                                         </React.Fragment>
@@ -1341,7 +1342,10 @@ export default function AgentDashboard(props) {
                                               res.type == "image/png"
                                             ) {
                                               setUploadedPanorama(
-                                                (oldArray) => [...oldArray, res]
+                                                (oldArray) => [
+                                                  ...oldArray,
+                                                  res,
+                                                ],
                                               );
                                             } else {
                                               setMessage("Accepts only images");
@@ -1785,7 +1789,7 @@ export default function AgentDashboard(props) {
                                                       onChange={(event) => {
                                                         handleChange(
                                                           event,
-                                                          res
+                                                          res,
                                                         );
                                                       }}
                                                       checked={
@@ -1872,7 +1876,7 @@ export default function AgentDashboard(props) {
                                                       onChange={(event) => {
                                                         handleInteriorChange(
                                                           event,
-                                                          res
+                                                          res,
                                                         );
                                                       }}
                                                       checked={
@@ -1959,7 +1963,7 @@ export default function AgentDashboard(props) {
                                                       onChange={(event) => {
                                                         handleExteriorChange(
                                                           event,
-                                                          res
+                                                          res,
                                                         );
                                                       }}
                                                       checked={
@@ -2045,7 +2049,7 @@ export default function AgentDashboard(props) {
                                                       onChange={(event) => {
                                                         handleCommunityChange(
                                                           event,
-                                                          res
+                                                          res,
                                                         );
                                                       }}
                                                       checked={
@@ -3096,8 +3100,8 @@ export default function AgentDashboard(props) {
                     <div class="wlcm_video_sec">
                       <video width="100%" height="350" controls autoplay>
                         <source
-                          src="https://virtualtourcafe.com/videos/VTC_Getting_Started_Video_2017.mp4"
-                          type=""
+                          src="https://virtualtourcafe.com/videos/VirtualTourCafe_Getting_Started_Video_2025.mp4"
+                          type="video/mp4"
                         />
                       </video>
                     </div>
@@ -3225,3 +3229,6 @@ export default function AgentDashboard(props) {
     </div>
   );
 }
+
+
+

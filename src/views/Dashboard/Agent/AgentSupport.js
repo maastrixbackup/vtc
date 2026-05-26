@@ -7,6 +7,10 @@ import vendor2 from "../../../images/preferedvendor_2.png";
 import vendor3 from "../../../images/preferedvendor_3.png";
 import vendor4 from "../../../images/preferedvendor_4.png";
 import vendor5 from "../../../images/preferedvendor_5.png";
+import vedio1 from "../../../images/v1play.png";
+import vedio2 from "../../../images/v2play.png";
+import vedio3 from "../../../images/v3play.png";
+import vedio4 from "../../../images/v4play.png";
 import tours from "../../../images/tours.jpg";
 import Skeleton from "@material-ui/lab/Skeleton";
 import Footer from "../../../components/Footer/AgentFooter";
@@ -81,7 +85,7 @@ export default function AgentSupport() {
                     <li class="">
                       <Link to={APIPath() + "agent-dashboard"}>My Cafe</Link>
                     </li>
-                   
+
                     <li>
                       <Link to={APIPath() + "agent-tour-list"}>Tours</Link>
                     </li>
@@ -119,6 +123,91 @@ export default function AgentSupport() {
       </section>
       <section class="contact-page-section">
         <div class="container">
+          <div className="row mb-4">
+            <div className="col-lg-12">
+              <div class="text-center agent_support ">
+                <h3>Learning Tutorials</h3>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-lg-6 mb-2">
+              <div class="video_box">
+                <video
+                  width="100%"
+                  height="50%"
+                  controls
+                  poster={vedio1}
+                  style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
+                >
+                  <source
+                    src="https://virtualtourcafe.com/videos/VirtualTourCafe_Getting_Started_Video_2025.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+              <h5 style={{ textAlign: "center", textShadow: "0 0 1px black " }}>
+                Getting Started with VirtualTourCafe
+              </h5>
+            </div>
+            <div class="col-lg-6 mb-2">
+              <div class="video_box">
+                <video
+                  width="100%"
+                  height="50%"
+                  controls
+                  poster={vedio2}
+                  style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
+                >
+                  <source
+                    src="https://virtualtourcafe.com/videos/VTC_Getting_Started_Part_1.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+              <h5 style={{ textAlign: "center", textShadow: "0 0 1px black " }}>
+                Getting Started Part I
+              </h5>
+            </div>
+            <div class="col-lg-6 mb-2">
+              <div class="video_box">
+                <video
+                  width="100%"
+                  height="50%"
+                  controls
+                  poster={vedio3}
+                  style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
+                >
+                  <source
+                    src="https://virtualtourcafe.com/videos/VTC_Getting_Started_Part_2.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+              <h5 style={{ textAlign: "center", textShadow: "0 0 1px black " }}>
+                Getting Started Part II
+              </h5>
+            </div>
+            <div class="col-lg-6 mb-2">
+              <div class="video_box">
+                <video
+                  width="100%"
+                  height="50%"
+                  controls
+                  poster={vedio4}
+                  style={{ aspectRatio: "16 / 9", objectFit: "cover" }}
+                >
+                  <source
+                    src="https://virtualtourcafe.com/videos/VTC_Getting_Started_Part_3.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
+              <h5 style={{ textAlign: "center", textShadow: "0 0 1px black " }}>
+                Getting Started Part III
+              </h5>
+            </div>
+          </div>
           <div class="row">
             <div class="col-lg-12 text-center">
               <div class="sub-title-2">
@@ -244,7 +333,6 @@ export default function AgentSupport() {
                   allowfullscreen=""
                   loading="lazy"
                 ></iframe>
-                {/* <iframe src="https://maps.google.com/maps?width=720&amp;height=600&amp;hl=en&amp;coord=39.966528,-75.158284&amp;q=1%20Grafton%20Street%2C%20Dublin%2C%20Ireland+(My%20Business%20Name)&amp;ie=UTF8&amp;t=p&amp;z=16&amp;iwloc=B&amp;output=embed" scrolling="no"></iframe> */}
               </div>
             </div>
           </div>

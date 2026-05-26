@@ -58,6 +58,7 @@ const APITourService = APIURL() + "tourservicelink";
 const APISendMail = APIURL() + "send-TrafficReport";
 const APISaveTrafficReport = APIURL() + "save-trafficReport";
 const APIDuplicate = APIURL() + "duplicateimageset";
+const APIUpdateListingPhoto = APIURL() + "update-listing-photo";
 const initialDomainOrderState = {
   authenticate_key: "abcd123XYZ",
   agent_id: "",
@@ -125,7 +126,7 @@ export default function AgentTourList(props) {
 
   const [distributeVideoChecked, setDistributeVideoChecked] = useState(false);
   const [domainOrderData, setDomainOrderData] = useState(
-    initialDomainOrderState
+    initialDomainOrderState,
   );
   const [uploadedVideos, setUploadedVideos] = useState([]);
 
@@ -310,7 +311,7 @@ export default function AgentTourList(props) {
   // Toggle checkbox
   const toggleIdSelection = (id) => {
     setSelectedIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
 
@@ -342,7 +343,35 @@ export default function AgentTourList(props) {
       });
     }
   }, [context.state.user, sync, pageNumber]);
+  console.log("all tour Dtaa", imagesetList);
 
+  const handleUpdateListingPhoto = (data) => {
+    setOpen(true);
+    const obj = {
+      lisitng_id: Number(data.listing_id),
+      tourId: data.id,
+      agent_id: data.userid,
+    };
+    postRecord(APIUpdateListingPhoto, obj)
+      .then((res) => {
+        if (res.data.status === "success") {
+          setMessage(res.data.message);
+          setOpenSuccess(true);
+          setSync(false);
+        } else {
+          setMessage(res.data.message);
+          setOpenError(true);
+          setSync(false);
+        }
+        setSync(true);
+        setOpen(false);
+      })
+      .catch((err) => {
+        setMessage("Something Went Wrong. Please try again later...");
+        setOpenError(true);
+        setOpen(false);
+      });
+  };
   useEffect(() => {
     const objusr = { authenticate_key: "abcd123XYZ", country_id: 40 };
     postRecord(APIGetStates, objusr).then((res) => {
@@ -421,6 +450,8 @@ export default function AgentTourList(props) {
       }
     }
   }, [context.state.user, id, isPremium, defaultsThemeId]);
+  console.log("all data", allData);
+
   useEffect(() => {
     if (imagesetList.length > 0) {
       filterData();
@@ -658,7 +689,7 @@ export default function AgentTourList(props) {
         } else {
           setMessage(
             res.data[0].response.message ||
-              "Something Went Wrong. Please try again later..."
+              "Something Went Wrong. Please try again later...",
           );
           setOpenError(true);
           setSync(false);
@@ -845,7 +876,7 @@ export default function AgentTourList(props) {
                 APIPath() +
                   "agent-video-non-active/" +
                   localStorage.getItem("id"),
-                "_blank"
+                "_blank",
               );
             } else {
               setThemeId(res.data[0].response.tourdetails.premium_tour_theme);
@@ -1257,7 +1288,7 @@ export default function AgentTourList(props) {
                   property: res.data[0].response.data.property,
                   pictureAry: res.data[0].response.data.pictureAry,
                 },
-                {}
+                {},
               );
             }
             if (res.data[0].response.data.panoramaImgAry.length > 0) {
@@ -1270,7 +1301,7 @@ export default function AgentTourList(props) {
                   imagecapturedatepano:
                     res.data[0].response.data.imagecapturedatepano,
                 },
-                {}
+                {},
               );
             }
             if (res.data[0].response.data.videoAry.length > 0) {
@@ -1282,7 +1313,7 @@ export default function AgentTourList(props) {
                   videoAry: res.data[0].response.data.videoAry,
                   post: res.data[0].response.data.post,
                 },
-                {}
+                {},
               );
             }
             setGlobalMessage(res.data[0].response.message);
@@ -1306,10 +1337,10 @@ export default function AgentTourList(props) {
         })
         .catch((err) => {
           setMessage(
-            "Some of the Images are Corrupt Please Check and Upload Again..."
+            "Some of the Images are Corrupt Please Check and Upload Again...",
           );
           setGlobalMessage(
-            "Some of the Images are Corrupt Please Check and Upload Again..."
+            "Some of the Images are Corrupt Please Check and Upload Again...",
           );
           setGlobalAlertType("success");
           setGlobalOpenPopUp(true);
@@ -1341,7 +1372,7 @@ export default function AgentTourList(props) {
   };
   const handlePanoramaRemove = (data) => {
     const filteredPeople = uploadedPanorama.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedPanorama(filteredPeople);
   };
@@ -1350,13 +1381,13 @@ export default function AgentTourList(props) {
   };
   const handleVideoRemove = (data) => {
     const filteredPeople = uploadedVideos.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedVideos(filteredPeople);
   };
   const handleImageRemove = (data) => {
     const filteredPeople = uploadedImages.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedImages(filteredPeople);
   };
@@ -1807,7 +1838,7 @@ export default function AgentTourList(props) {
                                                 onChange={(e) => {
                                                   if (e.target.checked) {
                                                     setSelectedIds(
-                                                      availableListingIds
+                                                      availableListingIds,
                                                     );
                                                   } else {
                                                     setSelectedIds([]);
@@ -1840,7 +1871,7 @@ export default function AgentTourList(props) {
                                                       className="form-check-input"
                                                       id={`listing-${id}`}
                                                       checked={selectedIds.includes(
-                                                        id
+                                                        id,
                                                       )}
                                                       onChange={() =>
                                                         toggleIdSelection(id)
@@ -2414,6 +2445,89 @@ export default function AgentTourList(props) {
                                 <a onClick={() => handleDelete(res.id)}>
                                   <i class="far fa-trash-alt"></i>
                                 </a>
+                                {res?.listing_id &&
+                                res?.photoCounts?.tour_photo_count <
+                                  res?.photoCounts?.mls_photo_count ? (
+                                  <a
+                                    className="update-image-listing update"
+                                    onClick={() =>
+                                      handleUpdateListingPhoto(res)
+                                    }
+                                  >
+                                    {"(" +
+                                      res?.photoCounts?.tour_photo_count +
+                                      "/" +
+                                      res?.photoCounts?.mls_photo_count +
+                                      ")"}
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="30"
+                                      height="30"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                    >
+                                      <path
+                                        d="M20 7H9"
+                                        stroke="white"
+                                        stroke-width="2.2"
+                                        stroke-linecap="round"
+                                      />
+
+                                      <path
+                                        d="M16 3L20 7L16 11"
+                                        stroke="white"
+                                        stroke-width="2.2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      />
+
+                                      <path
+                                        d="M4 17H15"
+                                        stroke="white"
+                                        stroke-width="2.2"
+                                        stroke-linecap="round"
+                                      />
+
+                                      <path
+                                        d="M8 13L4 17L8 21"
+                                        stroke="white"
+                                        stroke-width="2.2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      />
+                                    </svg>
+                                  </a>
+                                ) : (
+                                  <button
+                                    className="update-image-listing updated"
+                                    disabled
+                                  >
+                                    <svg
+                                      width="120"
+                                      height="120"
+                                      viewBox="0 0 120 120"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <circle
+                                        cx="60"
+                                        cy="60"
+                                        r="50"
+                                        stroke="white"
+                                        stroke-width="8"
+                                        fill="none"
+                                      />
+
+                                      <path
+                                        d="M38 62L53 77L83 47"
+                                        stroke="white"
+                                        stroke-width="8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      />
+                                    </svg>
+                                  </button>
+                                )}
                               </div>
                               <div class="profile-screen-desc2">
                                 <ul>
@@ -2623,7 +2737,7 @@ export default function AgentTourList(props) {
                                         onChange={(event) =>
                                           handleFlyerServiceChange(
                                             event,
-                                            res.id
+                                            res.id,
                                           )
                                         }
                                         checked={res.flyerservice}
@@ -2678,7 +2792,7 @@ export default function AgentTourList(props) {
                                         onChange={(event) =>
                                           handleVideoServiceChange(
                                             event,
-                                            res.id
+                                            res.id,
                                           )
                                         }
                                         checked={res.videoservice}
@@ -7078,14 +7192,14 @@ export default function AgentTourList(props) {
                             <td style={{ fontSize: "12px" }}>{index + 1}</td>
                             <td style={{ fontSize: "12px" }}>
                               {new Date(res.createdAt).toLocaleDateString(
-                                "en-US"
+                                "en-US",
                               )}
                             </td>
                             <td style={{ fontSize: "12px" }}>{res.domain}</td>
                             <td style={{ fontSize: "12px" }}>{res.domainId}</td>
                             <td style={{ fontSize: "12px" }}>
                               {new Date(res.expires).toLocaleDateString(
-                                "en-US"
+                                "en-US",
                               )}
                             </td>
                             <td style={{ fontSize: "12px" }}>

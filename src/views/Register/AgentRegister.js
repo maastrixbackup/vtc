@@ -124,6 +124,10 @@ export default function Register() {
   const [showPayment, setShowPayment] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isEmailExist, setIsEmailExist] = useState(false);
+  const [a, setA] = useState(() => Math.floor(Math.random() * 10) + 1);
+  const [b, setB] = useState(() => Math.floor(Math.random() * 10) + 1);
+  const [answer, setAnswer] = useState("");
+  const [puzError, setPuzError] = useState("");
 
   useEffect(() => {
     const obj = { authenticate_key: "abcd123XYZ", email: subscribeData.email };
@@ -183,7 +187,7 @@ export default function Register() {
   };
   const handleFocusEmail = () => {
     var pattern = new RegExp(
-      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
     );
     if (subscribeData.email === "") {
       setEmailErrorText("email is required *");
@@ -241,7 +245,7 @@ export default function Register() {
   };
   const goToAddress = () => {
     var pattern = new RegExp(
-      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
     );
     if (
       subscribeData.fname !== "" &&
@@ -251,7 +255,7 @@ export default function Register() {
     ) {
       if (!pattern.test(subscribeData.email)) {
         setEmailErrorText(
-          "Please enter valid email address. eg. xyz@example.com"
+          "Please enter valid email address. eg. xyz@example.com",
         );
       } else if (isEmailExist) {
         setEmailErrorText("Email Already Exists");
@@ -327,6 +331,8 @@ export default function Register() {
       } else {
         setZipErrorText("");
       }
+
+      // Math captcha validation
     }
   };
   const goBackToAddress = () => {
@@ -335,7 +341,13 @@ export default function Register() {
     setShowPayment(false);
   };
   const goToSuccess = () => {
-    if (captchaSuccess === false) {
+    if (Number(answer) == "") {
+      setMessage("Please solve all the captcha correctly");
+      setOpenError(true);
+    } else if (Number(answer) !== a + b) {
+      setMessage("Value mismatch. Please check ");
+      setOpenError(true);
+    } else if (captchaSuccess === false) {
       setMessage("Please enter a valid captcha code");
       setOpenError(true);
     } else {
@@ -956,14 +968,62 @@ export default function Register() {
                                           />
                                         </div>
                                       </div>
+                                      {/* <div class="row"> */}
                                       <div class="row">
-                                        <div class="col-md-12 col-lg-12 formbox1">
+                                        <div class="col-md-4 col-lg-4 formbox1">
                                           <ReCAPTCHA
                                             sitekey="6LfHSiwgAAAAAAHtot668mAzqqmXqcre4wXdHbf-"
                                             onChange={onChange}
                                           />
                                         </div>
+                                        <div className="col-md-4 col-lg-4 formbox1">
+                                          <div
+                                            style={{
+                                              border: "1px solid #d3d3d3",
+                                              borderRadius: "4px",
+                                              width: "180px",
+                                              // height: "58px",
+                                              display: "flex",
+                                              alignItems: "center",
+                                              padding: "20px",
+                                              gap: "12px",
+                                              background: "#f9f9f9",
+                                            }}
+                                          >
+                                            <span
+                                              style={{
+                                                fontSize: "20px",
+                                                fontWeight: "600",
+                                                minWidth: "80px",
+                                              }}
+                                            >
+                                              {a} + {b} =
+                                            </span>
+
+                                            <input
+                                              type="text"
+                                              value={answer}
+                                              onChange={(e) =>
+                                                setAnswer(e.target.value)
+                                              }
+                                              placeholder="?"
+                                              style={{
+                                                width: "60px",
+                                                height: "36px",
+                                                background: "none",
+                                                fontWeight: "600",
+                                                padding: "6px 3px",
+                                                fontSize: "20px",
+                                                border: "none",
+                                                borderBottom: "1px solid black",
+                                              }}
+                                            />
+                                          </div>
+                                        </div>
                                       </div>
+
+                                      {/* <div class="row"></div> */}
+                                      {/* </div> */}
                                     </div>
                                   </div>
                                 </div>
