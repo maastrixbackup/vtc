@@ -8891,7 +8891,7 @@ const AgentEditTour = React.memo((props) => {
                 <h5>Email Recipients (comma seperated)</h5>
               </div>
               <p class="padd_top">
-                You could enter multiple email addresses separated by commas.
+                You could enter multiple email addresses separated by commas. 
               </p>
               <div class="service_links">
                 <div class="row">

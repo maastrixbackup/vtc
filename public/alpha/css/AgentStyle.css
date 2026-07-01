@@ -4336,7 +4336,9 @@ font-size: 80%;
 }
 .updated{
   background-color: #0f4cce;
+  color: white;
 }
+
 .update-image-listing:disabled {
   /* opacity: 0.8; */
   cursor: not-allowed;
@@ -4344,6 +4346,9 @@ font-size: 80%;
 .update{
   background-color: #FFA12D;
   color: white;
+}
+.update:hover{
+  color: white ;
 }
 .update-image-listing > svg {
   height: 20px;

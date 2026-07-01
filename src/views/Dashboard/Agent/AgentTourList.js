@@ -184,6 +184,8 @@ export default function AgentTourList(props) {
       }
     });
   }, []);
+  console.log("tour id is ...", id);
+
   useEffect(() => {
     if (context.state.user) {
       //  console.log(JSON.parse(context.state.user).agentId);
@@ -1508,6 +1510,7 @@ export default function AgentTourList(props) {
     setOpen(true);
     const obj = {
       authenticate_key: "abcd123XYZ",
+      tourId: id,
       brokerid: JSON.parse(context.state.user).agentId,
       text: trafficData.reportrecipients,
     };
@@ -2445,96 +2448,95 @@ export default function AgentTourList(props) {
                                 <a onClick={() => handleDelete(res.id)}>
                                   <i class="far fa-trash-alt"></i>
                                 </a>
-                                {(res?.listing_id )&&
-                                (
-                                  
-                               
-                                
-                                (res?.photoCounts?.tour_photo_count <
-                                  res?.photoCounts?.mls_photo_count) ? (
-                                  <a
-                                    className="update-image-listing update"
-                                    onClick={() =>
-                                      handleUpdateListingPhoto(res)
-                                    }
-                                  >
-                                    {"(" +
-                                      res?.photoCounts?.tour_photo_count +
-                                      "/" +
-                                      res?.photoCounts?.mls_photo_count +
-                                      ")"}
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="30"
-                                      height="30"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
+                                {res?.listing_id &&
+                                  (res?.photoCounts?.tour_photo_count <
+                                  res?.photoCounts?.mls_photo_count ? (
+                                    <a
+                                      className="update-image-listing update"
+                                      onClick={() =>
+                                        handleUpdateListingPhoto(res)
+                                      }
                                     >
-                                      <path
-                                        d="M20 7H9"
-                                        stroke="white"
-                                        stroke-width="2.2"
-                                        stroke-linecap="round"
-                                      />
-
-                                      <path
-                                        d="M16 3L20 7L16 11"
-                                        stroke="white"
-                                        stroke-width="2.2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-
-                                      <path
-                                        d="M4 17H15"
-                                        stroke="white"
-                                        stroke-width="2.2"
-                                        stroke-linecap="round"
-                                      />
-
-                                      <path
-                                        d="M8 13L4 17L8 21"
-                                        stroke="white"
-                                        stroke-width="2.2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
-                                  </a>
-                                ) : (
-                                  <button
-                                    className="update-image-listing updated"
-                                    disabled
-                                  >
-                                    <svg
-                                      width="120"
-                                      height="120"
-                                      viewBox="0 0 120 120"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <circle
-                                        cx="60"
-                                        cy="60"
-                                        r="50"
-                                        stroke="white"
-                                        stroke-width="8"
+                                      {"(" +
+                                        res?.photoCounts?.tour_photo_count +
+                                        "/" +
+                                        res?.photoCounts?.mls_photo_count +
+                                        ")"}
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 24 24"
                                         fill="none"
-                                      />
+                                      >
+                                        <path
+                                          d="M20 7H9"
+                                          stroke="white"
+                                          stroke-width="2.2"
+                                          stroke-linecap="round"
+                                        />
 
-                                      <path
-                                        d="M38 62L53 77L83 47"
-                                        stroke="white"
-                                        stroke-width="8"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                      />
-                                    </svg>
-                                  </button>
-                                )
-                              )}
+                                        <path
+                                          d="M16 3L20 7L16 11"
+                                          stroke="white"
+                                          stroke-width="2.2"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+
+                                        <path
+                                          d="M4 17H15"
+                                          stroke="white"
+                                          stroke-width="2.2"
+                                          stroke-linecap="round"
+                                        />
+
+                                        <path
+                                          d="M8 13L4 17L8 21"
+                                          stroke="white"
+                                          stroke-width="2.2"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </a>
+                                  ) : (
+                                    <button
+                                      className="update-image-listing updated"
+                                      disabled
+                                    >
+                                      {"(" +
+                                        res?.photoCounts?.tour_photo_count +
+                                        "/" +
+                                        res?.photoCounts?.mls_photo_count +
+                                        ")"}
+                                      <svg
+                                        width="120"
+                                        height="120"
+                                        viewBox="0 0 120 120"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <circle
+                                          cx="60"
+                                          cy="60"
+                                          r="50"
+                                          stroke="white"
+                                          stroke-width="8"
+                                          fill="none"
+                                        />
+
+                                        <path
+                                          d="M38 62L53 77L83 47"
+                                          stroke="white"
+                                          stroke-width="8"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                        />
+                                      </svg>
+                                    </button>
+                                  ))}
                               </div>
-
 
                               <div class="profile-screen-desc2">
                                 <ul>

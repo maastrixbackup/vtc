@@ -244,30 +244,7 @@ export default function TrafficReport(props) {
       });
     }
   }, [tour_id]);
-  // console.log(yaxisData);
-  // console.log(xaxisData);
-  // console.log(videoServices);
-  // const generatePDF = () => {
-  //   const pages = document.getElementById("container");
-  //   html2PDF(pages, {
-  //     jsPDF: {
-  //       format: "a4",
-  //     },
-  //     html2canvas: {
-  //       scrollX: 0,
-  //       scrollY: -window.scrollY,
-  //     },
-  //     watermark: {
-  //       handler({ pdf, imgNode, pageNumber2, totalPageNumber }) {
-  //         const props = pdf.getImageProperties(imgNode);
-      
-  //         pdf.addImage(imgNode, "PNG", 0, 0, 40, 40);
-  //       },
-  //     },
-  //     imageType: "image/png",
-  //     output: "./AgentTrafficReport.pdf",
-  //   });
-  // };
+
   const generatePDF = () => {
     const element = document.getElementById("container");
   
@@ -276,7 +253,7 @@ export default function TrafficReport(props) {
       return;
     }
   
-    html2canvas(element, { scale: 2, useCORS: true }).then((canvas) => {
+    html2canvas(element, { scale:0.8, useCORS: true }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
   
