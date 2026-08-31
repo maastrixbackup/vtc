@@ -200,21 +200,21 @@ const AgentEditTour = React.memo((props) => {
   const [firstOrder, setFirstOrder] = useState({});
   const [announcements, setAnnouncements] = useState([]);
   const [announcementData, setAnnouncementData] = useState(
-    initialAnnouncementState
+    initialAnnouncementState,
   );
   const [selectedDate, setSelectedDate] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date("2014-08-18T21:11:54"),
   );
   const [selectedFrom, setSelectedFrom] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date("2014-08-18T21:11:54"),
   );
   const [selectedTo, setSelectedTo] = React.useState(
-    new Date("2014-08-18T21:11:54")
+    new Date("2014-08-18T21:11:54"),
   );
   const selectOrRemove = (id) => {
     if (selectedImages.includes(id)) {
       setSelectedImages((selectedImages) =>
-        selectedImages.filter((image) => image != id)
+        selectedImages.filter((image) => image != id),
       );
     } else setSelectedImages((selectedImages) => [...selectedImages, id]);
   };
@@ -245,7 +245,7 @@ const AgentEditTour = React.memo((props) => {
   const [youtubeLinkData, setYoutubeLinkData] = useState({});
   const [openWalkthroughModal, setOpenWalkThroughModal] = useState(false);
   const [walkthroughData, setWalkthroughData] = useState(
-    initialWalkthroughData
+    initialWalkthroughData,
   );
   const [openCompanyBanner, setOpenCompanyBanner] = useState(false);
   const [allBanners, setAllBanners] = useState([]);
@@ -663,20 +663,25 @@ const AgentEditTour = React.memo((props) => {
       });
     }
   }, [context.state.user, sync, tour_id]);
-  useEffect(() => {
-    if (context.state.user) {
-      const obj = {
-        authenticate_key: "abcd123XYZ",
-        agentId: JSON.parse(context.state.user).agentId,
-        tourid: tour_id,
-      };
-      postRecord(APIGetEditTourList, obj).then((res) => {
-        if (res.data[0].response.status === "success") {
-          setTourList(res.data[0].response.dataDetails.dataProvider);
-        }
-      });
-    }
-  }, [context.state.user, sync, tour_id]);
+useEffect(() => {
+  if (context.state.user) {
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      agentId: JSON.parse(context.state.user).agentId,
+      tourid: tour_id,
+    };
+    postRecord(APIGetEditTourList, obj).then((res) => {
+      if (res.data[0].response.status === "success") {
+        const list =
+          (res.data[0].response.dataDetails &&
+            res.data[0].response.dataDetails.dataProvider) ||
+          res.data[0].response.dataProvider ||
+          [];
+        setTourList(list);
+      }
+    });
+  }
+}, [context.state.user, sync, tour_id]);
   useEffect(() => {
     if (context.state.user) {
       const obj = {
@@ -728,25 +733,25 @@ const AgentEditTour = React.memo((props) => {
           setBrightValue(
             res.data[0].response.data.properties[0].brightness === 100
               ? 10
-              : res.data[0].response.data.properties[0].brightness
+              : res.data[0].response.data.properties[0].brightness,
           );
           setGrayValue(res.data[0].response.data.properties[0].grayscale);
           setContrastValue(
             res.data[0].response.data.properties[0].contrast === 0
               ? 1
-              : res.data[0].response.data.properties[0].contrast
+              : res.data[0].response.data.properties[0].contrast,
           );
           setHueValue(res.data[0].response.data.properties[0].huerotate);
           setInvertValue(res.data[0].response.data.properties[0].invert);
           setOpacityValue(
             res.data[0].response.data.properties[0].opacity === 0
               ? 100
-              : res.data[0].response.data.properties[0].opacity
+              : res.data[0].response.data.properties[0].opacity,
           );
           setSaturateValue(
             res.data[0].response.data.properties[0].saturation === 100
               ? 10
-              : res.data[0].response.data.properties[0].saturation
+              : res.data[0].response.data.properties[0].saturation,
           );
           setSepiaValue(res.data[0].response.data.properties[0].sepia);
           setRotateValue(res.data[0].response.data.properties[0].rotate);
@@ -754,52 +759,52 @@ const AgentEditTour = React.memo((props) => {
           setpreviousblurValue(
             res.data[0].response.data.properties[0].blur === null
               ? 0
-              : res.data[0].response.data.properties[0].blur
+              : res.data[0].response.data.properties[0].blur,
           );
           setpreviousBrightValue(
             res.data[0].response.data.properties[0].brightness === 100
               ? 10
-              : res.data[0].response.data.properties[0].brightness
+              : res.data[0].response.data.properties[0].brightness,
           );
           setpreviousGrayValue(
             res.data[0].response.data.properties[0].grayscale === null
               ? 0
-              : res.data[0].response.data.properties[0].grayscale
+              : res.data[0].response.data.properties[0].grayscale,
           );
           setpreviousContrastValue(
             res.data[0].response.data.properties[0].contrast === 0
               ? 1
-              : res.data[0].response.data.properties[0].contrast
+              : res.data[0].response.data.properties[0].contrast,
           );
           setpreviousHueValue(
             res.data[0].response.data.properties[0].huerotate === null
               ? 0
-              : res.data[0].response.data.properties[0].huerotate
+              : res.data[0].response.data.properties[0].huerotate,
           );
           setpreviousInvertValue(
             res.data[0].response.data.properties[0].invert === null
               ? 0
-              : res.data[0].response.data.properties[0].invert
+              : res.data[0].response.data.properties[0].invert,
           );
           setpreviousOpacityValue(
             res.data[0].response.data.properties[0].opacity === 0
               ? 100
-              : res.data[0].response.data.properties[0].opacity
+              : res.data[0].response.data.properties[0].opacity,
           );
           setpreviousSaturateValue(
             res.data[0].response.data.properties[0].saturation === 100
               ? 10
-              : res.data[0].response.data.properties[0].saturation
+              : res.data[0].response.data.properties[0].saturation,
           );
           setpreviousSepiaValue(
             res.data[0].response.data.properties[0].sepia === null
               ? 0
-              : res.data[0].response.data.properties[0].sepia
+              : res.data[0].response.data.properties[0].sepia,
           );
           setpreviousRotateValue(
             res.data[0].response.data.properties[0].rotate === null
               ? 0
-              : res.data[0].response.data.properties[0].rotate
+              : res.data[0].response.data.properties[0].rotate,
           );
         }
       });
@@ -877,11 +882,12 @@ const AgentEditTour = React.memo((props) => {
       });
     }
   }, [context.state.user, sync, tour_id]);
-  useEffect(() => {
-    if (tourList.length > 0) {
-      filterData();
-    }
-  }, [offset, tourList]);
+
+useEffect(() => {
+  if (tourList && tourList.length > 0) {
+    filterData();
+  }
+}, [offset, tourList]);
 
   useEffect(() => {
     if (context.state.user) {
@@ -962,8 +968,8 @@ const AgentEditTour = React.memo((props) => {
           res.name === data.name
             ? firstOrder.order
             : res.name === data.firstOrder
-            ? data.order
-            : res.order,
+              ? data.order
+              : res.order,
       };
       // if (res.name === data.name) {
       //     res.order = firstOrder.order;
@@ -1044,7 +1050,7 @@ const AgentEditTour = React.memo((props) => {
           res.status = 1;
         } else {
           setCheckedMenu((checkdMenu) =>
-            checkdMenu.filter((fp, i) => i !== index)
+            checkdMenu.filter((fp, i) => i !== index),
           );
           res.status = 0;
         }
@@ -1062,7 +1068,7 @@ const AgentEditTour = React.memo((props) => {
           res.status = 1;
         } else {
           setCheckedMenu((checkdMenu) =>
-            checkdMenu.filter((fp, i) => i !== index)
+            checkdMenu.filter((fp, i) => i !== index),
           );
           res.status = 0;
         }
@@ -1080,7 +1086,7 @@ const AgentEditTour = React.memo((props) => {
           res.status = 1;
         } else {
           setCheckedMenu((checkdMenu) =>
-            checkdMenu.filter((fp, i) => i !== index)
+            checkdMenu.filter((fp, i) => i !== index),
           );
           res.status = 0;
         }
@@ -1098,7 +1104,7 @@ const AgentEditTour = React.memo((props) => {
           res.status = 1;
         } else {
           setCheckedMenu((checkdMenu) =>
-            checkdMenu.filter((fp, i) => i !== index)
+            checkdMenu.filter((fp, i) => i !== index),
           );
           res.status = 0;
         }
@@ -1116,7 +1122,7 @@ const AgentEditTour = React.memo((props) => {
           res.status = 1;
         } else {
           setCheckedMenu((checkdMenu) =>
-            checkdMenu.filter((fp, i) => i !== index)
+            checkdMenu.filter((fp, i) => i !== index),
           );
           res.status = 0;
         }
@@ -1424,19 +1430,14 @@ const AgentEditTour = React.memo((props) => {
     // setTourList([]);
     setTourList(tourList);
   };
-  const handleImageTourChange = (event, id) => {
-    tourList.forEach((res) => {
-      if (res.id === id) {
-        if (event === true) {
-          res.enableontour = 1;
-        } else {
-          res.enableontour = 0;
-        }
-      }
-    });
-    // setTourList([]);
-    setTourList(tourList);
-  };
+const handleImageTourChange = (event, id) => {
+  const updated = dragImages.map((res) =>
+    res.id === id
+      ? { ...res, enableontour: event === true ? 1 : 0 }
+      : res
+  );
+  setDragImages(updated);
+};
   const handlefontTourChange = (event, id) => {
     var new_tourList = tourList;
     new_tourList.forEach((res) => {
@@ -1539,14 +1540,14 @@ const AgentEditTour = React.memo((props) => {
     setSepiaValue(value);
     setEditImageData({ ...editImageData, sepia: value });
   };
-  const handleRadioChange = (event, id) => {
-    tourList.forEach((res) => {
-      if (res.id === id) {
-        res.tourfontlocation = event.target.value;
-      }
-    });
-    setTourList(tourList);
-  };
+const handleRadioChange = (event, id) => {
+  const updated = dragImages.map((res) =>
+    res.id === id
+      ? { ...res, tourfontlocation: event.target.value }
+      : res
+  );
+  setDragImages(updated);
+};
 
   const handleRotate = (data) => {
     setRotateValue(data);
@@ -2369,7 +2370,7 @@ const AgentEditTour = React.memo((props) => {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
-      }
+      },
     );
     announcementData.agent_id = JSON.parse(context.state.user).agentId;
     postRecord(APISaveAnnouncement, announcementData)
@@ -2395,7 +2396,7 @@ const AgentEditTour = React.memo((props) => {
   };
   const editAnnouncement = (data) => {
     data.fromtime_h = new Date(
-      "07/29/2019 " + data.fromtime + " " + data.fromampm
+      "07/29/2019 " + data.fromtime + " " + data.fromampm,
     );
     data.totime_h = new Date("07/29/2019 " + data.totime + " " + data.toampm);
     setAnnouncementData(data);
@@ -2434,7 +2435,7 @@ const AgentEditTour = React.memo((props) => {
     setTotalDivs(
       totalDivs.filter(function (item) {
         return item !== "Div" + (totalDivs.length - 1);
-      })
+      }),
     );
   };
   const updateAnnouncement = () => {
@@ -2454,7 +2455,7 @@ const AgentEditTour = React.memo((props) => {
         hour: "numeric",
         minute: "numeric",
         hour12: true,
-      }
+      },
     );
     postRecord(APISaveAnnouncement, announcementData)
       .then((res) => {
@@ -2478,13 +2479,21 @@ const AgentEditTour = React.memo((props) => {
       });
   };
   const updateTourListData = () => {
-    setOpen(true);
-    const obj = {
-      authenticate_key: "abcd123XYZ",
-      agent_id: JSON.parse(context.state.user).agentId,
-      type: "tour",
-      imageArr: dragImages,
-    };
+     setOpen(true);
+  const finalImageArr = dragImages.map((res) => ({
+    ...res,
+    enable_caption: res.enable_caption === 1 ? 1 : 0,
+    caption_position: res.tourfontlocation || "center", // key name backend expects
+  }));
+  setDragImages(finalImageArr);
+
+  const obj = {
+    authenticate_key: "abcd123XYZ",
+    agent_id: JSON.parse(context.state.user).agentId,
+    type: "tour",
+    imageArr: finalImageArr,
+  };
+
     postRecord(APIUpdateTour, obj)
       .then((res) => {
         if (res.data[0].response.status === "success") {
@@ -2677,12 +2686,28 @@ const AgentEditTour = React.memo((props) => {
       });
   };
 
-  const filterData = async () => {
-    const endOffset = offset + postPerPage;
-    setTotalData(tourList.slice(offset, endOffset));
-    setDragImages(tourList);
-    setPageCount(Math.ceil(tourList.length / postPerPage));
-  };
+const filterData = async () => {
+  const endOffset = offset + postPerPage;
+  const normalizedList = tourList.map((freshItem) => {
+    const existing = dragImages.find((d) => d.id === freshItem.id);
+    return {
+      ...freshItem,
+      enable_caption:
+        freshItem.enable_caption !== undefined &&
+        freshItem.enable_caption !== null
+          ? Number(freshItem.enable_caption) === 1
+            ? 1
+            : 0
+          : existing
+          ? existing.enable_caption
+          : 0,
+    };
+  });
+  setTotalData(normalizedList.slice(offset, endOffset));
+  setDragImages(normalizedList);
+  setPageCount(Math.ceil(normalizedList.length / postPerPage));
+};
+
   const handlePageClick = (event) => {
     // setOffset(selectedPage + 6);
     const newOffset = (event.selected * postPerPage) % tourList.length;
@@ -2700,7 +2725,7 @@ const AgentEditTour = React.memo((props) => {
           if (res.data[0].response.tourdetails.isactive === 0) {
             window.open(
               APIPath() + "agent-video-non-active/" + tour_id,
-              "_blank"
+              "_blank",
             );
           } else {
             setThemeId(res.data[0].response.tourdetails.premium_tour_theme);
@@ -2718,7 +2743,7 @@ const AgentEditTour = React.memo((props) => {
   const facebookLoginLink = () => {
     window.open(
       "https://www.facebook.com/login.php?skip_api_login=1&api_key=443725232478550&kid_directed_site=0&app_id=443725232478550&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fdialog%2Foauth%3Fapp_id%3D443725232478550%26cbt%3D1650037099788%26channel_url%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Df33f5ab944ead08%2526domain%253Dvirtualtourcafe.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fvirtualtourcafe.com%25252Ff25a4bf64f69478%2526relation%253Dopener%26client_id%3D443725232478550%26display%3Dpopup%26domain%3Dvirtualtourcafe.com%26e2e%3D%257B%257D%26fallback_redirect_uri%3Dhttps%253A%252F%252Fvirtualtourcafe.com%252Fagent%252Ftours%252Fedittour%252F4778003%26locale%3Den_US%26logger_id%3Df3c1a5e74cf591%26origin%3D1%26redirect_uri%3Dhttps%253A%252F%252Fstaticxx.facebook.com%252Fx%252Fconnect%252Fxd_arbiter%252F%253Fversion%253D46%2523cb%253Df361b68717ed25c%2526domain%253Dvirtualtourcafe.com%2526is_canvas%253Dfalse%2526origin%253Dhttps%25253A%25252F%25252Fvirtualtourcafe.com%25252Ff25a4bf64f69478%2526relation%253Dopener%2526frame%253Df34c3a9b88b2254%26response_type%3Dtoken%252Csigned_request%252Cgraph_domain%26scope%3Dread_stream%252Cpublish_stream%26sdk%3Djoey%26ret%3Dlogin%26fbapp_pres%3D0%26tp%3Dunspecified&cancel_url=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df361b68717ed25c%26domain%3Dvirtualtourcafe.com%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fvirtualtourcafe.com%252Ff25a4bf64f69478%26relation%3Dopener%26frame%3Df34c3a9b88b2254%26error%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied&display=popup&locale=en_GB&pl_dbl=0",
-      "_blank"
+      "_blank",
     );
   };
   const handleEditImageset = () => {
@@ -2757,7 +2782,7 @@ const AgentEditTour = React.memo((props) => {
       0,
       0,
       crop.width,
-      crop.height
+      crop.height,
     );
     const base64Image = canvas.toDataURL();
     setCroppedImage([dataURLtoFile(base64Image, fileName)]);
@@ -2822,6 +2847,18 @@ const AgentEditTour = React.memo((props) => {
     // tourList.imageArr = {};
     setDragImages(arr);
   };
+
+  const handleCaptionEnableChange = (event, id) => {
+    const value = event.target.value; // "on" or "off"
+    const arr = dragImages.map((res) => {
+      if (res.id === id) {
+        return { ...res, enable_caption: value === "on" ? 1 : 0 };
+      }
+      return res;
+    });
+    setDragImages(arr);
+  };
+
   const options = {
     lazyLoad: true,
     loop: false,
@@ -2862,7 +2899,7 @@ const AgentEditTour = React.memo((props) => {
   };
   const handleImageRemove = (data) => {
     const filteredPeople = uploadedImages.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedImages(filteredPeople);
   };
@@ -2927,7 +2964,7 @@ const AgentEditTour = React.memo((props) => {
   };
   const handleVideoRemove = (data) => {
     const filteredPeople = uploadedVideos.filter(
-      (item) => item.name !== data.name
+      (item) => item.name !== data.name,
     );
     setUploadedVideos(filteredPeople);
   };
@@ -3321,7 +3358,7 @@ const AgentEditTour = React.memo((props) => {
       }
     }
   }, [context.state.user]);
-
+console.log("tour-list",dragImages);
   return (
     <>
       <AgentHeader />
@@ -3650,7 +3687,8 @@ const AgentEditTour = React.memo((props) => {
                               class="dropdown-item"
                               onClick={() => setOpenNarrationModal(true)}
                             >
-                              <i class="fas fa-torii-gate"></i> Tour Narration{" "}
+                              <i class="fas fa-torii-gate"></i> Tour
+                              Narration{" "}
                             </a>
                           </li>
                           <li>
@@ -3659,7 +3697,8 @@ const AgentEditTour = React.memo((props) => {
                               data-toggle="modal"
                               data-target="#Property"
                             >
-                              <i class="fas fa-home"></i> Property Information{" "}
+                              <i class="fas fa-home"></i> Property
+                              Information{" "}
                             </a>
                           </li>
 
@@ -4600,6 +4639,40 @@ const AgentEditTour = React.memo((props) => {
                               placeholder={res.caption}
                               class="form-control"
                             />
+                          </div>
+                        </div>
+
+                        <div className="caption-options">
+                          <div className="option-group">
+                            <div className="option-title">Caption</div>
+
+                            <div className="option-values">
+                              <label className="radio-label">
+                                <input
+                                  type="radio"
+                                  name={"captionEnable" + res.id}
+                                  value="on"
+                                  checked={Number(res.enable_caption) === 1}
+                                  onChange={(event) =>
+                                    handleCaptionEnableChange(event, res.id)
+                                  }
+                                />
+                                <span>On</span>
+                              </label>
+
+                              <label className="radio-label">
+                                <input
+                                  type="radio"
+                                  name={"captionEnable" + res.id}
+                                  value="off"
+                                  checked={Number(res.enable_caption) !== 1}
+                                  onChange={(event) =>
+                                    handleCaptionEnableChange(event, res.id)
+                                  }
+                                />
+                                <span>Off</span>
+                              </label>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -8891,7 +8964,7 @@ const AgentEditTour = React.memo((props) => {
                 <h5>Email Recipients (comma seperated)</h5>
               </div>
               <p class="padd_top">
-                You could enter multiple email addresses separated by commas. 
+                You could enter multiple email addresses separated by commas.
               </p>
               <div class="service_links">
                 <div class="row">
@@ -10190,7 +10263,7 @@ const AgentEditTour = React.memo((props) => {
                             href="javascript:void()"
                             onClick={() => {
                               downloadQrCode(
-                                otherLink.qr_code.mycafe_image_link
+                                otherLink.qr_code.mycafe_image_link,
                               );
                             }}
                             class="next_btn download_btn"

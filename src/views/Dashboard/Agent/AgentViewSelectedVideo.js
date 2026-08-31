@@ -155,7 +155,7 @@ export default function AgentViewSelectedVideo(props) {
         if (res.data[0].response.status === "success") {
           setCurrentUser(res.data[0].response.data.agent_profile);
           setCompanyInformation(
-            res.data[0].response.data.agent_profile.company_details
+            res.data[0].response.data.agent_profile.company_details,
           );
           setAgentProfile(res.data[0].response.data.agent_profile.profile_img);
         }
@@ -283,7 +283,7 @@ export default function AgentViewSelectedVideo(props) {
   const ListingPage = () => {
     window.open(
       APIPath() + "agent-my-listing/" + AgentId + "/" + TourId,
-      "_blank"
+      "_blank",
     );
   };
   const SaveToDesktop = () => {
@@ -325,14 +325,14 @@ export default function AgentViewSelectedVideo(props) {
     // window.location.href = "https://nces.ed.gov/globallocator/index.asp?search=1&State=BC&zipcode=&School=1&PrivSchool=1&miles=10&CS=240931FB";
     window.open(
       "https://nces.ed.gov/globallocator/index.asp?search=1&State=BC&zipcode=&School=1&PrivSchool=1&miles=10&CS=240931FB",
-      "_blank"
+      "_blank",
     );
   };
   const handleSvgLink = () => {
     // window.location.href = "https://www.walkscore.com/score/dfds?utm_source=walkscore.com&utm_medium=score-badge&utm_campaign=ws_score_widget";
     window.open(
       "https://www.walkscore.com/score/dfds?utm_source=walkscore.com&utm_medium=score-badge&utm_campaign=ws_score_widget",
-      "_blank"
+      "_blank",
     );
   };
   const amenityHandleDateChange = (event) => {
@@ -672,22 +672,6 @@ export default function AgentViewSelectedVideo(props) {
                             </ul>
                           </nav>
                         </div>
-                        {/* <div class="Music-player-holder">
-                                                <div class="player">
-                                                    <img id="button" onClick={togglePlay} src={playbtn} />
-                                                    <audio>
-                                                        <source src="images/Better_World_full_mix.mp3" />
-                                                    </audio>
-                                                </div>
-                                                <div class="bar-c">
-                                                    <div id="bar-1" class="bar noAnim"></div>
-                                                    <div id="bar-2" class="bar noAnim"></div>
-                                                    <div id="bar-3" class="bar noAnim"></div>
-                                                    <div id="bar-4" class="bar noAnim"></div>
-                                                    <div id="bar-5" class="bar noAnim"></div>
-                                                    <div id="bar-6" class="bar noAnim"></div>
-                                                </div>
-                                            </div> */}
                       </div>
                     </div>
                   </div>
@@ -837,20 +821,7 @@ export default function AgentViewSelectedVideo(props) {
                           <i class="fab fa-instagram"></i>
                         </a>
                       </div>
-                      {/* <div style={{ height: '100vh', width: '100%' }}>
-                                            <GoogleMapReact
-                                                yesIWantToUseGoogleMapApiInternals
-                                                bootstrapURLKeys={{ key: "AIzaSyASaIio-R74aUvP2e2DWt-sNRllHPsdoX0" }}
-                                                defaultCenter={defaultProps.center}
-                                                defaultZoom={defaultProps.zoom}
-                                            >
-                                                <AnyReactComponent
-                                                    lat={59.955413}
-                                                    lng={30.337844}
-                                                    text="My Marker"
-                                                />
-                                            </GoogleMapReact>
-                                        </div> */}
+
                       <div class="theme5  googlemap">
                         <iframe
                           src="https://maps.google.com/maps?q=California&t=&z=13&ie=UTF8&iwloc=&output=embed"
@@ -1328,7 +1299,7 @@ export default function AgentViewSelectedVideo(props) {
           onCloseRequest={() => setOpenGallery(false)}
           onMovePrevRequest={() =>
             setPhotoIndex(
-              (photoIndex + galleryImages.length - 1) % galleryImages.length
+              (photoIndex + galleryImages.length - 1) % galleryImages.length,
             )
           }
           onMoveNextRequest={() =>
