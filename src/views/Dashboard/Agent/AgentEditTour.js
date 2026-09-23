@@ -3023,6 +3023,60 @@ const filterData = async () => {
       console.error("Error downloading image:", error);
     }
   };
+const getTinyThumbUrl = (imageurl) => {
+  // swaps "/original/" or "/thumbnail/" in the path with "/tinythumb/"
+  return imageurl.replace(/\/(original|thumbnail)\//i, "/tinythumb/");
+};
+const getOriginalUrl = (imageurl) => {
+  return imageurl.replace(/\/(thumbnail|tinythumb)\//i, "/original/");
+};
+
+
+const downloadAllImagesHigh = async () => {
+  for (const res of dragImages) {
+    if (res.image_type !== "image") continue;
+    try {
+      const originalUrl = getOriginalUrl(res.imageurl);
+      const response = await fetch(originalUrl);
+      const blob = await response.blob();
+      const src = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = src;
+      link.setAttribute("download", (res.filename || "image") + ".jpg");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(src);
+      await new Promise((r) => setTimeout(r, 300));
+    } catch (err) {
+      console.error("Error downloading", res.imageurl, err);
+    }
+  }
+};
+// Low-res: downscale each image via canvas before downloading
+const downloadAllImagesLow = async () => {
+  for (const res of dragImages) {
+    if (res.image_type !== "image") continue;
+    try {
+      const tinyUrl = getTinyThumbUrl(res.imageurl);
+      const response = await fetch(tinyUrl);
+      const blob = await response.blob();
+      const src = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = src;
+      link.setAttribute("download", (res.filename || "image") + "_low.jpg");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(src);
+
+      await new Promise((r) => setTimeout(r, 300)); // avoid browser blocking rapid downloads
+    } catch (err) {
+      console.error("Error downloading tinythumb for", res.imageurl, err);
+    }
+  }
+};
   // const downloadImage = () => {
   //   if (imageUrl !== "") {
   //     if (imageId === "") {
@@ -3517,7 +3571,16 @@ console.log("tour-list",dragImages);
                               <i class="fas fa-download"></i> Download
                             </a>
                           </li>
-
+<li>
+  <a class="dropdown-item" onClick={downloadAllImagesHigh}>
+    <i class="fas fa-download"></i> Download All Images (High)
+  </a>
+</li>
+<li>
+  <a class="dropdown-item" onClick={downloadAllImagesLow}>
+    <i class="fas fa-download"></i> Download All Images (Low)
+  </a>
+</li>
                           <li>
                             <a class="dropdown-item" onClick={handleDelete}>
                               <i class="far fa-trash-alt"></i> Delete

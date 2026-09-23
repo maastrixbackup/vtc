@@ -12123,5 +12123,66 @@ body .uwy.userway_p1 .userway_buttons_wrapper {
 }
 
 
+/* ---- Marketing Kit order stepper (AgentMarketing.jsx) ---- */
 
+/* Highlight the active / completed step icon in the site's orange theme */
+.marketing-stepper-dialog .MuiStepIcon-root.MuiStepIcon-active,
+.marketing-stepper-dialog .MuiStepIcon-root.MuiStepIcon-completed {
+  color: #ffa12d;
+}
+
+.marketing-stepper {
+  padding: 20px 0 10px;
+}
+
+.step-content {
+  padding: 10px 0 0;
+}
+
+/* Review & Submit summary table */
+.marketing-summary-table td {
+  padding: 10px 12px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.marketing-summary-table td:first-child {
+  font-weight: 600;
+  width: 40%;
+  background: #f9f9f9;
+}
+
+/* Back / Next / Submit buttons */
+.stepper-actions {
+  margin-top: 25px;
+}
+
+.marketing-order-btn {
+  background: #ffa12d;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-left: 10px;
+}
+
+.marketing-order-btn:hover {
+  background: #e8901f;
+}
+
+.marketing-order-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.marketing-order-btn.back {
+  background: #5d5d5d;
+}
+
+.marketing-order-btn.back:hover {
+  background: #464646;
+}
 

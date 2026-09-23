@@ -1897,6 +1897,7 @@ nav-item {
   position: relative;
 }
 
+
 .prefered-vendorbtm-box img {
   width: 100%;
 
@@ -1922,7 +1923,17 @@ nav-item {
 
   box-shadow: 0 10px 20px 0 rgba(149, 183, 208, 0.2);
 }
+.contct-box-marketing {
+  margin-left: 20px;
 
+  margin-bottom: 30px;
+
+  padding: 30px 20px ;
+
+  box-shadow: 0 10px 20px 0 rgba(149, 183, 208, 0.2);
+}
+
+.contct-box-marketing i ,
 .contct-box i {
   width: 60px;
 
@@ -1945,11 +1956,14 @@ nav-item {
   top: 30px;
 }
 
+.contct-box-marketing p,
+.contct-box-marketing p a ,
 .contct-box p,
 .contct-box p a {
   color: #4d595f;
 }
 
+.contct-box-marketing h3 ,
 .contct-box h3 {
   font-size: 20px;
 
@@ -1961,10 +1975,12 @@ nav-item {
   font-weight: 600;
 }
 
+.contct-box-marketing p ,
 .contct-box p {
   margin: 0;
 }
 
+.contct-box-marketing p a:hover ,
 .contct-box p a:hover {
   text-decoration: underline;
 }

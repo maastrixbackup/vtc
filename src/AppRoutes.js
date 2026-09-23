@@ -93,6 +93,7 @@ import DragAndDrop from "./views/Dashboard/Agent/DragAndDrop";
 import AdminVideoLogin from "./views/Login/AdminVideoLogin";
 import MetaTags from "./components/MetaTags";
 import RedirectComponent from "./components/RedirectComponent";
+import AgentMarketing from "./views/Dashboard/Agent/AgentMarketing";
 
 var hist = createBrowserHistory();
 function Alert(props) {
@@ -274,6 +275,10 @@ export default function AppRoutes() {
           <PrivateRoute
             path={APIPath() + "agent-video-list"}
             component={AgentVideoList}
+          />
+          <PrivateRoute
+            path={APIPath() + "agent-marketing"}
+            component={AgentMarketing}
           />
           <PrivateRoute
             path={APIPath() + "agent-dashboard/:type?"}

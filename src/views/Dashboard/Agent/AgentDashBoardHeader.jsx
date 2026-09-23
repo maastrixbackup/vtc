@@ -55,29 +55,31 @@ function AgentDashBoardHeader({ ShowMenu, HideMenu, imagesetId }) {
             Videos
           </NavLink>
         </li>
-        <li>
-          <NavLink activeClassName="active" to={APIPath() + "agent-setting"}>
-            Settings
-          </NavLink>
-        </li>
-        <li>
+     
+        {/* <li>
           <NavLink
             activeClassName="active"
             to={APIPath() + "agent-preferred-vendor"}
           >
             Preferred Vendors
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             activeClassName="active"
-            to={{
-              pathname:
-                "https://www.xpressdocs.com/next/index.php?uuid=458143677bda0010f37b603828f3b783",
-            }}
-            target="_blank"
+            // to={{
+            //   pathname:
+            //     "https://www.xpressdocs.com/next/index.php?uuid=458143677bda0010f37b603828f3b783",
+            // }}
+            to={APIPath() + "agent-marketing"}
+            // target="_blank"
           >
-            Xpressdocs
+         Marketing
+          </NavLink>
+        </li>
+           <li>
+          <NavLink activeClassName="active" to={APIPath() + "agent-setting"}>
+            Settings
           </NavLink>
         </li>
         <li>

@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function AgentDashboard(props) {
+  console.log("propsss",props)
   let AgentType = props.match.params.type;
   let history = useHistory();
   const context = useContext(AuthContext);
@@ -928,7 +929,7 @@ export default function AgentDashboard(props) {
   const goToImageSet = () => {
     history.push(APIPath() + "agent-image-sets");
   };
-
+console.log("agent type",AgentType)
   return (
     <div>
       <Title title="Agent Dashboard" />

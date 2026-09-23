@@ -26,10 +26,13 @@ const APIUnLinkBroker = APIURL() + "unlink-broker";
 const APISubscription = APIURL() + "agent-signup";
 const APIGetCountries = APIURL() + "get-countries";
 const APIGetStates = APIURL() + "get-states";
+const BACK_CONTEXT_KEY = "agent-dashboard-back-context";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 export default function AgentHeader(props) {
+  const urls = window.location.href;
+  console.log("urls---------", urls);
   let history = useHistory();
   const initialSubState = {
     fname: "",
@@ -58,8 +61,9 @@ export default function AgentHeader(props) {
   const [AgentBrokerDetails, setAgentBrokerDetails] = useState({});
   const [sync, setSync] = useState(false);
   const [maxWidth, setMaxWidth] = React.useState("md");
-  const [backButton, setBackButton] = useState(false);
-  const [backToBroker, setbackToBroker] = useState(false);
+  const [backContext, setBackContext] = useState(() => {
+    return sessionStorage.getItem(BACK_CONTEXT_KEY);
+  });
   const [brokerId, setBrokerId] = useState("");
   const [allCountries, setAllCountries] = useState([]);
   const [allStates, setAllStates] = useState([]);
@@ -68,21 +72,22 @@ export default function AgentHeader(props) {
     setCaptchaSuccess(true);
   }
   useEffect(() => {
-    let user = props.user;
-    if (user === "admin") {
-      setBackButton(true);
-    } else {
-      setBackButton(false);
-    }
-  }, [user]);
-  useEffect(() => {
-    let user = props.user;
+    const user = props.user;
+
     if (user === "broker") {
-      setbackToBroker(true);
-    } else {
-      setbackToBroker(false);
+      sessionStorage.setItem(BACK_CONTEXT_KEY, "broker");
+      setBackContext("broker");
+    } else if (user === "admin") {
+      sessionStorage.setItem(BACK_CONTEXT_KEY, "admin");
+      setBackContext("admin");
     }
-  }, [user]);
+    // Note: intentionally no "else" clear here. Most pages render
+    // <AgentHeader /> without passing a `user` prop at all, so an undefined
+    // prop just means "this page didn't say" - not "leave broker/admin
+    // context". Clearing here was wiping the flag on ordinary navigation.
+    // The flag is cleared explicitly instead: on BacktoBroker/BacktoAdmin
+    // click, and on sign-out (see handleLogout below).
+  }, [props.user]);
   useEffect(() => {
     if (context.state.user) {
       // loadCaptchaEnginge(6);
@@ -142,6 +147,7 @@ export default function AgentHeader(props) {
     });
   }, [subscribeData.countryid]);
   const handleLogout = () => {
+    sessionStorage.removeItem(BACK_CONTEXT_KEY);
     dispatch({
       type: "LOGOUT",
     });
@@ -302,9 +308,11 @@ export default function AgentHeader(props) {
     });
   };
   const BacktoAdmin = () => {
+    sessionStorage.removeItem(BACK_CONTEXT_KEY);
     window.location.href = "https://virtualtourcafe.com/admin/dashboard";
   };
   const BacktoBroker = () => {
+    sessionStorage.removeItem(BACK_CONTEXT_KEY);
     history.push(APIPath() + "back-to-broker/" + brokerId);
   };
   const SaveSubscription = () => {
@@ -358,7 +366,7 @@ export default function AgentHeader(props) {
                   <h6>Welcome {currentUser.name}</h6>
                 </div>
                 <div class="agent_dashboard_right">
-                  {backToBroker ? (
+                  {backContext === "broker" ? (
                     <a
                       style={{ cursor: "pointer", marginRight: "10px" }}
                       onClick={() => BacktoBroker()}
@@ -369,7 +377,7 @@ export default function AgentHeader(props) {
                   ) : (
                     ""
                   )}
-                  {backButton ? (
+                  {backContext === "admin" ? (
                     <a
                       style={{ cursor: "pointer", marginRight: "10px" }}
                       onClick={() => BacktoAdmin()}
@@ -1140,7 +1148,13 @@ export default function AgentHeader(props) {
                 style={{ float: "right" }}
                 disabled={loading}
               >
-                {loading?<><i class="loaderrr fas fa-spinner fa-spin"></i> Loading</>:"Save"}
+                {loading ? (
+                  <>
+                    <i class="loaderrr fas fa-spinner fa-spin"></i> Loading
+                  </>
+                ) : (
+                  "Save"
+                )}
               </button>
             </form>
           </div>
