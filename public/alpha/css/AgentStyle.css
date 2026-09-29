@@ -1923,12 +1923,13 @@ nav-item {
 
   box-shadow: 0 10px 20px 0 rgba(149, 183, 208, 0.2);
 }
+
 .contct-box-marketing {
   margin-left: 20px;
 
   margin-bottom: 30px;
 
-  padding: 30px 20px ;
+  padding: 30px 20px !important ;
 
   box-shadow: 0 10px 20px 0 rgba(149, 183, 208, 0.2);
 }
@@ -1975,7 +1976,7 @@ nav-item {
   font-weight: 600;
 }
 
-.contct-box-marketing p ,
+
 .contct-box p {
   margin: 0;
 }
@@ -2000,7 +2001,61 @@ nav-item {
 
   border: none;
 }
+.domain-marketing-box {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  text-align: left;
+}
 
+.domain-left-image {
+  width: 50%;
+  flex-shrink: 0;
+}
+
+.domain-left-image img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.domain-content {
+  flex: 1;
+}
+
+.domain-content h3 {
+  margin-bottom: 20px;
+}
+
+.domain-content .marketing-box-description {
+  margin-bottom: 15px;
+}
+
+.domain-content .marketing-box-price {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+  .domain-marketing-box {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .domain-left-image {
+    width: 100%;
+  }
+
+  .domain-left-image img {
+    height: 250px;
+  }
+
+  .domain-content {
+    width: 100%;
+  }
+}
 .contact-form:after,
 .contact-form:before {
   width: 85px;
@@ -5840,4 +5895,301 @@ li.nav-item {
   -webkit-box-shadow: 0 2px 5px rgb(52 58 64 / 16%);
   box-shadow: 0 2px 5px rgb(52 58 64 / 16%);
   border: 5px solid #fff;
+}
+
+/* ---- Marketing Kit / Property Domain page (AgentMarketing.jsx) ---- */
+
+/* Marketing Kit / Property Domain tab pills
+   Renders in its normal position in the page. Once JS (in AgentMarketing.jsx)
+   detects the page has scrolled past that point, it adds `.is-pinned` to
+   the wrapper, which switches the pill to position:fixed so it stays
+   visible while the rest of the page scrolls beneath it - like the
+   Standard/Signature toggle on the Pricing page. The wrapper keeps a fixed
+   height so content doesn't jump when the pill switches to fixed. */
+.marketing-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 62px; /* match the pill's rendered height; adjust if it changes */
+}
+
+.marketing-tabs {
+  display: inline-flex;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+}
+
+.marketing-tabs-wrap.is-pinned .marketing-tabs {
+  position: fixed;
+  /* Distance from the top of the viewport once pinned - raise/lower this
+     to clear your site header if it overlaps. */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
+
+.marketing-tab-btn {
+  border: none;
+  background: transparent;
+  color: #555;
+  font-weight: 900;
+  padding: 10px 22px;
+  border-radius: 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+    font-size: 17px;
+  gap: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.marketing-tab-btn i {
+  font-size: 17px;
+}
+
+.marketing-tab-btn:hover:not(.active) {
+  background: #f5f5f5;
+}
+
+.marketing-tab-btn.active {
+  background: #ffa12d;
+  color: #fff;
+}
+
+/* "Everything You Need To Market Your Listing" - image + bullet list */
+.marketing-features-row {
+  align-items: center;
+}
+
+.marketing-features-image {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Marketing Kit / Property Domain boxes */
+.contct-box-marketing {
+  padding: 10px 0;
+
+}
+.contct-box-marketing >h3{
+  font-size: 26px !important;
+}
+.marketing-box-description {
+  color: #666;
+  font-size: 14px;
+  max-width: 480px;
+  margin: 10px auto 15px;
+  line-height: 1.5;
+}
+
+.marketing-box-price {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Order / Submit button used both under each box and inside the modals */
+.form-actions {
+  margin-top: 25px;
+}
+
+.marketing-order-btn {
+  background: #ffa12d;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.marketing-order-btn:hover {
+  background: #e8901f;
+}
+
+.marketing-order-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* ---- Marketing Kit / Property Domain page (AgentMarketing.jsx) ---- */
+
+/* Marketing Kit / Property Domain tab pills
+   Renders in its normal position in the page. Once JS (in AgentMarketing.jsx)
+   detects the page has scrolled past that point, it adds `.is-pinned` to
+   the wrapper, which switches the pill to position:fixed so it stays
+   visible while the rest of the page scrolls beneath it - like the
+   Standard/Signature toggle on the Pricing page. The wrapper keeps a fixed
+   height so content doesn't jump when the pill switches to fixed. */
+.marketing-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 62px; /* match the pill's rendered height; adjust if it changes */
+}
+
+.marketing-tabs {
+  display: inline-flex;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 6px;
+}
+
+.marketing-tabs-wrap.is-pinned .marketing-tabs {
+  position: fixed;
+  /* Distance from the top of the viewport once pinned - raise/lower this
+     to clear your site header if it overlaps. */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
+
+.marketing-tab-btn {
+  border: none;
+  background: transparent;
+  color: #555;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.marketing-tab-btn i {
+  font-size: 14px;
+}
+
+.marketing-tab-btn:hover:not(.active) {
+  background: #f5f5f5;
+}
+
+.marketing-tab-btn.active {
+  background: #ffa12d;
+  color: #fff;
+}
+
+/* "Everything You Need To Market Your Listing" - image + bullet list */
+.marketing-features-row {
+  align-items: center;
+}
+
+.marketing-features-image {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Marketing Kit / Property Domain boxes */
+.contct-box-marketing {
+  padding: 10px 0;
+}
+
+.marketing-box-description {
+  color: #666;
+  font-size: 14px;
+  max-width: 480px;
+  margin: 10px auto 15px;
+  line-height: 1.5;
+}
+
+.marketing-box-price {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Property Domain box - image left, content right */
+.domain-marketing-box {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  text-align: left;
+}
+
+
+.domain-content {
+  flex: 1;
+}
+
+.domain-content .marketing-box-description {
+  margin: 10px 0 15px;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .domain-marketing-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .domain-left-image {
+    max-width: 100%;
+  }
+}
+
+/* Order / Submit button used both under each box and inside the modals */
+.form-actions {
+  margin-top: 25px;
+}
+
+.marketing-order-btn {
+  background: #ffa12d;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.marketing-order-btn:hover {
+  background: #e8901f;
+}
+
+.marketing-order-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Grey "Back" variant of the order button, used on the Payment step */
+.marketing-order-btn.back {
+  background: #6c757d;
+}
+
+.marketing-order-btn.back:hover {
+  background: #5a6268;
+}
+
+/* ---- Order dialog stepper (Details -> Payment) ---- */
+
+.marketing-order-dialog .MuiStepIcon-root.MuiStepIcon-active,
+.marketing-order-dialog .MuiStepIcon-root.MuiStepIcon-completed {
+  color: #ffa12d;
+}
+
+.marketing-stepper {
+  padding: 20px 0 10px;
+}
+
+.step-content {
+  padding: 10px 0 0;
+}
+
+/* Back (left) / Submit (right) row on the Payment step */
+.stepper-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
 }

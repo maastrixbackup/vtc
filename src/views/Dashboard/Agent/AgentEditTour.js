@@ -51,6 +51,7 @@ import "cropperjs/dist/cropper.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import JSZip from "jszip";
 import AutocompleteAgents from "../../../components/AutocompleteAgents";
 
 const APITourService = APIURL() + "tourservicelink";
@@ -107,7 +108,7 @@ const APIUpdateQR = APIURL() + "update-qr-code";
 const APIAgentTrafficOption = APIURL() + "agent-update-traffic";
 const APIOtherLink = APIURL() + "tourotherlink";
 const APIGetNewsLetter = APIURL() + "get-newsletter";
-
+const APISendImageLinksEmail = APIURL() + "send-imagelinks-email";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -202,6 +203,11 @@ const AgentEditTour = React.memo((props) => {
   const [announcementData, setAnnouncementData] = useState(
     initialAnnouncementState,
   );
+  const [openSendImageLinksModal, setOpenSendImageLinksModal] = useState(false);
+  const [imageLinksEmailData, setImageLinksEmailData] = useState({
+    img_quality: "",
+    email: "",
+  });
   const [selectedDate, setSelectedDate] = React.useState(
     new Date("2014-08-18T21:11:54"),
   );
@@ -663,25 +669,25 @@ const AgentEditTour = React.memo((props) => {
       });
     }
   }, [context.state.user, sync, tour_id]);
-useEffect(() => {
-  if (context.state.user) {
-    const obj = {
-      authenticate_key: "abcd123XYZ",
-      agentId: JSON.parse(context.state.user).agentId,
-      tourid: tour_id,
-    };
-    postRecord(APIGetEditTourList, obj).then((res) => {
-      if (res.data[0].response.status === "success") {
-        const list =
-          (res.data[0].response.dataDetails &&
-            res.data[0].response.dataDetails.dataProvider) ||
-          res.data[0].response.dataProvider ||
-          [];
-        setTourList(list);
-      }
-    });
-  }
-}, [context.state.user, sync, tour_id]);
+  useEffect(() => {
+    if (context.state.user) {
+      const obj = {
+        authenticate_key: "abcd123XYZ",
+        agentId: JSON.parse(context.state.user).agentId,
+        tourid: tour_id,
+      };
+      postRecord(APIGetEditTourList, obj).then((res) => {
+        if (res.data[0].response.status === "success") {
+          const list =
+            (res.data[0].response.dataDetails &&
+              res.data[0].response.dataDetails.dataProvider) ||
+            res.data[0].response.dataProvider ||
+            [];
+          setTourList(list);
+        }
+      });
+    }
+  }, [context.state.user, sync, tour_id]);
   useEffect(() => {
     if (context.state.user) {
       const obj = {
@@ -883,11 +889,11 @@ useEffect(() => {
     }
   }, [context.state.user, sync, tour_id]);
 
-useEffect(() => {
-  if (tourList && tourList.length > 0) {
-    filterData();
-  }
-}, [offset, tourList]);
+  useEffect(() => {
+    if (tourList && tourList.length > 0) {
+      filterData();
+    }
+  }, [offset, tourList]);
 
   useEffect(() => {
     if (context.state.user) {
@@ -981,6 +987,52 @@ useEffect(() => {
     //     }
     // });
   };
+
+  const handleImageLinksEmailChange = (event) => {
+    const { name, value } = event.target;
+    setImageLinksEmailData({ ...imageLinksEmailData, [name]: value });
+  };
+
+  const SendImageLinksEmail = () => {
+    setOpen(true);
+    const imageIds = selectedImages.map((img) => img.id || img);
+    // console.log("IMAGE IDS:::::::::::::::::::::::::",imageIds)
+
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      tour_id: tour_id,
+      img_quality: imageLinksEmailData.img_quality,
+      email: imageLinksEmailData.email,
+      image_ids: imageIds,
+    };
+
+    postRecord(APISendImageLinksEmail, obj)
+      .then((res) => {
+        const response = res.data.response;
+
+        if (response.status === "success") {
+          const data = response.data;
+
+          setMessage(`${response.message} `);
+
+          setOpenSuccess(true);
+          setOpenSendImageLinksModal(false);
+          setImageLinksEmailData({ img_quality: "", email: "" });
+        } else {
+          setMessage(response.message);
+          setOpenError(true);
+        }
+      })
+      .catch((err) => {
+        console.error("Send image links error:", err);
+        setMessage("Something Went Wrong. Please try again later...");
+        setOpenError(true);
+      })
+      .finally(() => {
+        setOpen(false);
+      });
+  };
+
   const handleChange = (event, amenity) => {
     var arr = [];
     appliancesAmenities.forEach((res) => {
@@ -1430,14 +1482,12 @@ useEffect(() => {
     // setTourList([]);
     setTourList(tourList);
   };
-const handleImageTourChange = (event, id) => {
-  const updated = dragImages.map((res) =>
-    res.id === id
-      ? { ...res, enableontour: event === true ? 1 : 0 }
-      : res
-  );
-  setDragImages(updated);
-};
+  const handleImageTourChange = (event, id) => {
+    const updated = dragImages.map((res) =>
+      res.id === id ? { ...res, enableontour: event === true ? 1 : 0 } : res,
+    );
+    setDragImages(updated);
+  };
   const handlefontTourChange = (event, id) => {
     var new_tourList = tourList;
     new_tourList.forEach((res) => {
@@ -1540,14 +1590,12 @@ const handleImageTourChange = (event, id) => {
     setSepiaValue(value);
     setEditImageData({ ...editImageData, sepia: value });
   };
-const handleRadioChange = (event, id) => {
-  const updated = dragImages.map((res) =>
-    res.id === id
-      ? { ...res, tourfontlocation: event.target.value }
-      : res
-  );
-  setDragImages(updated);
-};
+  const handleRadioChange = (event, id) => {
+    const updated = dragImages.map((res) =>
+      res.id === id ? { ...res, tourfontlocation: event.target.value } : res,
+    );
+    setDragImages(updated);
+  };
 
   const handleRotate = (data) => {
     setRotateValue(data);
@@ -2479,20 +2527,20 @@ const handleRadioChange = (event, id) => {
       });
   };
   const updateTourListData = () => {
-     setOpen(true);
-  const finalImageArr = dragImages.map((res) => ({
-    ...res,
-    enable_caption: res.enable_caption === 1 ? 1 : 0,
-    caption_position: res.tourfontlocation || "center", // key name backend expects
-  }));
-  setDragImages(finalImageArr);
+    setOpen(true);
+    const finalImageArr = dragImages.map((res) => ({
+      ...res,
+      enable_caption: res.enable_caption === 1 ? 1 : 0,
+      caption_position: res.tourfontlocation || "center", // key name backend expects
+    }));
+    setDragImages(finalImageArr);
 
-  const obj = {
-    authenticate_key: "abcd123XYZ",
-    agent_id: JSON.parse(context.state.user).agentId,
-    type: "tour",
-    imageArr: finalImageArr,
-  };
+    const obj = {
+      authenticate_key: "abcd123XYZ",
+      agent_id: JSON.parse(context.state.user).agentId,
+      type: "tour",
+      imageArr: finalImageArr,
+    };
 
     postRecord(APIUpdateTour, obj)
       .then((res) => {
@@ -2686,27 +2734,27 @@ const handleRadioChange = (event, id) => {
       });
   };
 
-const filterData = async () => {
-  const endOffset = offset + postPerPage;
-  const normalizedList = tourList.map((freshItem) => {
-    const existing = dragImages.find((d) => d.id === freshItem.id);
-    return {
-      ...freshItem,
-      enable_caption:
-        freshItem.enable_caption !== undefined &&
-        freshItem.enable_caption !== null
-          ? Number(freshItem.enable_caption) === 1
-            ? 1
-            : 0
-          : existing
-          ? existing.enable_caption
-          : 0,
-    };
-  });
-  setTotalData(normalizedList.slice(offset, endOffset));
-  setDragImages(normalizedList);
-  setPageCount(Math.ceil(normalizedList.length / postPerPage));
-};
+  const filterData = async () => {
+    const endOffset = offset + postPerPage;
+    const normalizedList = tourList.map((freshItem) => {
+      const existing = dragImages.find((d) => d.id === freshItem.id);
+      return {
+        ...freshItem,
+        enable_caption:
+          freshItem.enable_caption !== undefined &&
+          freshItem.enable_caption !== null
+            ? Number(freshItem.enable_caption) === 1
+              ? 1
+              : 0
+            : existing
+              ? existing.enable_caption
+              : 0,
+      };
+    });
+    setTotalData(normalizedList.slice(offset, endOffset));
+    setDragImages(normalizedList);
+    setPageCount(Math.ceil(normalizedList.length / postPerPage));
+  };
 
   const handlePageClick = (event) => {
     // setOffset(selectedPage + 6);
@@ -3023,60 +3071,135 @@ const filterData = async () => {
       console.error("Error downloading image:", error);
     }
   };
-const getTinyThumbUrl = (imageurl) => {
-  // swaps "/original/" or "/thumbnail/" in the path with "/tinythumb/"
-  return imageurl.replace(/\/(original|thumbnail)\//i, "/tinythumb/");
-};
-const getOriginalUrl = (imageurl) => {
-  return imageurl.replace(/\/(thumbnail|tinythumb)\//i, "/original/");
-};
+  const getTinyThumbUrl = (imageurl) => {
+    // swaps "/original/" or "/thumbnail/" in the path with "/tinythumb/"
+    return imageurl.replace(/\/(original|thumbnail)\//i, "/tinythumb/");
+  };
+  const getOriginalUrl = (imageurl) => {
+    return imageurl.replace(/\/(thumbnail|tinythumb)\//i, "/original/");
+  };
 
+  // const downloadAllImagesHigh = async () => {
+  //   for (const res of dragImages) {
+  //     if (res.image_type !== "image") continue;
+  //     try {
+  //       const originalUrl = getOriginalUrl(res.imageurl);
+  //       const response = await fetch(originalUrl);
+  //       const blob = await response.blob();
+  //       const src = URL.createObjectURL(blob);
+  //       const link = document.createElement("a");
+  //       link.href = src;
+  //       link.setAttribute("download", (res.filename || "image") + ".jpg");
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //       URL.revokeObjectURL(src);
+  //       await new Promise((r) => setTimeout(r, 300));
+  //     } catch (err) {
+  //       console.error("Error downloading", res.imageurl, err);
+  //     }
+  //   }
+  // };
 
 const downloadAllImagesHigh = async () => {
-  for (const res of dragImages) {
-    if (res.image_type !== "image") continue;
+    const zip = new JSZip();
+    const imageItems = dragImages.filter((res) => res.image_type === "image");
+
+    if (imageItems.length === 0) return;
+
     try {
-      const originalUrl = getOriginalUrl(res.imageurl);
-      const response = await fetch(originalUrl);
-      const blob = await response.blob();
-      const src = URL.createObjectURL(blob);
+      const downloadPromises = imageItems.map(async (res, index) => {
+        try {
+          const originalUrl = getOriginalUrl(res.imageurl);
+          const response = await fetch(originalUrl);
+          const blob = await response.blob();
+
+          const filename = `${res.filename || `image_${index + 1}`}`;
+          zip.file(filename, blob);
+        } catch (err) {
+          console.error("Error fetching high-res image:", res.imageurl, err);
+        }
+      });
+
+      await Promise.all(downloadPromises);
+
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      const src = URL.createObjectURL(zipBlob);
+
       const link = document.createElement("a");
       link.href = src;
-      link.setAttribute("download", (res.filename || "image") + ".jpg");
+      link.setAttribute("download", `tour_${tour_id}_high_res.zip`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(src);
-      await new Promise((r) => setTimeout(r, 300));
     } catch (err) {
-      console.error("Error downloading", res.imageurl, err);
+      console.error("Error creating high-res zip file:", err);
     }
-  }
-};
-// Low-res: downscale each image via canvas before downloading
-const downloadAllImagesLow = async () => {
-  for (const res of dragImages) {
-    if (res.image_type !== "image") continue;
+  };
+
+  // Low Resolution ZIP Download
+  const downloadAllImagesLow = async () => {
+    const zip = new JSZip();
+    const imageItems = dragImages.filter((res) => res.image_type === "image");
+
+    if (imageItems.length === 0) return;
+
     try {
-      const tinyUrl = getTinyThumbUrl(res.imageurl);
-      const response = await fetch(tinyUrl);
-      const blob = await response.blob();
-      const src = URL.createObjectURL(blob);
+      const downloadPromises = imageItems.map(async (res, index) => {
+        try {
+          const tinyUrl = getTinyThumbUrl(res.imageurl);
+          const response = await fetch(tinyUrl);
+          const blob = await response.blob();
+
+          const filename = `${res.filename || `image_${index + 1}`}`;
+          zip.file(filename, blob);
+        } catch (err) {
+          console.error("Error fetching low-res image:", res.imageurl, err);
+        }
+      });
+
+      await Promise.all(downloadPromises);
+
+      const zipBlob = await zip.generateAsync({ type: "blob" });
+      const src = URL.createObjectURL(zipBlob);
 
       const link = document.createElement("a");
       link.href = src;
-      link.setAttribute("download", (res.filename || "image") + "_low.jpg");
+      link.setAttribute("download", `tour_${tour_id}_low_res.zip`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(src);
-
-      await new Promise((r) => setTimeout(r, 300)); // avoid browser blocking rapid downloads
     } catch (err) {
-      console.error("Error downloading tinythumb for", res.imageurl, err);
+      console.error("Error creating low-res zip file:", err);
     }
-  }
-};
+  };
+
+  // Low-res: downscale each image via canvas before downloading
+  // const downloadAllImagesLow = async () => {
+  //   for (const res of dragImages) {
+  //     if (res.image_type !== "image") continue;
+  //     try {
+  //       const tinyUrl = getTinyThumbUrl(res.imageurl);
+  //       const response = await fetch(tinyUrl);
+  //       const blob = await response.blob();
+  //       const src = URL.createObjectURL(blob);
+
+  //       const link = document.createElement("a");
+  //       link.href = src;
+  //       link.setAttribute("download", (res.filename || "image") + "_low.jpg");
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //       URL.revokeObjectURL(src);
+
+  //       await new Promise((r) => setTimeout(r, 300)); // avoid browser blocking rapid downloads
+  //     } catch (err) {
+  //       console.error("Error downloading tinythumb for", res.imageurl, err);
+  //     }
+  //   }
+  // };
   // const downloadImage = () => {
   //   if (imageUrl !== "") {
   //     if (imageId === "") {
@@ -3412,7 +3535,7 @@ const downloadAllImagesLow = async () => {
       }
     }
   }, [context.state.user]);
-console.log("tour-list",dragImages);
+  console.log("tour-list", dragImages);
   return (
     <>
       <AgentHeader />
@@ -3571,16 +3694,24 @@ console.log("tour-list",dragImages);
                               <i class="fas fa-download"></i> Download
                             </a>
                           </li>
-<li>
-  <a class="dropdown-item" onClick={downloadAllImagesHigh}>
-    <i class="fas fa-download"></i> Download All Images (High)
-  </a>
-</li>
-<li>
-  <a class="dropdown-item" onClick={downloadAllImagesLow}>
-    <i class="fas fa-download"></i> Download All Images (Low)
-  </a>
-</li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={downloadAllImagesHigh}
+                            >
+                              <i class="fas fa-download"></i> Download All
+                              Images (High)
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={downloadAllImagesLow}
+                            >
+                              <i class="fas fa-download"></i> Download All
+                              Images (Low)
+                            </a>
+                          </li>
                           <li>
                             <a class="dropdown-item" onClick={handleDelete}>
                               <i class="far fa-trash-alt"></i> Delete
@@ -3627,6 +3758,17 @@ console.log("tour-list",dragImages);
                             >
                               {" "}
                               <i class="fas fa-link"></i> Service Links
+                            </a>
+                          </li>
+
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              onClick={() => setOpenSendImageLinksModal(true)}
+                            >
+                              {" "}
+                              <i class="fas fa-envelope"></i> Send Images Link
+                              To Email
                             </a>
                           </li>
 
@@ -4431,21 +4573,41 @@ console.log("tour-list",dragImages);
             <div class="col-lg-12 col-md-12">
               <div class="test_sec">
                 <div class="test_sec_left"></div>
-                <div class="test_sec_right">
+                <div
+                  className="test_sec_right"
+                  style={{ display: "flex", gap: "10px", alignItems: "center" }}
+                >
                   {selectedImages.length > 0 && (
-                    <button
-                      onClick={deleteSelected}
-                      type="button"
-                      class="next_btn float-start"
-                    >
-                      Delete Selected
-                    </button>
+                    <>
+                     <button
+  onClick={() => {
+    if (selectedImages.length === 0) {
+      setMessage("Please select at least one photo.");
+      setOpenError(true);
+      return;
+    }
+    setOpenSendImageLinksModal(true);
+  }}
+  type="button"
+  className="next_btn"
+>
+  Email Selected Photos ({selectedImages.length})
+</button>
+
+                      <button
+                        onClick={deleteSelected}
+                        type="button"
+                        className="next_btn"
+                      >
+                        Delete Selected
+                      </button>
+                    </>
                   )}
 
                   <button
                     onClick={updateTourListData}
                     type="button"
-                    class="next_btn"
+                    className="next_btn"
                   >
                     Save
                   </button>
@@ -5808,6 +5970,70 @@ console.log("tour-list",dragImages);
               </div>
             </div>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        maxWidth="sm"
+        fullWidth={true}
+        onClose={() => setOpenSendImageLinksModal(false)}
+        aria-labelledby="customized-dialog-title"
+        open={openSendImageLinksModal}
+      >
+        <DialogTitle id="customized-dialog-title">
+          Send Images Link To Email
+          <CancelIcon
+            onClick={() => setOpenSendImageLinksModal(false)}
+            style={{ float: "right", cursor: "pointer" }}
+          />
+        </DialogTitle>
+        <DialogContent dividers>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              SendImageLinksEmail();
+            }}
+          >
+            <div class="row">
+              <div class="col-md-6 formbox1">
+                <label>
+                  Image Quality <span style={{ color: "#ffa12d" }}>*</span>
+                </label>
+                <select
+                  class="form-control formbox1select"
+                  name="img_quality"
+                  value={imageLinksEmailData.img_quality}
+                  onChange={handleImageLinksEmailChange}
+                  required
+                >
+                  <option value="">---Select Quality---</option>
+                  <option value="high">High</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+              <div class="col-md-6 formbox1">
+                <label>
+                  Email <span style={{ color: "#ffa12d" }}>*</span>
+                </label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  value={imageLinksEmailData.email}
+                  onChange={handleImageLinksEmailChange}
+                  placeholder="Enter email address"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row" style={{ marginTop: "15px" }}>
+              <div class="col-md-12 text-right">
+                <button type="submit" class="next_btn border-0">
+                  Send
+                </button>
+              </div>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
       <Dialog
